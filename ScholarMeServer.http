@@ -1,0 +1,6 @@
+@ScholarMeServer_HostAddress = http://localhost:5108
+
+GET {{ScholarMeServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
