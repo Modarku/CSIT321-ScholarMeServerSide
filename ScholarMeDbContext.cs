@@ -24,100 +24,62 @@ namespace RestTest
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Setup table columns
-            modelBuilder.Entity<UserAccount>(e =>
-            {
-                e.Property(u => u.CreatedAt)
-                      .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            // TODO: Setup table columns
 
-                e.Property(u => u.UpdatedAt)
-                      .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            });
+            modelBuilder.Entity<UserAccount>().HasData(
+                    new UserAccount()
+                    {
+                        Id = 1,
+                        Username = "Cher",
+                        Email = "cher@gmail.com",
+                        Password = "nothash",
+                        FirstName = "Teach",
+                        LastName = "Cher",
+                    }
+                );
 
-            modelBuilder.Entity<Flashcard>(e =>
-            {
-                e.Property(u => u.CreatedAt)
-                      .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            modelBuilder.Entity<FlashcardSet>().HasData(
+                    new FlashcardSet()
+                    {
+                        Id = 1,
+                        UserAccountId = 1,
+                        Title = "Flashcard Set 1",
+                        Description = "This is the first flashcard set",
+                    }
+                );
 
-                e.Property(u => u.UpdatedAt)
-                      .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            });
+            modelBuilder.Entity<Flashcard>().HasData(
+                    new Flashcard()
+                    {
+                        Id = 1,
+                        FlashcardSetId = 1,
+                        Question = "What is the capital of France?",
+                    }
+                );
 
-            modelBuilder.Entity<FlashcardChoice>(e =>
-            {
-                e.Property(u => u.IsAnswer)
-                        .HasDefaultValue(false);
-
-                e.Property(u => u.CreatedAt)
-                      .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                e.Property(u => u.UpdatedAt)
-                      .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            });
-
-            modelBuilder.Entity<FlashcardSet>(e =>
-            {
-                e.Property(u => u.CreatedAt)
-                      .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                e.Property(u => u.UpdatedAt)
-                      .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            });
-
-            // Comment out seeding data because for unknown reason it cause PendingModelChangesWarning
-            // Seeding Data
-            //modelBuilder.Entity<UserAccount>().HasData(
-            //        new UserAccount()
-            //        {
-            //            Id = 1,
-            //            Username = "hunyo",
-            //            Email = "hunyo@gmail.com",
-            //            Password = HashPassword("sekwret"),
-            //            FirstName = "Jun",
-            //            LastName = "Sayke",
-            //        }
-            //    );
-
-            //modelBuilder.Entity<FlashcardSet>().HasData(
-            //        new FlashcardSet()
-            //        {
-            //            Id = 1,
-            //            UserAccountId = 1,
-            //            Title = "Intelligent System I",
-            //            Description = "Final Exam Reviewer",
-            //        }
-            //    );
-
-            //modelBuilder.Entity<Flashcard>().HasData(
-            //        new Flashcard()
-            //        {
-            //            Id = 1,
-            //            FlashcardSetId = 1,
-            //            Question = "What is Neural Networks?",
-            //        }
-            //    );
-
-            //modelBuilder.Entity<FlashcardChoice>().HasData(
-            //        new FlashcardChoice()
-            //        {
-            //            Id = 1,
-            //            FlashcardId = 1,
-            //            Choice = "An wifi network",
-            //        },
-            //        new FlashcardChoice()
-            //        {
-            //            Id = 2,
-            //            FlashcardId = 1,
-            //            Choice = "A brain stem",
-            //        },
-            //        new FlashcardChoice()
-            //        {
-            //            Id = 3,
-            //            FlashcardId = 1,
-            //            Choice = "A machine learning model",
-            //            IsAnswer = true,
-            //        }
-            //    );
+            modelBuilder.Entity<FlashcardChoice>().HasData(
+                    new FlashcardChoice()
+                    {
+                        Id = 1,
+                        FlashcardId = 1,
+                        Choice = "Paris",
+                        IsAnswer = true,
+                    },
+                    new FlashcardChoice()
+                    {
+                        Id = 2,
+                        FlashcardId = 1,
+                        Choice = "London",
+                        IsAnswer = false,
+                    },
+                    new FlashcardChoice()
+                    {
+                        Id = 3,
+                        FlashcardId = 1,
+                        Choice = "Berlin",
+                        IsAnswer = false,
+                    }
+                );
         }
     }
 }

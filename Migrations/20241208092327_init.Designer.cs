@@ -12,7 +12,7 @@ using RestTest;
 namespace ScholarMeServer.Migrations
 {
     [DbContext(typeof(ScholarMeDbContext))]
-    [Migration("20241208083339_init")]
+    [Migration("20241208092327_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -34,9 +34,7 @@ namespace ScholarMeServer.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("FlashcardSetId")
                         .HasColumnType("integer");
@@ -46,15 +44,23 @@ namespace ScholarMeServer.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FlashcardSetId");
 
                     b.ToTable("Flashcards");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FlashcardSetId = 1,
+                            Question = "What is the capital of France?",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("RestTest.Models.FlashcardChoice", b =>
@@ -70,28 +76,51 @@ namespace ScholarMeServer.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("FlashcardId")
                         .HasColumnType("integer");
 
                     b.Property<bool>("IsAnswer")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false);
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FlashcardId");
 
                     b.ToTable("FlashcardChoices");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Choice = "Paris",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FlashcardId = 1,
+                            IsAnswer = true,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Choice = "London",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FlashcardId = 1,
+                            IsAnswer = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Choice = "Berlin",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FlashcardId = 1,
+                            IsAnswer = false,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("RestTest.Models.FlashcardSet", b =>
@@ -103,9 +132,7 @@ namespace ScholarMeServer.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -116,9 +143,7 @@ namespace ScholarMeServer.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("UserAccountId")
                         .HasColumnType("integer");
@@ -128,6 +153,17 @@ namespace ScholarMeServer.Migrations
                     b.HasIndex("UserAccountId");
 
                     b.ToTable("FlashcardSets");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "This is the first flashcard set",
+                            Title = "Flashcard Set 1",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserAccountId = 1
+                        });
                 });
 
             modelBuilder.Entity("RestTest.Models.UserAccount", b =>
@@ -139,9 +175,7 @@ namespace ScholarMeServer.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -163,9 +197,7 @@ namespace ScholarMeServer.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -174,15 +206,30 @@ namespace ScholarMeServer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "cher@gmail.com",
+                            FirstName = "Teach",
+                            LastName = "Cher",
+                            Password = "nothash",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Username = "Cher"
+                        });
                 });
 
             modelBuilder.Entity("RestTest.Models.Flashcard", b =>
                 {
-                    b.HasOne("RestTest.Models.FlashcardSet", null)
+                    b.HasOne("RestTest.Models.FlashcardSet", "FlashcardSet")
                         .WithMany("Flashcards")
                         .HasForeignKey("FlashcardSetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("FlashcardSet");
                 });
 
             modelBuilder.Entity("RestTest.Models.FlashcardChoice", b =>
@@ -199,7 +246,7 @@ namespace ScholarMeServer.Migrations
             modelBuilder.Entity("RestTest.Models.FlashcardSet", b =>
                 {
                     b.HasOne("RestTest.Models.UserAccount", "UserAccount")
-                        .WithMany()
+                        .WithMany("FlashcardSets")
                         .HasForeignKey("UserAccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -215,6 +262,11 @@ namespace ScholarMeServer.Migrations
             modelBuilder.Entity("RestTest.Models.FlashcardSet", b =>
                 {
                     b.Navigation("Flashcards");
+                });
+
+            modelBuilder.Entity("RestTest.Models.UserAccount", b =>
+                {
+                    b.Navigation("FlashcardSets");
                 });
 #pragma warning restore 612, 618
         }

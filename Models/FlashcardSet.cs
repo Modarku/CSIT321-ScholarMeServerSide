@@ -8,6 +8,7 @@ namespace RestTest.Models
     {
         public int Id { get; set; }
 
+        // Many-to-One relationship with UserAccount
         public int UserAccountId { get; set; }
 
         public string Title { get; set; }

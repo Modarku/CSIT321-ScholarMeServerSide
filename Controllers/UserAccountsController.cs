@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ScholarMeServer.DTO.UserAccount;
 using ScholarMeServer.Services.UserAccountInfo;
+using ScholarMeServer.Utilities;
 
 namespace ScholarMeServer.Controllers
 {
@@ -9,10 +10,12 @@ namespace ScholarMeServer.Controllers
     public class UserAccountsController : ControllerBase
     {
         private readonly IUserAccountInfoService _userAccountInfoService;
+        private readonly Jwt _jwt;
 
-        public UserAccountsController(IUserAccountInfoService userAccountInfoService)
+        public UserAccountsController(IUserAccountInfoService userAccountInfoService, Jwt jwt)
         {
             _userAccountInfoService = userAccountInfoService;
+            _jwt = jwt;
         }
 
         [HttpPost("signup")]
@@ -45,7 +48,9 @@ namespace ScholarMeServer.Controllers
             try
             {
                 var user = await _userAccountInfoService.SignInUserAsync(userAccountDto);
-                return Ok(user);
+                var token = _jwt.GenerateJwtToken(user);
+
+                return Ok(new { user, token });
             }
             catch (Exception e)
             {

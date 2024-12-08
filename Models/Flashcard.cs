@@ -8,6 +8,7 @@ namespace RestTest.Models
     {
         public int Id { get; set; }
 
+        // Many-to-One relationship with FlashcardSet
         public int FlashcardSetId { get; set; }
 
         public string Question { get; set; }
@@ -19,6 +20,6 @@ namespace RestTest.Models
         // Navigation Property
         public List<FlashcardChoice> Choices { get; set; }
 
-        //public FlashcardSet FlashcardSet { get; set; }
+        public FlashcardSet FlashcardSet { get; set; }
     }
 }

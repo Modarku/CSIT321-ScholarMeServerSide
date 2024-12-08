@@ -1,13 +1,39 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using RestTest;
-using ScholarMeServer.Repository.FlashcardInfo;
+using ScholarMeServer.Repository.FlashcardSetInfo;
 using ScholarMeServer.Repository.UserAccountInfo;
-using ScholarMeServer.Services.FlashcardInfo;
+using ScholarMeServer.Services.FlashcardSetInfo;
 using ScholarMeServer.Services.UserAccountInfo;
+using ScholarMeServer.Utilities;
+using System.Diagnostics;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// JWT Authentication Setup
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+        };
+    });
+
+builder.Services.AddAuthorization();
+
 // Add services to the container.
+
+// Inject Jwt utility class as singleton
+builder.Services.AddSingleton<Jwt>();
 
 // OLD Services
 //builder.Services.AddTransient<IUserAccountService, UserAccountService>();
@@ -24,9 +50,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<IUserAccountInfoService, UserAccountInfoService>();
 builder.Services.AddScoped<IUserAccountInfoRepository, UserAccountInfoRepository>();
 
-builder.Services.AddTransient<IFlashcardInfoService, FlashcardInfoService>();
-builder.Services.AddScoped<IFlashcardInfoRepository, FlashcardInfoRepository>();
+builder.Services.AddTransient<IFlashcardSetInfoService, FlashcardSetInfoService>();
+builder.Services.AddScoped<IFlashcardSetInfoRepository, FlashcardSetInfoRepository>();
 
+//builder.Services.AddTransient<IFlashcardInfoService, FlashcardInfoService>();
+//builder.Services.AddScoped<IFlashcardInfoRepository, FlashcardInfoRepository>();
+    
 builder.Services.AddDbContext<ScholarMeDbContext>(
     db => db.UseNpgsql(builder.Configuration.GetConnectionString("ScholarMeDbConnectionString")), 
     ServiceLifetime.Scoped
@@ -51,6 +80,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

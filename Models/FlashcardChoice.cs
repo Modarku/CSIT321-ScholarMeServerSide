@@ -8,6 +8,7 @@ namespace RestTest.Models
     {
         public int Id { get; set; }
 
+        // Many-to-One relationship with Flashcard
         public int FlashcardId { get; set; }
 
         public string Choice { get; set; }
