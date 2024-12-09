@@ -51,7 +51,7 @@ namespace RestTest
                     new Flashcard()
                     {
                         Id = 1,
-                        FlashcardSetId = 1,
+                        FlashcardDeckId = 1,
                         Question = "What is the capital of France?",
                     }
                 );

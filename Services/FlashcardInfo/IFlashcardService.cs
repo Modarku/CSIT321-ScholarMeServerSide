@@ -6,7 +6,8 @@ namespace ScholarMeServer.Services.FlashcardInfo
     {
         public Task<FlashcardReadOnlyDto> CreateFlashcard(int flashcardDeckId, FlashcardCreateDto flashcardDto);
         public Task<List<FlashcardReadOnlyDto>> GetFlashcardsByDeckId(int flashcardDeckId);
-        public Task<FlashcardReadOnlyDto> UpdateFlashcard(int flashcardDeckId, FlashcardUpdateDto flashcardDto);
-        public Task DeleteFlashcard(int flashcardDeckId);
+        public Task<FlashcardReadOnlyDto> GetFlashcardById(int flashcardId);
+        public Task<FlashcardReadOnlyDto> UpdateFlashcard(int flashcardId, FlashcardUpdateDto flashcardDto);
+        public Task DeleteFlashcard(int flashcardId);
     }
 }

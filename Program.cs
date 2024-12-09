@@ -3,9 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RestTest;
+using ScholarMeServer.Repository.FlashcardChoiceInfo;
 using ScholarMeServer.Repository.FlashcardDeckInfo;
 using ScholarMeServer.Repository.FlashcardInfo;
 using ScholarMeServer.Repository.UserAccountInfo;
+using ScholarMeServer.Services.FlashcardChoiceInfo;
 using ScholarMeServer.Services.FlashcardDeckInfo;
 using ScholarMeServer.Services.FlashcardInfo;
 using ScholarMeServer.Services.UserAccountInfo;
@@ -61,12 +63,15 @@ builder.Services.AddScoped<IFlashcardDeckRepository, FlashcardDeckRepository>();
 builder.Services.AddTransient<IFlashcardService, FlashcardService>();
 builder.Services.AddScoped<IFlashcardRepository, FlashcardRepository>();
 
+builder.Services.AddTransient<IFlashcardChoiceService, FlashcardChoiceService>();
+builder.Services.AddScoped<IFlashcardChoiceRepository,  FlashcardChoiceRepository>();
+
 //builder.Services.AddTransient<IFlashcardSetInfoService, FlashcardSetInfoService>();
 //builder.Services.AddScoped<IFlashcardSetInfoRepository, FlashcardSetInfoRepository>();
 
 //builder.Services.AddTransient<IFlashcardInfoService, FlashcardInfoService>();
 //builder.Services.AddScoped<IFlashcardInfoRepository, FlashcardInfoRepository>();
-    
+
 builder.Services.AddDbContext<ScholarMeDbContext>(
     db => db.UseNpgsql(builder.Configuration.GetConnectionString("ScholarMeDbConnectionString")), 
     ServiceLifetime.Scoped

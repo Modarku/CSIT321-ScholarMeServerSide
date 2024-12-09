@@ -36,7 +36,7 @@ namespace ScholarMeServer.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("FlashcardSetId")
+                    b.Property<int>("FlashcardDeckId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Question")
@@ -48,7 +48,7 @@ namespace ScholarMeServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FlashcardSetId");
+                    b.HasIndex("FlashcardDeckId");
 
                     b.ToTable("Flashcards");
 
@@ -223,13 +223,13 @@ namespace ScholarMeServer.Migrations
 
             modelBuilder.Entity("RestTest.Models.Flashcard", b =>
                 {
-                    b.HasOne("RestTest.Models.FlashcardDeck", "FlashcardSet")
+                    b.HasOne("RestTest.Models.FlashcardDeck", "FlashcardDeck")
                         .WithMany("Flashcards")
-                        .HasForeignKey("FlashcardSetId")
+                        .HasForeignKey("FlashcardDeckId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("FlashcardSet");
+                    b.Navigation("FlashcardDeck");
                 });
 
             modelBuilder.Entity("RestTest.Models.FlashcardChoice", b =>
@@ -246,7 +246,7 @@ namespace ScholarMeServer.Migrations
             modelBuilder.Entity("RestTest.Models.FlashcardDeck", b =>
                 {
                     b.HasOne("RestTest.Models.UserAccount", "UserAccount")
-                        .WithMany("FlashcardSets")
+                        .WithMany("FlashcardDecks")
                         .HasForeignKey("UserAccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -266,7 +266,7 @@ namespace ScholarMeServer.Migrations
 
             modelBuilder.Entity("RestTest.Models.UserAccount", b =>
                 {
-                    b.Navigation("FlashcardSets");
+                    b.Navigation("FlashcardDecks");
                 });
 #pragma warning restore 612, 618
         }

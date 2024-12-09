@@ -24,6 +24,6 @@ namespace RestTest.Models
         public DateTime UpdatedAt { get; set; }
 
         // Navigation Property
-        public List<FlashcardDeck> FlashcardSets { get; set; }
+        public List<FlashcardDeck> FlashcardDecks { get; set; }
     }
 }

@@ -6,12 +6,6 @@ using ScholarMeServer.Services.FlashcardDeckInfo;
 
 namespace ScholarMeServer.Controllers
 {
-    /**
-     * POST(/flashcards/{userAccountId}/decks) - CreateFlashcardDeck(int userAccountId, FlashcardDeckCreateDto flashcardDeckDto);  
-     * GET(/flashcards/{userAccountId}/decks) - GetFlashcardDecks(int userAccountId);  
-     * PUT(/flashcards/{userAccountId}/decks/{flashcardDeckId}) - UpdateFlashcardDeck(int flashcardDeckId, FlashcardDeckUpdateDto flashcardDeckDto); 
-     * DELETE(/flashcards/{userAccountId}/decks/{flashcardDeckId}) - DeleteFlashcardDeck(int flashcardDeckId);
-     */
     [ApiController]
     [Route("api/flashcards/{userAccountId:int}/decks")]
     [Authorize]
@@ -32,10 +26,18 @@ namespace ScholarMeServer.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetFlashcardDecks([FromRoute] int userAccountId)
+        public async Task<IActionResult> GetFlashcardDecksByUserId([FromRoute] int userAccountId)
         {
-            var flashcardDecks = await _flashcardDeckService.GetFlashcardDecks(userAccountId);
+            var flashcardDecks = await _flashcardDeckService.GetFlashcardDecksByUserId(userAccountId);
             return Ok(flashcardDecks);
+        }
+
+        [HttpGet]
+        [Route("{flashcardDeckId:int")]
+        public async Task<IActionResult> GetFlashcardDeckById([FromRoute] int flashcardDeckId)
+        {
+            var flashcardDeck = await _flashcardDeckService.GetFlashcardDeckById(flashcardDeckId);
+            return Ok(flashcardDeck);
         }
 
         [HttpPut]

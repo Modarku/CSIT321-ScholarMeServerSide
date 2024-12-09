@@ -1,62 +1,46 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestTest;
 using RestTest.Models;
-using ScholarMeServer.DTO.Flashcard;
 
 namespace ScholarMeServer.Repository.FlashcardInfo
 {
-    public class FlashcardRepository : IFlashcardRepository
+    public class FlashcardRepository : BaseRepository, IFlashcardRepository
     {
-        private readonly ScholarMeDbContext _scholarmeDbContext;
-
-        public FlashcardRepository(ScholarMeDbContext scholarmeDbContext)
-        {
-            _scholarmeDbContext = scholarmeDbContext;
-        }
+        public FlashcardRepository(ScholarMeDbContext scholarmeDbContext) : base(scholarmeDbContext) { }
 
         public async Task AddFlashcard( Flashcard flashcard)
         {
-            _scholarmeDbContext.Flashcards.Add(flashcard);
+            _scholarmeDbContext.Set<Flashcard>().Add(flashcard);
             await _scholarmeDbContext.SaveChangesAsync();
         }
 
         public async Task<List<Flashcard>> GetFlashcardsByDeckId(int flashcardDeckId)
         {
-            var flashcards = await _scholarmeDbContext.Flashcards.Where(f => f.FlashcardSetId == flashcardDeckId).ToListAsync();
+            var flashcards = await _scholarmeDbContext.Set<Flashcard>().Where(f => f.FlashcardDeckId == flashcardDeckId).ToListAsync();
             return flashcards;
         }
 
         public async Task<Flashcard?> GetFlashcardById(int flashcardId)
         {
-            var flashcard = await _scholarmeDbContext.Flashcards.FindAsync(flashcardId);
+            var flashcard = await _scholarmeDbContext.Set<Flashcard>().FindAsync(flashcardId);
             return flashcard;
-        }
-
-        public async Task DeleteFlashcard(int flashcardId)
-        {
-            var flashcard = await GetFlashcardById(flashcardId);
-
-            if (flashcard != null)
-            {
-                _scholarmeDbContext.Flashcards.Remove(flashcard);
-                await _scholarmeDbContext.SaveChangesAsync();
-            }
         }
 
         public async Task SaveFlashcard(Flashcard flashcard)
         {
-            _scholarmeDbContext.Flashcards.Update(flashcard);
+            _scholarmeDbContext.Set<Flashcard>().Update(flashcard);
             await _scholarmeDbContext.SaveChangesAsync();
         }
 
-        public bool HasChanges()
+        public async Task DeleteFlashcard(Flashcard flashcard)
         {
-            return _scholarmeDbContext.ChangeTracker.HasChanges();
+            _scholarmeDbContext.Set<Flashcard>().Remove(flashcard);
+            await _scholarmeDbContext.SaveChangesAsync();
         }
 
         public async Task<bool> FlashcardDeckExists(int flashcardDeckId)
         {
-            return await _scholarmeDbContext.FlashcardDecks.AnyAsync(f => f.Id == flashcardDeckId);
+            return await _scholarmeDbContext.Set<FlashcardDeck>().AnyAsync(f => f.Id == flashcardDeckId);
         }
     }
 }

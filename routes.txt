@@ -8,16 +8,42 @@ POST(/users/signup) - SignUp(UserSignUpDto userSignUpDto)
 
 - CRUD operations
 POST(/flashcards/{userAccountId}/decks) - CreateFlashcardDeck(int userAccountId, FlashcardDeckCreateDto flashcardDeckDto);
-GET(/flashcards/{userAccountId}/decks) - GetFlashcardDecks(int userAccountId);
+GET(/flashcards/{userAccountId}/decks) - GetFlashcardDecksByUserId(int userAccountId);
+GET(/flashcards/{userAccountId}/decks/{flashcardDeckId}) - GetFlashcardDeckById(int flashcardDeckId);
 PUT(/flashcards/{userAccountId}/decks/{flashcardDeckId}) - UpdateFlashcardDeck(int flashcardDeckId, FlashcardDeckUpdateDto flashcardDeckDto);
 DELETE(/flashcards/{userAccountId}/decks/{flashcardDeckId}) - DeleteFlashcardDeck(int flashcardDeckId);
 
 POST(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards) - CreateFlashcard(int flashcardDeckId, FlashcardCreateDto flashcardDto);
-GET(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards) - GetFlashcards(int flashcardDeckId);
+GET(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards) - GetFlashcardsByDeckId(int flashcardDeckId);
+GET(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards/{flashcardId}) - GetFlashcardById(int flashcardId);
 PUT(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards/{flashcardId}) - UpdateFlashcard(int flashcardDeckId, FlashcardUpdateDto flashcardDto);
 DELETE(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards/{flashcardId}) - DeleteFlashcard(int flashcardId);
 
 POST(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards/{flashcardId}/choices) - CreateFlashcardChoice(int flashcardId, FlashcardChoiceCreateDto flashcardChoiceDto);
-GET(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards/{flashcardId}/choices) - GetFlashcardChoices(int flashcardId);
+GET(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards/{flashcardId}/choices) - GetFlashcardChoicesByCardId(int flashcardId);
+GET(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards/{flashcardId}/choices/{flashcardChoiceId}) - GetFlashcardChoiceById(int flashcardChoiceId);
 UPDATE(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards/{flashcardId}/choices/{flashcardChoiceId}) - UpdateFlashcardChoice(int flashcardChoiceId, FlashcardChoiceUpdateDto flashcardChoiceDto);
 DELETE(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards/{flashcardId}/choices/{flashcardChoiceId}) - DeleteFlashcardChoice(int flashcardChoiceId);
+
+Flattened Structure
+
+Decks
+POST /decks - Create a deck for the authenticated user.
+GET /decks - Get all decks for the authenticated user.
+GET /decks/{deckId} - Get a specific deck by its ID.
+PUT /decks/{deckId} - Update a deck.
+DELETE /decks/{deckId} - Delete a deck.
+
+Cards
+POST /decks/{deckId}/cards - Create a card in a specific deck.
+GET /decks/{deckId}/cards - Get all cards for a specific deck.
+GET /cards/{cardId} - Get a specific card (deck context implied from the card ID).
+PUT /cards/{cardId} - Update a specific card.
+DELETE /cards/{cardId} - Delete a specific card.
+
+Choices
+POST /cards/{cardId}/choices - Create a choice for a specific card.
+GET /cards/{cardId}/choices - Get all choices for a specific card.
+GET /choices/{choiceId} - Get a specific choice (card context implied from the choice ID).
+PUT /choices/{choiceId} - Update a specific choice.
+DELETE /choices/{choiceId} - Delete a specific choice.

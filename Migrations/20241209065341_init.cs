@@ -114,7 +114,7 @@ namespace ScholarMeServer.Migrations
 
             migrationBuilder.InsertData(
                 table: "Flashcards",
-                columns: new[] { "Id", "CreatedAt", "FlashcardSetId", "Question", "UpdatedAt" },
+                columns: new[] { "Id", "CreatedAt", "FlashcardDeckId", "Question", "UpdatedAt" },
                 values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "What is the capital of France?", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
@@ -140,7 +140,7 @@ namespace ScholarMeServer.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Flashcards_FlashcardSetId",
                 table: "Flashcards",
-                column: "FlashcardSetId");
+                column: "FlashcardDeckId");
         }
 
         /// <inheritdoc />
