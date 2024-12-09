@@ -1,25 +1,25 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
+// Model for independent flashcards
 namespace RestTest.Models
 {
     public class Flashcard
     {
-        [Key]
-        public int FlashcardId { get; set; }
+        public int Id { get; set; }
 
-        [Required]
-        [ForeignKey(nameof(UserAccount))]
-        public int UserId { get; set; }
-        public UserAccount UserAccount { get; set; }
+        // Many-to-One relationship with FlashcardSet
+        public int FlashcardSetId { get; set; }
 
-        [Required]
         public string Question { get; set; }
 
-        public DateTime DateAdded { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; }
 
-        public DateTime DateUpdated { get; set; } = DateTime.Now;
+        public DateTime UpdatedAt { get; set; }
 
-        List<FlashcardChoice>? Choices { get; set; }
+        // Navigation Property
+        public List<FlashcardChoice> Choices { get; set; }
+
+        public FlashcardDeck FlashcardSet { get; set; }
     }
 }

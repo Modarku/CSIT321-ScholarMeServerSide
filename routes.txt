@@ -1,0 +1,23 @@
+- Route layout
+/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards/{flashcardId}/choices/{flashcardChoiceId}
+
+- JWT Token Sender
+POST(/users/signin) - SignIn(UserSignInDto userSignInDto)
+POST(/users/signup) - SignUp(UserSignUpDto userSignUpDto)
+
+
+- CRUD operations
+POST(/flashcards/{userAccountId}/decks) - CreateFlashcardDeck(int userAccountId, FlashcardDeckCreateDto flashcardDeckDto);
+GET(/flashcards/{userAccountId}/decks) - GetFlashcardDecks(int userAccountId);
+PUT(/flashcards/{userAccountId}/decks/{flashcardDeckId}) - UpdateFlashcardDeck(int flashcardDeckId, FlashcardDeckUpdateDto flashcardDeckDto);
+DELETE(/flashcards/{userAccountId}/decks/{flashcardDeckId}) - DeleteFlashcardDeck(int flashcardDeckId);
+
+POST(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards) - CreateFlashcard(int flashcardDeckId, FlashcardCreateDto flashcardDto);
+GET(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards) - GetFlashcards(int flashcardDeckId);
+PUT(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards/{flashcardId}) - UpdateFlashcard(int flashcardDeckId, FlashcardUpdateDto flashcardDto);
+DELETE(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards/{flashcardId}) - DeleteFlashcard(int flashcardId);
+
+POST(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards/{flashcardId}/choices) - CreateFlashcardChoice(int flashcardId, FlashcardChoiceCreateDto flashcardChoiceDto);
+GET(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards/{flashcardId}/choices) - GetFlashcardChoices(int flashcardId);
+UPDATE(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards/{flashcardId}/choices/{flashcardChoiceId}) - UpdateFlashcardChoice(int flashcardChoiceId, FlashcardChoiceUpdateDto flashcardChoiceDto);
+DELETE(/flashcards/{userAccountId}/decks/{flashcardDeckId}/cards/{flashcardId}/choices/{flashcardChoiceId}) - DeleteFlashcardChoice(int flashcardChoiceId);

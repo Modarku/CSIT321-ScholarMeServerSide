@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using RestTest.Models;
 
 namespace RestTest
@@ -8,75 +7,78 @@ namespace RestTest
     {
         public ScholarMeDbContext(DbContextOptions<ScholarMeDbContext> options) : base(options) { }
 
-        public DbSet<UserAccount> Users { get; set; }
-        public DbSet<FlashcardSet> FlashcardSets { get; set; }  
-        public DbSet<FlashcardSetFlashcard> FlashcardSetFlashcards { get; set; }
+        public DbSet<UserAccount> UserAccounts { get; set; }
         public DbSet<Flashcard> Flashcards { get; set; }
-        public DbSet<FlashcardChoice> FlashcardsChoice { get; set; }
+        public DbSet<FlashcardChoice> FlashcardChoices { get; set; }
+        public DbSet<FlashcardDeck> FlashcardDecks { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder
-                .UseSqlServer("ScholarMeDbConnectionString")
-                .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
-        }
+        //public DbSet<FlashcardSetFlashcard> FlashcardSetFlashcards { get; set; }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder
+        //        .UseSqlServer("ScholarMeDbConnectionString")
+        //        .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // TODO: Setup table columns
+
             modelBuilder.Entity<UserAccount>().HasData(
-                new UserAccount()
-                {
-                    UserId = 1,
-                    Username = "Cher",
-                    Email = "cher@gmail.com",
-                    Password = PasswordHash.EnhancedHashPassword("cherpassword", 16),
-                    FirstName = "Teach",
-                    LastName = "Cher",
-                    PhoneNumber = "01234567890",
-                    ProfilePic = null,
-                    Role = UserRole.Teacher,
-                    Status = UserStatus.Active,
-                },
-                new UserAccount()
-                {
-                    UserId = 2,
-                    Username = "Perpy",
-                    Email = "perpy@gmail.com",
-                    Password = PasswordHash.EnhancedHashPassword("perpypassword", 16),
-                    FirstName = "Van",
-                    LastName = "Perpetua",
-                    PhoneNumber = "01234567890",
-                    ProfilePic = null,
-                    Role = UserRole.Student,
-                    Status = UserStatus.Active,
-                },
-                new UserAccount()
-                {
-                    UserId = 3,
-                    Username = "Junsayke",
-                    Email = "junsayke@gmail.com",
-                    Password = PasswordHash.EnhancedHashPassword("junsaykepassword", 16),
-                    FirstName = "Tonio",
-                    LastName = "Ubaldo",
-                    PhoneNumber = "01234567890",
-                    ProfilePic = null,
-                    Role = UserRole.Student,
-                    Status = UserStatus.Active,
-                },
-                new UserAccount()
-                {
-                    UserId = 4,
-                    Username = "Modarku",
-                    Email = "modarku@gmail.com",
-                    Password = PasswordHash.EnhancedHashPassword("modarkupassword", 16),
-                    FirstName = "Jian",
-                    LastName = "Olamit",
-                    PhoneNumber = "01234567890",
-                    ProfilePic = null,
-                    Role = UserRole.Student,
-                    Status = UserStatus.Inactive,
-                }
-            );
+                    new UserAccount()
+                    {
+                        Id = 1,
+                        Username = "Cher",
+                        Email = "cher@gmail.com",
+                        Password = HashPassword("hashme"),
+                        FirstName = "Teach",
+                        LastName = "Cher",
+                    }
+                );
+
+            modelBuilder.Entity<FlashcardDeck>().HasData(
+                    new FlashcardDeck()
+                    {
+                        Id = 1,
+                        UserAccountId = 1,
+                        Title = "Flashcard Set 1",
+                        Description = "This is the first flashcard set",
+                    }
+                );
+
+            modelBuilder.Entity<Flashcard>().HasData(
+                    new Flashcard()
+                    {
+                        Id = 1,
+                        FlashcardSetId = 1,
+                        Question = "What is the capital of France?",
+                    }
+                );
+
+            modelBuilder.Entity<FlashcardChoice>().HasData(
+                    new FlashcardChoice()
+                    {
+                        Id = 1,
+                        FlashcardId = 1,
+                        Choice = "Paris",
+                        IsAnswer = true,
+                    },
+                    new FlashcardChoice()
+                    {
+                        Id = 2,
+                        FlashcardId = 1,
+                        Choice = "London",
+                        IsAnswer = false,
+                    },
+                    new FlashcardChoice()
+                    {
+                        Id = 3,
+                        FlashcardId = 1,
+                        Choice = "Berlin",
+                        IsAnswer = false,
+                    }
+                );
         }
     }
 }

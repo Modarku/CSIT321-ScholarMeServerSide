@@ -1,17 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-// Model for individual user accounts
-namespace RestTest.Models
+﻿namespace ScholarMeServer.DTO.UserAccount
 {
-    public class UserAccount
+    // User Details
+    public class UserAccountReadOnlyDto
     {
         public int Id { get; set; }
-
         public string Username { get; set; }
 
         public string Email { get; set; }
-
-        public string Password { get; set; }
 
         public string FirstName { get; set; }
 
@@ -22,8 +17,5 @@ namespace RestTest.Models
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
-
-        // Navigation Property
-        public List<FlashcardDeck> FlashcardSets { get; set; }
     }
 }
