@@ -4,8 +4,10 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RestTest;
 using ScholarMeServer.Repository.FlashcardDeckInfo;
+using ScholarMeServer.Repository.FlashcardInfo;
 using ScholarMeServer.Repository.UserAccountInfo;
 using ScholarMeServer.Services.FlashcardDeckInfo;
+using ScholarMeServer.Services.FlashcardInfo;
 using ScholarMeServer.Services.UserAccountInfo;
 using ScholarMeServer.Utilities;
 using System.Text;
@@ -56,6 +58,8 @@ builder.Services.AddScoped<IUserAccountInfoRepository, UserAccountInfoRepository
 builder.Services.AddTransient<IFlashcardDeckService, FlashcardDeckService>();
 builder.Services.AddScoped<IFlashcardDeckRepository, FlashcardDeckRepository>();
 
+builder.Services.AddTransient<IFlashcardService, FlashcardService>();
+builder.Services.AddScoped<IFlashcardRepository, FlashcardRepository>();
 
 //builder.Services.AddTransient<IFlashcardSetInfoService, FlashcardSetInfoService>();
 //builder.Services.AddScoped<IFlashcardSetInfoRepository, FlashcardSetInfoRepository>();

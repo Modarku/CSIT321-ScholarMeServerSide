@@ -8,33 +8,33 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\OldController\**" />
-    <Compile Remove="Repository\FlashcardInfo\**" />
     <Compile Remove="Repository\FlashcardSetInfo\**" />
     <Compile Remove="Repository\IRepository\**" />
-    <Compile Remove="Services\FlashcardInfo\**" />
+    <Compile Remove="Repository\OldFlashcardInfo\**" />
     <Compile Remove="Services\FlashcardSetInfo\**" />
     <Compile Remove="Services\IServices\**" />
+    <Compile Remove="Services\OldFlashcardInfo\**" />
     <Content Remove="Controllers\OldController\**" />
-    <Content Remove="Repository\FlashcardInfo\**" />
     <Content Remove="Repository\FlashcardSetInfo\**" />
     <Content Remove="Repository\IRepository\**" />
-    <Content Remove="Services\FlashcardInfo\**" />
+    <Content Remove="Repository\OldFlashcardInfo\**" />
     <Content Remove="Services\FlashcardSetInfo\**" />
     <Content Remove="Services\IServices\**" />
+    <Content Remove="Services\OldFlashcardInfo\**" />
     <EmbeddedResource Remove="Controllers\OldController\**" />
-    <EmbeddedResource Remove="Repository\FlashcardInfo\**" />
     <EmbeddedResource Remove="Repository\FlashcardSetInfo\**" />
     <EmbeddedResource Remove="Repository\IRepository\**" />
-    <EmbeddedResource Remove="Services\FlashcardInfo\**" />
+    <EmbeddedResource Remove="Repository\OldFlashcardInfo\**" />
     <EmbeddedResource Remove="Services\FlashcardSetInfo\**" />
     <EmbeddedResource Remove="Services\IServices\**" />
+    <EmbeddedResource Remove="Services\OldFlashcardInfo\**" />
     <None Remove="Controllers\OldController\**" />
-    <None Remove="Repository\FlashcardInfo\**" />
     <None Remove="Repository\FlashcardSetInfo\**" />
     <None Remove="Repository\IRepository\**" />
-    <None Remove="Services\FlashcardInfo\**" />
+    <None Remove="Repository\OldFlashcardInfo\**" />
     <None Remove="Services\FlashcardSetInfo\**" />
     <None Remove="Services\IServices\**" />
+    <None Remove="Services\OldFlashcardInfo\**" />
   </ItemGroup>
 
   <ItemGroup>
