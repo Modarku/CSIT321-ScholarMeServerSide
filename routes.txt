@@ -47,3 +47,6 @@ GET /cards/{cardId}/choices - Get all choices for a specific card.
 GET /choices/{choiceId} - Get a specific choice (card context implied from the choice ID).
 PUT /choices/{choiceId} - Update a specific choice.
 DELETE /choices/{choiceId} - Delete a specific choice.
+
+Route JSON Return are one dimensional meaning that the return object will be a single object and not nested objects.
+This is due to how the client side layout will be structured. The client side will be responsible for the nesting of objects.

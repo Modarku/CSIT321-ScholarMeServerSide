@@ -1,29 +1,36 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using RestTest.Models;
 
 namespace RestTest
 {
     public class ScholarMeDbContext : DbContext
     {
-        public ScholarMeDbContext(DbContextOptions<ScholarMeDbContext> options) : base(options) { }
+        private readonly IConfiguration _configuration;
+
+        public ScholarMeDbContext(DbContextOptions<ScholarMeDbContext> options, IConfiguration configuration) : base(options)
+        {
+            _configuration = configuration;
+        }
 
         public DbSet<UserAccount> UserAccounts { get; set; }
         public DbSet<Flashcard> Flashcards { get; set; }
         public DbSet<FlashcardChoice> FlashcardChoices { get; set; }
         public DbSet<FlashcardDeck> FlashcardDecks { get; set; }
 
-        //public DbSet<FlashcardSetFlashcard> FlashcardSetFlashcards { get; set; }
+        // Used to supressed when PendingModelChangesWarning is thrown although not recommended unless the schema and model are already in sync
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            var connectionString = _configuration.GetConnectionString("ScholarMeDbConnectionString");
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder
-        //        .UseSqlServer("ScholarMeDbConnectionString")
-        //        .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
-        //}
+            optionsBuilder
+                .UseNpgsql(connectionString)
+                .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // TODO: Setup table columns
+            // TODO: Setup table columns such as adding default values because ORM does not support default values
 
             modelBuilder.Entity<UserAccount>().HasData(
                     new UserAccount()
@@ -34,6 +41,8 @@ namespace RestTest
                         Password = HashPassword("hashme"),
                         FirstName = "Teach",
                         LastName = "Cher",
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow,
                     }
                 );
 
@@ -44,6 +53,8 @@ namespace RestTest
                         UserAccountId = 1,
                         Title = "Flashcard Set 1",
                         Description = "This is the first flashcard set",
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow,
                     }
                 );
 
@@ -53,6 +64,8 @@ namespace RestTest
                         Id = 1,
                         FlashcardDeckId = 1,
                         Question = "What is the capital of France?",
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow,
                     }
                 );
 
@@ -63,6 +76,8 @@ namespace RestTest
                         FlashcardId = 1,
                         Choice = "Paris",
                         IsAnswer = true,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow,
                     },
                     new FlashcardChoice()
                     {
@@ -70,6 +85,8 @@ namespace RestTest
                         FlashcardId = 1,
                         Choice = "London",
                         IsAnswer = false,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow,
                     },
                     new FlashcardChoice()
                     {
@@ -77,6 +94,8 @@ namespace RestTest
                         FlashcardId = 1,
                         Choice = "Berlin",
                         IsAnswer = false,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow,
                     }
                 );
         }

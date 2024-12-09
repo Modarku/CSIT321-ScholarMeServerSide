@@ -3,11 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using ScholarMeServer.DTO.UserAccount;
 using ScholarMeServer.Services.UserAccountInfo;
 using ScholarMeServer.Utilities;
+using System.Security.Claims;
 
 namespace ScholarMeServer.Controllers
 {
-    // TODO: Restrict access of UpdateUserAccount and UpdateUserPassword routes to their owner.
-
     [ApiController]
     [Route("api/[controller]")]
     public class UserAccountsController : ControllerBase
@@ -23,7 +22,7 @@ namespace ScholarMeServer.Controllers
 
         [HttpPost("signup")]
         [AllowAnonymous]
-        public async Task<IActionResult> SignUp(UserAccountSignUpDto userAccountDto)
+        public async Task<IActionResult> SignUp([FromBody] UserAccountSignUpDto userAccountDto)
         {
             var user = await _userAccountInfoService.SignUpUser(userAccountDto);
             return Ok(user);
@@ -31,7 +30,7 @@ namespace ScholarMeServer.Controllers
 
         [HttpPost("signin")]
         [AllowAnonymous]
-        public async Task<IActionResult> SignIn(UserAccountSignInDto userAccountDto)
+        public async Task<IActionResult> SignIn([FromBody] UserAccountSignInDto userAccountDto)
         {
             var user = await _userAccountInfoService.SignInUser(userAccountDto);
             var token = _jwt.GenerateJwtToken(user);
@@ -39,21 +38,20 @@ namespace ScholarMeServer.Controllers
             return Ok(new { user, token });
         }
 
-        [HttpPut]
-        [Route("{userAccountId:int}/edit-profile")]
+        [HttpPut("edit-profile")]
         [Authorize]
-        public async Task<IActionResult> UpdateUserAccount(int userAccountId, UserAccountUpdateDto userAccountDto)
+        public async Task<IActionResult> UpdateUserAccount([FromBody] UserAccountUpdateDto userAccountDto)
         {
+            var userAccountId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var user = await _userAccountInfoService.UpdateUserAccount(userAccountId, userAccountDto);
             return Ok(user);
         }
 
-        [HttpPut]
-        [Route("{userAccountId:int}/change-password")]
+        [HttpPut("change-password")]
         [Authorize]
-        public async Task<IActionResult> UpdateUserPassword(int userAccountId, UserAccountChangePasswordDto userAccountDto)
+        public async Task<IActionResult> UpdateUserPassword([FromBody] UserAccountChangePasswordDto userAccountDto)
         {
-
+            var userAccountId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             await _userAccountInfoService.UpdateUserPassword(userAccountId, userAccountDto);
             return NoContent();
         }

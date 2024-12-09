@@ -54,7 +54,7 @@ namespace ScholarMeServer.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FlashcardSetId = 1,
+                            FlashcardDeckId = 1,
                             Question = "What is the capital of France?",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
@@ -212,7 +212,7 @@ namespace ScholarMeServer.Migrations
                             Email = "cher@gmail.com",
                             FirstName = "Teach",
                             LastName = "Cher",
-                            Password = "nothash",
+                            Password = "$2a$11$INSoIly/oqNSyygsDzjnNOHFdREmIkenNbtTLYnE7tMZ5K5orkKDy",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Username = "Cher"
                         });

@@ -6,7 +6,7 @@ using ScholarMeServer.Services.FlashcardInfo;
 namespace ScholarMeServer.Controllers
 {
     [ApiController]
-    [Route("api/flashcards/{userAccountId:int}/decks/{flashcardDeckId:int}/cards")]
+    [Route("api/flashcards")]
     [Authorize]
     public class FlashcardsController : ControllerBase
     {
@@ -17,38 +17,35 @@ namespace ScholarMeServer.Controllers
             _flashcardService = flashcardService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateFlashcard([FromRoute] int flashcardDeckId, FlashcardCreateDto flashcardDto)
+        [HttpPost("decks/{flashcardDeckId:int}/cards")]
+        public async Task<IActionResult> CreateFlashcard([FromRoute] int flashcardDeckId, [FromBody] FlashcardCreateDto flashcardDto)
         {
             var createdFlashcard = await _flashcardService.CreateFlashcard(flashcardDeckId, flashcardDto);
             return CreatedAtRoute("GetFlashcardById", new { id = createdFlashcard.Id }, createdFlashcard);
         }
 
-        [HttpGet]
+        [HttpGet("decks/{flashcardDeckId:int}/cards")]
         public async Task<IActionResult> GetFlashcardsByDeckId([FromRoute] int flashcardDeckId)
         {
             var flashcards = await _flashcardService.GetFlashcardsByDeckId(flashcardDeckId);
             return Ok(flashcards);
         }
 
-        [HttpGet]
-        [Route("{flashcardId:int}", Name = "GetFlashcardById")]
+        [HttpGet("cards/{flashcardId:int}", Name = "GetFlashcardById")]
         public async Task<IActionResult> GetFlashcardById([FromRoute] int flashcardId)
         {
             var flashcard = await _flashcardService.GetFlashcardById(flashcardId);
             return Ok(flashcard);
         }
 
-        [HttpPut]
-        [Route("{flashcardId:int}")]
-        public async Task<IActionResult> UpdateFlashcard([FromRoute] int flashcardId, FlashcardUpdateDto flashcardDto)
+        [HttpPut("cards/{flashcardId:int}")]
+        public async Task<IActionResult> UpdateFlashcard([FromRoute] int flashcardId, [FromBody] FlashcardUpdateDto flashcardDto)
         {
             var updatedFlashcard = await _flashcardService.UpdateFlashcard(flashcardId, flashcardDto);
             return Ok(updatedFlashcard);
         }
 
-        [HttpDelete]
-        [Route("{flashcardId:int}")]
+        [HttpDelete("cards/{flashcardId:int}")]
         public async Task<IActionResult> DeleteFlashcard([FromRoute] int flashcardId)
         {
             await _flashcardService.DeleteFlashcard(flashcardId);
