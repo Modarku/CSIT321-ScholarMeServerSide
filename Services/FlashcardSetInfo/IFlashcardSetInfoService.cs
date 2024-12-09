@@ -4,10 +4,10 @@ namespace ScholarMeServer.Services.FlashcardSetInfo
 {
     public interface IFlashcardSetInfoService
     {
-        public Task<List<FlashcardSetDto>> GetFlashcardSets(int userAccountId);
-        public Task<FlashcardSetDto?> GetFlashcardSetById(int id);
-        public Task<FlashcardSetDto> CreateFlashcardSet(FlashcardSetCreateDto flashcardSetDto);
-        public Task<FlashcardSetDto?> UpdateFlashcardSet(int id, FlashcardSetUpdateDto flashcardSetDto);
+        public Task<List<FlashcardDeckReadOnlyDto>> GetFlashcardSets(int userAccountId);
+        public Task<FlashcardDeckReadOnlyDto?> GetFlashcardSetById(int id);
+        public Task<FlashcardDeckReadOnlyDto> CreateFlashcardSet(FlashcardDeckNewDto flashcardSetDto);
+        public Task<FlashcardDeckReadOnlyDto?> UpdateFlashcardSet(int id, FlashcardDeckUpdateDto flashcardSetDto);
         public Task DeleteFlashcardSet(int id);
     }
 }

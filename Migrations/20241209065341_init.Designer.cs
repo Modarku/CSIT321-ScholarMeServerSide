@@ -12,7 +12,7 @@ using RestTest;
 namespace ScholarMeServer.Migrations
 {
     [DbContext(typeof(ScholarMeDbContext))]
-    [Migration("20241208092327_init")]
+    [Migration("20241209065341_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -123,7 +123,7 @@ namespace ScholarMeServer.Migrations
                         });
                 });
 
-            modelBuilder.Entity("RestTest.Models.FlashcardSet", b =>
+            modelBuilder.Entity("RestTest.Models.FlashcardDeck", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -152,7 +152,7 @@ namespace ScholarMeServer.Migrations
 
                     b.HasIndex("UserAccountId");
 
-                    b.ToTable("FlashcardSets");
+                    b.ToTable("FlashcardDecks");
 
                     b.HasData(
                         new
@@ -205,7 +205,7 @@ namespace ScholarMeServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("UserAccounts");
 
                     b.HasData(
                         new
@@ -223,7 +223,7 @@ namespace ScholarMeServer.Migrations
 
             modelBuilder.Entity("RestTest.Models.Flashcard", b =>
                 {
-                    b.HasOne("RestTest.Models.FlashcardSet", "FlashcardSet")
+                    b.HasOne("RestTest.Models.FlashcardDeck", "FlashcardSet")
                         .WithMany("Flashcards")
                         .HasForeignKey("FlashcardSetId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -243,7 +243,7 @@ namespace ScholarMeServer.Migrations
                     b.Navigation("Flashcard");
                 });
 
-            modelBuilder.Entity("RestTest.Models.FlashcardSet", b =>
+            modelBuilder.Entity("RestTest.Models.FlashcardDeck", b =>
                 {
                     b.HasOne("RestTest.Models.UserAccount", "UserAccount")
                         .WithMany("FlashcardSets")
@@ -259,7 +259,7 @@ namespace ScholarMeServer.Migrations
                     b.Navigation("Choices");
                 });
 
-            modelBuilder.Entity("RestTest.Models.FlashcardSet", b =>
+            modelBuilder.Entity("RestTest.Models.FlashcardDeck", b =>
                 {
                     b.Navigation("Flashcards");
                 });

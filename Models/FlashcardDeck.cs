@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 // Model for grouping flashcards as a set
 namespace RestTest.Models
 {
-    public class FlashcardSet
+    public class FlashcardDeck
     {
         public int Id { get; set; }
 

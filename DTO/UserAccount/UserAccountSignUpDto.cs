@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace ScholarMeServer.DTO.UserAccount
 {
@@ -8,16 +9,20 @@ namespace ScholarMeServer.DTO.UserAccount
         [Required]
         [StringLength(50)]
         public string Username { get; set; }
+
         [Required]
         [StringLength(100)]
         [EmailAddress]
         public string Email { get; set; }
+
         [Required]
         [StringLength(255)]
         public string Password { get; set; }
+
         [Required]
         [StringLength(100)]
         public string FirstName { get; set; }
+
         [Required]
         [StringLength(100)]
         public string LastName { get; set; }

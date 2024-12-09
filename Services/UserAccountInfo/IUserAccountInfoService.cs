@@ -5,7 +5,9 @@ namespace ScholarMeServer.Services.UserAccountInfo
 {
     public interface IUserAccountInfoService
     {
-        Task<UserAccountDto> SignUpUserAsync(UserAccountSignUpDto userAccountDto);
-        Task<UserAccountDto> SignInUserAsync(UserAccountSignInDto userAccountDto);
+        public Task<UserAccountReadOnlyDto> SignUpUser(UserAccountSignUpDto userAccountDto);
+        public Task<UserAccountReadOnlyDto> SignInUser(UserAccountSignInDto userAccountDto);
+        public Task<UserAccountReadOnlyDto> UpdateUserAccount(int userAccountId, UserAccountUpdateDto userAccountDto);
+        public Task UpdateUserPassword(int userAccountId, UserAccountChangePasswordDto userAccountDto);
     }
 }

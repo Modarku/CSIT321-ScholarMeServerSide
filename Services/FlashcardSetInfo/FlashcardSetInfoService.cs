@@ -14,15 +14,15 @@ namespace ScholarMeServer.Services.FlashcardSetInfo
             _flashcardSetInfoRepository = flashcardSetInfoRepository;
         }
 
-        public async Task<List<FlashcardSetDto>> GetFlashcardSets(int userAccountId)
+        public async Task<List<FlashcardDeckReadOnlyDto>> GetFlashcardSets(int userAccountId)
         {
-            List<FlashcardSetDto> result = new List<FlashcardSetDto>();
+            List<FlashcardDeckReadOnlyDto> result = new List<FlashcardDeckReadOnlyDto>();
 
             var flashcardSets = await _flashcardSetInfoRepository.GetFlashcardSets(userAccountId);
 
-            foreach (FlashcardSet flashcardSet in flashcardSets)
+            foreach (FlashcardDeck flashcardSet in flashcardSets)
             {
-                result.Add(new FlashcardSetDto()
+                result.Add(new FlashcardDeckReadOnlyDto()
                 {
                     Id = flashcardSet.Id,
                     UserAccountId = flashcardSet.UserAccountId,
@@ -43,7 +43,7 @@ namespace ScholarMeServer.Services.FlashcardSetInfo
             return result;
 
         }
-        public async Task<FlashcardSetDto?> GetFlashcardSetById(int id)
+        public async Task<FlashcardDeckReadOnlyDto?> GetFlashcardSetById(int id)
         {
             var flashcardSet = await _flashcardSetInfoRepository.GetFlashcardSetById(id);
 
@@ -52,7 +52,7 @@ namespace ScholarMeServer.Services.FlashcardSetInfo
                 return null;
             }
 
-            return new FlashcardSetDto()
+            return new FlashcardDeckReadOnlyDto()
             {
                 Id = flashcardSet.Id,
                 UserAccountId = flashcardSet.UserAccountId,
@@ -70,14 +70,14 @@ namespace ScholarMeServer.Services.FlashcardSetInfo
             };
         }
 
-        public async Task<FlashcardSetDto> CreateFlashcardSet(FlashcardSetCreateDto flashcardSetDto)
+        public async Task<FlashcardDeckReadOnlyDto> CreateFlashcardSet(FlashcardDeckNewDto flashcardSetDto)
         {
             if (!_flashcardSetInfoRepository.UserAccountExists(flashcardSetDto.UserAccountId))
             {
                 throw new ArgumentException($"User account with id {flashcardSetDto.UserAccountId} does not exist.");
             }
 
-            var flashcard = await _flashcardSetInfoRepository.CreateFlashcardSet(new FlashcardSet()
+            var flashcard = await _flashcardSetInfoRepository.CreateFlashcardSet(new FlashcardDeck()
             {
                 UserAccountId = flashcardSetDto.UserAccountId,
                 Title = flashcardSetDto.Title,
@@ -86,7 +86,7 @@ namespace ScholarMeServer.Services.FlashcardSetInfo
                 UpdatedAt = DateTime.Now
             });
 
-            return new FlashcardSetDto()
+            return new FlashcardDeckReadOnlyDto()
             {
                 Id = flashcard.Id,
                 UserAccountId = flashcard.UserAccountId,
@@ -98,9 +98,9 @@ namespace ScholarMeServer.Services.FlashcardSetInfo
             };
         }
 
-        public async Task<FlashcardSetDto?> UpdateFlashcardSet(int id, FlashcardSetUpdateDto flashcardSetDto)
+        public async Task<FlashcardDeckReadOnlyDto?> UpdateFlashcardSet(int id, FlashcardDeckUpdateDto flashcardSetDto)
         {
-            var flashcardSet = await _flashcardSetInfoRepository.UpdateFlashcardSet(id, new FlashcardSet()
+            var flashcardSet = await _flashcardSetInfoRepository.UpdateFlashcardSet(id, new FlashcardDeck()
             {
                 Title = flashcardSetDto.Title,
                 Description = flashcardSetDto.Description
@@ -111,7 +111,7 @@ namespace ScholarMeServer.Services.FlashcardSetInfo
                 return null;
             }
 
-            return new FlashcardSetDto()
+            return new FlashcardDeckReadOnlyDto()
             {
                 Id = flashcardSet.Id,
                 UserAccountId = flashcardSet.UserAccountId,

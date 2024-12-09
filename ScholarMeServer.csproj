@@ -8,16 +8,32 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\OldController\**" />
+    <Compile Remove="Repository\FlashcardInfo\**" />
+    <Compile Remove="Repository\FlashcardSetInfo\**" />
     <Compile Remove="Repository\IRepository\**" />
+    <Compile Remove="Services\FlashcardInfo\**" />
+    <Compile Remove="Services\FlashcardSetInfo\**" />
     <Compile Remove="Services\IServices\**" />
     <Content Remove="Controllers\OldController\**" />
+    <Content Remove="Repository\FlashcardInfo\**" />
+    <Content Remove="Repository\FlashcardSetInfo\**" />
     <Content Remove="Repository\IRepository\**" />
+    <Content Remove="Services\FlashcardInfo\**" />
+    <Content Remove="Services\FlashcardSetInfo\**" />
     <Content Remove="Services\IServices\**" />
     <EmbeddedResource Remove="Controllers\OldController\**" />
+    <EmbeddedResource Remove="Repository\FlashcardInfo\**" />
+    <EmbeddedResource Remove="Repository\FlashcardSetInfo\**" />
     <EmbeddedResource Remove="Repository\IRepository\**" />
+    <EmbeddedResource Remove="Services\FlashcardInfo\**" />
+    <EmbeddedResource Remove="Services\FlashcardSetInfo\**" />
     <EmbeddedResource Remove="Services\IServices\**" />
     <None Remove="Controllers\OldController\**" />
+    <None Remove="Repository\FlashcardInfo\**" />
+    <None Remove="Repository\FlashcardSetInfo\**" />
     <None Remove="Repository\IRepository\**" />
+    <None Remove="Services\FlashcardInfo\**" />
+    <None Remove="Services\FlashcardSetInfo\**" />
     <None Remove="Services\IServices\**" />
   </ItemGroup>
 
@@ -26,6 +42,7 @@
     <Compile Remove="Controllers\FlashcardChoiceController.cs" />
     <Compile Remove="Controllers\FlashcardController.cs" />
     <Compile Remove="Controllers\FlashcardSetController.cs" />
+    <Compile Remove="Controllers\FlashcardSetsController.cs" />
     <Compile Remove="DB.cs" />
     <Compile Remove="DTO\FlashcardChoiceDTO.cs" />
     <Compile Remove="DTO\FlashcardDTO.cs" />
@@ -62,10 +79,6 @@
     <ItemGroup>
 	    <!-- emits global using static global::BCrypt.Net.BCrypt; -->
 	    <Using Include="BCrypt.Net.BCrypt" Static="True" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Repository\FlashcardChoiceInfo\" />
     </ItemGroup>
 
 </Project>

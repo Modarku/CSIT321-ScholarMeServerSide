@@ -4,7 +4,12 @@ namespace ScholarMeServer.Repository.UserAccountInfo
 {
     public interface IUserAccountInfoRepository
     {
-        Task<UserAccount?> GetUserByUsernameAsync(string username);
-        Task AddUserAsync(UserAccount userAccount);
+        public Task<UserAccount> CreateUserAccount(UserAccount userAccount);
+
+        public Task<UserAccount?> GetUserByUsername(string username);
+
+        public Task<UserAccount?> GetUserById(int userAccountId);
+
+        public Task SaveUser(UserAccount userAccount);
     }
 }

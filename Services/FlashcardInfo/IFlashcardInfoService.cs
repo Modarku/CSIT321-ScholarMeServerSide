@@ -5,10 +5,10 @@ namespace ScholarMeServer.Services.FlashcardInfo
 {
     public interface IFlashcardInfoService
     {
-        public Task<IEnumerable<FlashcardDto>> GetFlashcardsAsync();
-        public Task<FlashcardDto?> GetFlashcardByIdAsync(int id);
-        public Task<FlashcardDto> CreateFlashcardAsync(FlashcardCreateDto flashcardDto);
-        public Task<FlashcardDto?> UpdateFlashcardAsync(int id, FlashcardCreateDto flashcardDto);
-        public Task DeleteFlashcardAsync(int id);
+        public Task<List<FlashcardReadOnlyDto>> GetFlashcards(int flashcardSetId);
+        public Task<FlashcardReadOnlyDto?> GetFlashcardById(int id);
+        public Task<FlashcardReadOnlyDto> CreateFlashcard(FlashcardNewDto flashcardDto);
+        public Task<FlashcardReadOnlyDto?> UpdateFlashcard(int id, FlashcardNewDto flashcardDto);
+        public Task DeleteFlashcard(int id);
     }
 }

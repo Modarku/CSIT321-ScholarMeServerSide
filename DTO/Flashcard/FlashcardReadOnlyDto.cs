@@ -3,7 +3,7 @@
 namespace ScholarMeServer.DTO.Flashcard
 {
     // Primarily for displaying flashcards
-    public class FlashcardDto
+    public class FlashcardReadOnlyDto
     {
         public int Id { get; set; }
 

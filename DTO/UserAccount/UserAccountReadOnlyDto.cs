@@ -1,7 +1,7 @@
 ﻿namespace ScholarMeServer.DTO.UserAccount
 {
     // User Details
-    public class UserAccountDto
+    public class UserAccountReadOnlyDto
     {
         public int Id { get; set; }
         public string Username { get; set; }

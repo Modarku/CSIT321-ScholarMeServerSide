@@ -20,6 +20,6 @@ namespace RestTest.Models
         // Navigation Property
         public List<FlashcardChoice> Choices { get; set; }
 
-        public FlashcardSet FlashcardSet { get; set; }
+        public FlashcardDeck FlashcardSet { get; set; }
     }
 }

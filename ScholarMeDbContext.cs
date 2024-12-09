@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using RestTest.Models;
 
 namespace RestTest
@@ -8,10 +7,10 @@ namespace RestTest
     {
         public ScholarMeDbContext(DbContextOptions<ScholarMeDbContext> options) : base(options) { }
 
-        public DbSet<UserAccount> Users { get; set; }
+        public DbSet<UserAccount> UserAccounts { get; set; }
         public DbSet<Flashcard> Flashcards { get; set; }
         public DbSet<FlashcardChoice> FlashcardChoices { get; set; }
-        public DbSet<FlashcardSet> FlashcardSets { get; set; }
+        public DbSet<FlashcardDeck> FlashcardDecks { get; set; }
 
         //public DbSet<FlashcardSetFlashcard> FlashcardSetFlashcards { get; set; }
 
@@ -32,14 +31,14 @@ namespace RestTest
                         Id = 1,
                         Username = "Cher",
                         Email = "cher@gmail.com",
-                        Password = "nothash",
+                        Password = HashPassword("hashme"),
                         FirstName = "Teach",
                         LastName = "Cher",
                     }
                 );
 
-            modelBuilder.Entity<FlashcardSet>().HasData(
-                    new FlashcardSet()
+            modelBuilder.Entity<FlashcardDeck>().HasData(
+                    new FlashcardDeck()
                     {
                         Id = 1,
                         UserAccountId = 1,

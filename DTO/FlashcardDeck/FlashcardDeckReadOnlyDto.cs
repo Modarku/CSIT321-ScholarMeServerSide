@@ -1,9 +1,9 @@
 ﻿using ScholarMeServer.DTO.Flashcard;
 
-namespace ScholarMeServer.DTO.FlashcardSet
+namespace ScholarMeServer.DTO.FlashcardDeck
 {
     // Primarily for displaying flashcard sets
-    public class FlashcardSetDto
+    public class FlashcardDeckReadOnlyDto
     {
         public int Id { get; set; }
 
@@ -16,8 +16,5 @@ namespace ScholarMeServer.DTO.FlashcardSet
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
-
-        // Navigation Property
-        public List<FlashcardInnerDto> Flashcards { get; set; }
     }
 }

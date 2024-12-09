@@ -3,9 +3,7 @@
 namespace ScholarMeServer.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class FlashcardsController : ControllerBase
+    public class FlashcardChoicesController : ControllerBase
     {
-    
     }
 }

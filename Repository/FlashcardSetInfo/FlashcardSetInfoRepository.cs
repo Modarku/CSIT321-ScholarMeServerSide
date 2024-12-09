@@ -14,26 +14,26 @@ namespace ScholarMeServer.Repository.FlashcardSetInfo
             _scholarmeDbContext = scholarmeDbContext;
         }
 
-        public async Task<List<FlashcardSet>> GetFlashcardSets(int userAccountId)
+        public async Task<List<FlashcardDeck>> GetFlashcardSets(int userAccountId)
         {
             var flashcardSets = await _scholarmeDbContext.FlashcardSets.Where(flashcardSet => flashcardSet.UserAccountId == userAccountId)
                 .Include(flashcardSet => flashcardSet.Flashcards)
                 .ToListAsync();
             return flashcardSets;
         }
-        public async Task<FlashcardSet?> GetFlashcardSetById(int id)
+        public async Task<FlashcardDeck?> GetFlashcardSetById(int id)
         {
             var flashcardSet = await _scholarmeDbContext.FlashcardSets.FindAsync(id);
             return flashcardSet;
         }
-        public async Task<FlashcardSet> CreateFlashcardSet(FlashcardSet flashcardSet)
+        public async Task<FlashcardDeck> CreateFlashcardSet(FlashcardDeck flashcardSet)
         {
             _scholarmeDbContext.FlashcardSets.Add(flashcardSet);
             await _scholarmeDbContext.SaveChangesAsync();
 
             return flashcardSet;
         }
-        public async Task<FlashcardSet?> UpdateFlashcardSet(int id, FlashcardSet flashcardSet)
+        public async Task<FlashcardDeck?> UpdateFlashcardSet(int id, FlashcardDeck flashcardSet)
         {
             var existingFlashcardSet = await _scholarmeDbContext.FlashcardSets.FindAsync(id);
 
@@ -41,7 +41,7 @@ namespace ScholarMeServer.Repository.FlashcardSetInfo
             {
                 existingFlashcardSet.Title = flashcardSet.Title;
                 existingFlashcardSet.Description = flashcardSet.Description;
-                existingFlashcardSet.UpdatedAt = DateTime.Now;
+                existingFlashcardSet.UpdatedAt = DateTime.UtcNow;
                 await _scholarmeDbContext.SaveChangesAsync();
             }
             return existingFlashcardSet;

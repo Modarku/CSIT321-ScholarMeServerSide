@@ -15,7 +15,7 @@ namespace ScholarMeServer.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "UserAccounts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -31,11 +31,11 @@ namespace ScholarMeServer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_UserAccounts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "FlashcardSets",
+                name: "FlashcardDecks",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -48,11 +48,11 @@ namespace ScholarMeServer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FlashcardSets", x => x.Id);
+                    table.PrimaryKey("PK_FlashcardDecks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FlashcardSets_Users_UserAccountId",
+                        name: "FK_FlashcardDecks_UserAccounts_UserAccountId",
                         column: x => x.UserAccountId,
-                        principalTable: "Users",
+                        principalTable: "UserAccounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -72,9 +72,9 @@ namespace ScholarMeServer.Migrations
                 {
                     table.PrimaryKey("PK_Flashcards", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Flashcards_FlashcardSets_FlashcardSetId",
+                        name: "FK_Flashcards_FlashcardDecks_FlashcardSetId",
                         column: x => x.FlashcardSetId,
-                        principalTable: "FlashcardSets",
+                        principalTable: "FlashcardDecks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -103,12 +103,12 @@ namespace ScholarMeServer.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Users",
+                table: "UserAccounts",
                 columns: new[] { "Id", "CreatedAt", "Email", "FirstName", "LastName", "Password", "PhoneNumber", "UpdatedAt", "Username" },
                 values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "cher@gmail.com", "Teach", "Cher", "nothash", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Cher" });
 
             migrationBuilder.InsertData(
-                table: "FlashcardSets",
+                table: "FlashcardDecks",
                 columns: new[] { "Id", "CreatedAt", "Description", "Title", "UpdatedAt", "UserAccountId" },
                 values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is the first flashcard set", "Flashcard Set 1", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 });
 
@@ -133,14 +133,14 @@ namespace ScholarMeServer.Migrations
                 column: "FlashcardId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FlashcardDecks_UserAccountId",
+                table: "FlashcardDecks",
+                column: "UserAccountId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Flashcards_FlashcardSetId",
                 table: "Flashcards",
                 column: "FlashcardSetId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FlashcardSets_UserAccountId",
-                table: "FlashcardSets",
-                column: "UserAccountId");
         }
 
         /// <inheritdoc />
@@ -153,10 +153,10 @@ namespace ScholarMeServer.Migrations
                 name: "Flashcards");
 
             migrationBuilder.DropTable(
-                name: "FlashcardSets");
+                name: "FlashcardDecks");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "UserAccounts");
         }
     }
 }

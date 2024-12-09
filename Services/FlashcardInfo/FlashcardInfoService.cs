@@ -14,10 +14,10 @@ namespace ScholarMeServer.Services.FlashcardInfo
             _flashcardInfoRepository = flashcardInfoRepository;
         }
 
-        public async Task<IEnumerable<FlashcardDto>> GetFlashcardsAsync()
+        public async Task<IEnumerable<FlashcardReadOnlyDto>> GetFlashcardsAsync()
         {
             var flashcards = await _flashcardInfoRepository.GetFlashcardsAsync();
-            return flashcards.Select(f => new FlashcardDto
+            return flashcards.Select(f => new FlashcardReadOnlyDto
             {
                 Id = f.Id,
                 Question = f.Question,
@@ -34,7 +34,7 @@ namespace ScholarMeServer.Services.FlashcardInfo
             });
         }
 
-        public async Task<FlashcardDto?> GetFlashcardByIdAsync(int id)
+        public async Task<FlashcardReadOnlyDto?> GetFlashcardByIdAsync(int id)
         {
             var flashcard = await _flashcardInfoRepository.GetFlashcardByIdAsync(id);
 
@@ -42,7 +42,7 @@ namespace ScholarMeServer.Services.FlashcardInfo
             {
                 return null;
             }
-            return new FlashcardDto
+            return new FlashcardReadOnlyDto
             {
                 Id = flashcard.Id,
                 Question = flashcard.Question,
@@ -59,7 +59,7 @@ namespace ScholarMeServer.Services.FlashcardInfo
             };
         }
 
-        public async Task<FlashcardDto> CreateFlashcardAsync(FlashcardCreateDto flashcardDto)
+        public async Task<FlashcardReadOnlyDto> CreateFlashcardAsync(FlashcardNewDto flashcardDto)
         {
             var createdFlashcard = await _flashcardInfoRepository.CreateFlashcardAsync(
                     new Flashcard()
@@ -68,7 +68,7 @@ namespace ScholarMeServer.Services.FlashcardInfo
                     }
                 );
 
-            return new FlashcardDto
+            return new FlashcardReadOnlyDto
             {
                 Id = createdFlashcard.Id,
                 Question = createdFlashcard.Question,
@@ -78,7 +78,7 @@ namespace ScholarMeServer.Services.FlashcardInfo
             };
         }
 
-        public async Task<FlashcardDto?> UpdateFlashcardAsync(int id, FlashcardCreateDto flashcardDto)
+        public async Task<FlashcardReadOnlyDto?> UpdateFlashcardAsync(int id, FlashcardNewDto flashcardDto)
         {
             var flashcard = await _flashcardInfoRepository.UpdateFlashcardAsync(
                     id,
@@ -93,7 +93,7 @@ namespace ScholarMeServer.Services.FlashcardInfo
                 return null;
             }
 
-            return new FlashcardDto()
+            return new FlashcardReadOnlyDto()
             {
                 Id = flashcard.Id,
                 Question = flashcard.Question,
