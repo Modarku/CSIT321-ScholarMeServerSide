@@ -12,7 +12,7 @@ using RestTest;
 namespace ScholarMeServer.Migrations
 {
     [DbContext(typeof(ScholarMeDbContext))]
-    [Migration("20241209065341_init")]
+    [Migration("20241209165522_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -36,7 +36,7 @@ namespace ScholarMeServer.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("FlashcardSetId")
+                    b.Property<int>("FlashcardDeckId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Question")
@@ -48,7 +48,7 @@ namespace ScholarMeServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FlashcardSetId");
+                    b.HasIndex("FlashcardDeckId");
 
                     b.ToTable("Flashcards");
 
@@ -57,7 +57,7 @@ namespace ScholarMeServer.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FlashcardSetId = 1,
+                            FlashcardDeckId = 1,
                             Question = "What is the capital of France?",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
@@ -215,7 +215,7 @@ namespace ScholarMeServer.Migrations
                             Email = "cher@gmail.com",
                             FirstName = "Teach",
                             LastName = "Cher",
-                            Password = "nothash",
+                            Password = "$2a$11$INSoIly/oqNSyygsDzjnNOHFdREmIkenNbtTLYnE7tMZ5K5orkKDy",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Username = "Cher"
                         });
@@ -223,13 +223,13 @@ namespace ScholarMeServer.Migrations
 
             modelBuilder.Entity("RestTest.Models.Flashcard", b =>
                 {
-                    b.HasOne("RestTest.Models.FlashcardDeck", "FlashcardSet")
+                    b.HasOne("RestTest.Models.FlashcardDeck", "FlashcardDeck")
                         .WithMany("Flashcards")
-                        .HasForeignKey("FlashcardSetId")
+                        .HasForeignKey("FlashcardDeckId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("FlashcardSet");
+                    b.Navigation("FlashcardDeck");
                 });
 
             modelBuilder.Entity("RestTest.Models.FlashcardChoice", b =>
@@ -246,7 +246,7 @@ namespace ScholarMeServer.Migrations
             modelBuilder.Entity("RestTest.Models.FlashcardDeck", b =>
                 {
                     b.HasOne("RestTest.Models.UserAccount", "UserAccount")
-                        .WithMany("FlashcardSets")
+                        .WithMany("FlashcardDecks")
                         .HasForeignKey("UserAccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -266,7 +266,7 @@ namespace ScholarMeServer.Migrations
 
             modelBuilder.Entity("RestTest.Models.UserAccount", b =>
                 {
-                    b.Navigation("FlashcardSets");
+                    b.Navigation("FlashcardDecks");
                 });
 #pragma warning restore 612, 618
         }

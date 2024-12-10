@@ -16,14 +16,14 @@ namespace ScholarMeServer.Services.UserAccountInfo
 
         public async Task<UserAccountReadOnlyDto> SignUpUser(UserAccountSignUpDto userAccountDto)
         {
-            var existingUser = await _userAccountInfoRepository.GetUserByUsername(userAccountDto.Username);
-            if (existingUser != null)
+            var user = await _userAccountInfoRepository.GetUserByUsername(userAccountDto.Username);
+            if (user != null)
             {
                 // TODO:
                 throw new NotImplementedException("Validation logic not yet implemented!");
             }
 
-            var userAccount = new UserAccount
+            var account = new UserAccount
             {
                 Username = userAccountDto.Username,
                 Email = userAccountDto.Email,
@@ -35,18 +35,18 @@ namespace ScholarMeServer.Services.UserAccountInfo
                 UpdatedAt = DateTime.UtcNow
             };
 
-            await _userAccountInfoRepository.CreateUserAccount(userAccount);
+            await _userAccountInfoRepository.CreateUserAccount(account);
 
             return new UserAccountReadOnlyDto()
             {
-                Id = userAccount.Id,
-                Username = userAccount.Username,
-                Email = userAccount.Email,
-                FirstName = userAccount.FirstName,
-                LastName = userAccount.LastName,
-                PhoneNumber = userAccount.PhoneNumber,
-                CreatedAt = userAccount.CreatedAt,
-                UpdatedAt = userAccount.UpdatedAt
+                Id = account.Id,
+                Username = account.Username,
+                Email = account.Email,
+                FirstName = account.FirstName,
+                LastName = account.LastName,
+                PhoneNumber = account.PhoneNumber,
+                CreatedAt = account.CreatedAt,
+                UpdatedAt = account.UpdatedAt
             };
         }
 
@@ -81,67 +81,67 @@ namespace ScholarMeServer.Services.UserAccountInfo
 
         public async Task<UserAccountReadOnlyDto> UpdateUserAccount(int userAccountId, UserAccountUpdateDto userAccountDto)
         {
-            var existingUser = await _userAccountInfoRepository.GetUserById(userAccountId);
+            var user = await _userAccountInfoRepository.GetUserById(userAccountId);
 
-            if (existingUser == null)
+            if (user == null)
             {
                 // TODO:
                 throw new NotImplementedException("User Not Found: Validation logic not yet implemented!");
             }
 
-            if (!string.IsNullOrEmpty(userAccountDto.Email))
+            if (userAccountDto.Email != null)
             {
-                existingUser.Email = userAccountDto.Email;
+                user.Email = userAccountDto.Email;
             }
-            if (!string.IsNullOrEmpty(userAccountDto.FirstName))
+            if (userAccountDto.FirstName != null)
             {
-                existingUser.FirstName = userAccountDto.FirstName;
+                user.FirstName = userAccountDto.FirstName;
             }
-            if (!string.IsNullOrEmpty(userAccountDto.LastName))
+            if (userAccountDto.LastName != null)
             {
-                existingUser.LastName = userAccountDto.LastName;
+                user.LastName = userAccountDto.LastName;
             }
-            if (!string.IsNullOrEmpty(userAccountDto.PhoneNumber))
+            if (userAccountDto.PhoneNumber != null)
             {
-                existingUser.PhoneNumber = userAccountDto.PhoneNumber;
+                user.PhoneNumber = userAccountDto.PhoneNumber;
             }
 
-            existingUser.UpdatedAt = DateTime.UtcNow;
+            user.UpdatedAt = DateTime.UtcNow;
 
-            await _userAccountInfoRepository.SaveUser(existingUser);
+            await _userAccountInfoRepository.SaveUser(user);
 
             return new UserAccountReadOnlyDto()
             {
-                Id = existingUser.Id,
-                Username = existingUser.Username,
-                Email = existingUser.Email,
-                FirstName = existingUser.FirstName,
-                LastName = existingUser.LastName,
-                PhoneNumber = existingUser.PhoneNumber,
-                CreatedAt = existingUser.CreatedAt,
-                UpdatedAt = existingUser.UpdatedAt
+                Id = user.Id,
+                Username = user.Username,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                CreatedAt = user.CreatedAt,
+                UpdatedAt = user.UpdatedAt
             };
         }
 
         public async Task UpdateUserPassword(int userAccountId, UserAccountChangePasswordDto userAccountDto)
         {
-            var existingUser = await _userAccountInfoRepository.GetUserById(userAccountId);
+            var user = await _userAccountInfoRepository.GetUserById(userAccountId);
 
-            if (existingUser == null)
+            if (user == null)
             {
                 // TODO:
                 throw new NotImplementedException("User Not Found: Validation logic not yet implemented!");
             }
 
-            if (!Verify(userAccountDto.OldPassword, existingUser.Password))
+            if (!Verify(userAccountDto.OldPassword, user.Password))
             {
                 // TODO:
                 throw new NotImplementedException("Incorrect Password: Validation logic not yet implemented!");
             }
 
-            existingUser.Password = HashPassword(userAccountDto.NewPassword);
+            user.Password = HashPassword(userAccountDto.NewPassword);
 
-            await _userAccountInfoRepository.SaveUser(existingUser);
+            await _userAccountInfoRepository.SaveUser(user);
         }
     }
 }

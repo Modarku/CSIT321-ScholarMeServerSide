@@ -1,5 +1,6 @@
 ﻿using RestTest.Models;
 using ScholarMeServer.DTO.Flashcard;
+using ScholarMeServer.DTO.FlashcardChoice;
 using ScholarMeServer.Repository.FlashcardInfo;
 
 namespace ScholarMeServer.Services.FlashcardInfo
@@ -17,7 +18,7 @@ namespace ScholarMeServer.Services.FlashcardInfo
         {
             Flashcard flashcard = new Flashcard
             {
-                FlashcardSetId = flashcardDeckId,
+                FlashcardDeckId = flashcardDeckId,
                 Question = flashcardDto.Question,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
@@ -28,26 +29,28 @@ namespace ScholarMeServer.Services.FlashcardInfo
             return new FlashcardReadOnlyDto
             {
                 Id = flashcard.Id,
-                FlashcardSetId = flashcard.FlashcardSetId,
+                FlashcardSetId = flashcard.FlashcardDeckId,
                 Question = flashcard.Question,
             };
         }
 
         public async Task<List<FlashcardReadOnlyDto>> GetFlashcardsByDeckId(int flashcardDeckId)
         {
-            var flashcard = await _flashcardRepository.GetFlashcardsByDeckId(flashcardDeckId);
+            var flashcards = await _flashcardRepository.GetFlashcardsByDeckId(flashcardDeckId);
 
-            return flashcard.Select(f => new FlashcardReadOnlyDto
+            return flashcards.Select(f => new FlashcardReadOnlyDto
             {
                 Id = f.Id,
-                FlashcardSetId = f.FlashcardSetId,
+                FlashcardSetId = f.FlashcardDeckId,
                 Question = f.Question,
+                CreatedAt = f.CreatedAt,
+                UpdatedAt = f.UpdatedAt,
             }).ToList();
         }
 
-        public async Task<FlashcardReadOnlyDto> UpdateFlashcard(int flashcardDeckId, FlashcardUpdateDto flashcardDto)
+        public async Task<FlashcardReadOnlyDto> GetFlashcardById(int flashcardId)
         {
-            var flashcard = await _flashcardRepository.GetFlashcardById(flashcardDeckId);
+            var flashcard = await _flashcardRepository.GetFlashcardById(flashcardId);
 
             if (flashcard == null)
             {
@@ -55,17 +58,37 @@ namespace ScholarMeServer.Services.FlashcardInfo
                 throw new NotImplementedException("Flashcard Not Found: Validation logic not yet implemented!");
             }
 
-            if (flashcardDto.FlashcardSetId.HasValue && flashcardDto.FlashcardSetId != 0)
+            return new FlashcardReadOnlyDto
+            {
+                Id = flashcard.Id,
+                FlashcardSetId = flashcard.FlashcardDeckId,
+                Question = flashcard.Question,
+                CreatedAt = flashcard.CreatedAt,
+                UpdatedAt = flashcard.UpdatedAt,
+            };
+        }
+
+        public async Task<FlashcardReadOnlyDto> UpdateFlashcard(int flashcardId, FlashcardUpdateDto flashcardDto)
+        {
+            var flashcard = await _flashcardRepository.GetFlashcardById(flashcardId);
+
+            if (flashcard == null)
+            {
+                // TODO:
+                throw new NotImplementedException("Flashcard Not Found: Validation logic not yet implemented!");
+            }
+
+            if (flashcardDto.FlashcardSetId != null)
             {
                 if (!await _flashcardRepository.FlashcardDeckExists((int)flashcardDto.FlashcardSetId))
                 {
                     // TODO:
-                    throw new NotImplementedException("Flashcard Deck Not Found: Validation logic not yet implemented!");
+                    throw new NotImplementedException("Flashcard FlashcardDeck Not Found: Validation logic not yet implemented!");
                 }
-                flashcard.FlashcardSetId = (int)flashcardDto.FlashcardSetId;
+                flashcard.FlashcardDeckId = (int)flashcardDto.FlashcardSetId;
             }
 
-            if (!string.IsNullOrEmpty(flashcardDto.Question))
+            if (flashcardDto.Question != null)
             {
                 flashcard.Question = flashcardDto.Question;
             }
@@ -76,14 +99,22 @@ namespace ScholarMeServer.Services.FlashcardInfo
             return new FlashcardReadOnlyDto
             {
                 Id = flashcard.Id,
-                FlashcardSetId = flashcard.FlashcardSetId,
+                FlashcardSetId = flashcard.FlashcardDeckId,
                 Question = flashcard.Question,
             };
         }
 
-        public async Task DeleteFlashcard(int flashcardDeckId)
+        public async Task DeleteFlashcard(int flashcardId)
         {
-            await _flashcardRepository.DeleteFlashcard(flashcardDeckId);
+            var flashcard = await _flashcardRepository.GetFlashcardById(flashcardId);
+
+            if (flashcard == null)
+            {
+                // TODO:
+                throw new NotImplementedException("Flashcard Not Found: Validation logic not yet implemented!");
+            }
+
+            await _flashcardRepository.DeleteFlashcard(flashcard);
         }
     }
 }

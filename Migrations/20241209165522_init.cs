@@ -63,7 +63,7 @@ namespace ScholarMeServer.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FlashcardSetId = table.Column<int>(type: "integer", nullable: false),
+                    FlashcardDeckId = table.Column<int>(type: "integer", nullable: false),
                     Question = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -72,8 +72,8 @@ namespace ScholarMeServer.Migrations
                 {
                     table.PrimaryKey("PK_Flashcards", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Flashcards_FlashcardDecks_FlashcardSetId",
-                        column: x => x.FlashcardSetId,
+                        name: "FK_Flashcards_FlashcardDecks_FlashcardDeckId",
+                        column: x => x.FlashcardDeckId,
                         principalTable: "FlashcardDecks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -105,7 +105,7 @@ namespace ScholarMeServer.Migrations
             migrationBuilder.InsertData(
                 table: "UserAccounts",
                 columns: new[] { "Id", "CreatedAt", "Email", "FirstName", "LastName", "Password", "PhoneNumber", "UpdatedAt", "Username" },
-                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "cher@gmail.com", "Teach", "Cher", "nothash", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Cher" });
+                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "cher@gmail.com", "Teach", "Cher", "$2a$11$INSoIly/oqNSyygsDzjnNOHFdREmIkenNbtTLYnE7tMZ5K5orkKDy", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Cher" });
 
             migrationBuilder.InsertData(
                 table: "FlashcardDecks",
@@ -114,7 +114,7 @@ namespace ScholarMeServer.Migrations
 
             migrationBuilder.InsertData(
                 table: "Flashcards",
-                columns: new[] { "Id", "CreatedAt", "FlashcardSetId", "Question", "UpdatedAt" },
+                columns: new[] { "Id", "CreatedAt", "FlashcardDeckId", "Question", "UpdatedAt" },
                 values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "What is the capital of France?", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
@@ -138,9 +138,9 @@ namespace ScholarMeServer.Migrations
                 column: "UserAccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Flashcards_FlashcardSetId",
+                name: "IX_Flashcards_FlashcardDeckId",
                 table: "Flashcards",
-                column: "FlashcardSetId");
+                column: "FlashcardDeckId");
         }
 
         /// <inheritdoc />

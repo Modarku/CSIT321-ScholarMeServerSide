@@ -7,6 +7,7 @@ namespace ScholarMeServer.DTO.Flashcard
     public class FlashcardCreateDto
     {
         [Required]
+        [Range(1, int.MaxValue)]
         public int FlashcardSetId { get; set; }
 
         [Required]

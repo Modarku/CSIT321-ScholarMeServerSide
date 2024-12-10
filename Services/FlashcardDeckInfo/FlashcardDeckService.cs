@@ -1,4 +1,5 @@
 ﻿using RestTest.Models;
+using ScholarMeServer.DTO.Flashcard;
 using ScholarMeServer.DTO.FlashcardDeck;
 using ScholarMeServer.Repository.FlashcardDeckInfo;
 
@@ -24,71 +25,101 @@ namespace ScholarMeServer.Services.FlashcardDeckInfo
                 UpdatedAt = DateTime.UtcNow,
             };
 
-            FlashcardDeck createdFlashcardDeck = await _flashcardDeckRepository.CreateFlashcardDeck(flashcardDeck);
+            await _flashcardDeckRepository.AddFlashcardDeck(flashcardDeck);
 
             return new FlashcardDeckReadOnlyDto()
             {
-                Id = createdFlashcardDeck.Id,
-                UserAccountId = createdFlashcardDeck.UserAccountId,
-                Title = createdFlashcardDeck.Title,
-                Description = createdFlashcardDeck.Description,
-                CreatedAt = createdFlashcardDeck.CreatedAt,
-                UpdatedAt = createdFlashcardDeck.UpdatedAt,
+                Id = flashcardDeck.Id,
+                UserAccountId = flashcardDeck.UserAccountId,
+                Title = flashcardDeck.Title,
+                Description = flashcardDeck.Description,
+                CreatedAt = flashcardDeck.CreatedAt,
+                UpdatedAt = flashcardDeck.UpdatedAt,
             };
         } 
 
-        public async Task<List<FlashcardDeckReadOnlyDto>> GetFlashcardDecks(int userAccountId)
+        public async Task<List<FlashcardDeckReadOnlyDto>> GetFlashcardDecksByUserId(int userAccountId)
         {
-            var flashcardDecks = await _flashcardDeckRepository.GetFlashcardDecks(userAccountId);
+            var flashcardDecks = await _flashcardDeckRepository.GetFlashcardDecksByUserId(userAccountId);
 
-            return flashcardDecks.Select(deck => new FlashcardDeckReadOnlyDto()
+            return flashcardDecks.Select(d => new FlashcardDeckReadOnlyDto()
             {
-                Id = deck.Id,
-                UserAccountId = deck.UserAccountId,
-                Title = deck.Title,
-                Description = deck.Description,
-                CreatedAt = deck.CreatedAt,
-                UpdatedAt = deck.UpdatedAt,
+                Id = d.Id,
+                UserAccountId = d.UserAccountId,
+                Title = d.Title,
+                Description = d.Description,
+                CreatedAt = d.CreatedAt,
+                UpdatedAt = d.UpdatedAt,
             }).ToList();
+        }
+
+        public async Task<FlashcardDeckReadOnlyDto> GetFlashcardDeckById(int flashcardDeckId)
+        {
+            var flashcardDeck = await _flashcardDeckRepository.GetFlashcardDeckById(flashcardDeckId);
+
+            if (flashcardDeck == null)
+            {
+                // TODO:
+                throw new NotImplementedException("Flashcard Deck Not Found: Validation logic not yet implemented!");
+            }
+
+            return new FlashcardDeckReadOnlyDto()
+            {
+                Id = flashcardDeck.Id,
+                UserAccountId = flashcardDeck.UserAccountId,
+                Title = flashcardDeck.Title,
+                Description = flashcardDeck.Description,
+                CreatedAt = flashcardDeck.CreatedAt,
+                UpdatedAt = flashcardDeck.UpdatedAt,
+            };
         }
 
         public async Task<FlashcardDeckReadOnlyDto> UpdateFlashcardDeck(int flashcardDeckId, FlashcardDeckUpdateDto flashcardDeckDto)
         {
-            var existingFlashcardDeck = await _flashcardDeckRepository.GetFlashcardDeckById(flashcardDeckId);
+            var flashcardDeck = await _flashcardDeckRepository.GetFlashcardDeckById(flashcardDeckId);
 
-            if (existingFlashcardDeck == null)
+            if (flashcardDeck == null)
             {
-                throw new NotImplementedException("Flashcard Deck Not Found: Validation logic not yet implemented!");
+                // TODO:
+                throw new NotImplementedException("Flashcard FlashcardDeck Not Found: Validation logic not yet implemented!");
             }
 
-            if (!string.IsNullOrEmpty(flashcardDeckDto.Title))
+            if (flashcardDeckDto.Title != null)
             {
-                existingFlashcardDeck.Title = flashcardDeckDto.Title;
+                flashcardDeck.Title = flashcardDeckDto.Title;
             }
 
-            if (!string.IsNullOrEmpty(flashcardDeckDto.Description))
+            if (flashcardDeckDto.Description != null)
             {
-                existingFlashcardDeck.Description = flashcardDeckDto.Description;
+                flashcardDeck.Description = flashcardDeckDto.Description;
             }
 
-            existingFlashcardDeck.UpdatedAt = DateTime.UtcNow;
+            flashcardDeck.UpdatedAt = DateTime.UtcNow;
 
-            await _flashcardDeckRepository.SaveFlashcardDeck(existingFlashcardDeck);
+            await _flashcardDeckRepository.SaveFlashcardDeck(flashcardDeck);
 
             return new FlashcardDeckReadOnlyDto()
             {
-                Id = existingFlashcardDeck.Id,
-                UserAccountId = existingFlashcardDeck.UserAccountId,
-                Title = existingFlashcardDeck.Title,
-                Description = existingFlashcardDeck.Description,
-                CreatedAt = existingFlashcardDeck.CreatedAt,
-                UpdatedAt = existingFlashcardDeck.UpdatedAt,
+                Id = flashcardDeck.Id,
+                UserAccountId = flashcardDeck.UserAccountId,
+                Title = flashcardDeck.Title,
+                Description = flashcardDeck.Description,
+                CreatedAt = flashcardDeck.CreatedAt,
+                UpdatedAt = flashcardDeck.UpdatedAt,
             };
         }
 
         public async Task DeleteFlashcardDeck(int flashcardDeckId)
         {
-            await _flashcardDeckRepository.DeleteFlashcardDeck(flashcardDeckId);
+            var flashcardDeck = await _flashcardDeckRepository.GetFlashcardDeckById(flashcardDeckId);
+
+            if (flashcardDeck == null) 
+            {
+                // TODO:
+                throw new NotImplementedException("Flashcard Deck Not Found: Validation logic not yet implemented!");
+            }
+
+            await _flashcardDeckRepository.DeleteFlashcardDeck(flashcardDeck);
         }
     }
 }

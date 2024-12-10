@@ -4,14 +4,16 @@ namespace ScholarMeServer.DTO.UserAccount
 {
     public class UserAccountUpdateDto
     {
-        [StringLength(100)]
+        [StringLength(255)]
         [EmailAddress]
         public string? Email { get; set; }
 
-        [StringLength(100)]
+        [MinLength(1)]
+        [MaxLength(255)]
         public string? FirstName { get; set; }
 
-        [StringLength(100)]
+        [MinLength(1)]
+        [MaxLength(255)]
         public string? LastName { get; set; }
 
         // TODO: Philippines phone number validation specific

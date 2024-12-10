@@ -14,7 +14,5 @@ namespace ScholarMeServer.DTO.Flashcard
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
-
-        public List<FlashcardChoiceInnerDto>? Choices { get; set; }
     }
 }

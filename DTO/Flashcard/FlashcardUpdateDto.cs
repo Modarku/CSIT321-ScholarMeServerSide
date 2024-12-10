@@ -4,6 +4,7 @@ namespace ScholarMeServer.DTO.Flashcard
 {
     public class FlashcardUpdateDto
     {
+        [Range(1, int.MaxValue)]
         public int? FlashcardSetId { get; set; }
 
         [MinLength(1)]
