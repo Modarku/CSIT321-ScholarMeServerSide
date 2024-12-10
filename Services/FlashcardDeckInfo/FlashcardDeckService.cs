@@ -1,5 +1,4 @@
 ﻿using RestTest.Models;
-using ScholarMeServer.DTO.Flashcard;
 using ScholarMeServer.DTO.FlashcardDeck;
 using ScholarMeServer.Repository.FlashcardDeckInfo;
 

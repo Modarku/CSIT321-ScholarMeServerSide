@@ -53,10 +53,10 @@ namespace ScholarMeServer.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(1925),
                             FlashcardDeckId = 1,
                             Question = "What is the capital of France?",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(2100)
                         });
                 });
 
@@ -95,28 +95,28 @@ namespace ScholarMeServer.Migrations
                         {
                             Id = 1,
                             Choice = "Paris",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3110),
                             FlashcardId = 1,
                             IsAnswer = true,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3244)
                         },
                         new
                         {
                             Id = 2,
                             Choice = "London",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3402),
                             FlashcardId = 1,
                             IsAnswer = false,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3402)
                         },
                         new
                         {
                             Id = 3,
                             Choice = "Berlin",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3404),
                             FlashcardId = 1,
                             IsAnswer = false,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            UpdatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3404)
                         });
                 });
 
@@ -155,10 +155,10 @@ namespace ScholarMeServer.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(636),
                             Description = "This is the first flashcard set",
                             Title = "Flashcard Set 1",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(809),
                             UserAccountId = 1
                         });
                 });
@@ -208,13 +208,13 @@ namespace ScholarMeServer.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 984, DateTimeKind.Utc).AddTicks(2635),
                             Email = "cher@gmail.com",
                             FirstName = "Teach",
                             LastName = "Cher",
-                            Password = "$2a$11$INSoIly/oqNSyygsDzjnNOHFdREmIkenNbtTLYnE7tMZ5K5orkKDy",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Username = "Cher"
+                            Password = "$2a$11$gmNDL/jS7gca2lzEiL25j.HBKUjS.YT2XBRvhURmGxm8TDZyY.dCK",
+                            UpdatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 984, DateTimeKind.Utc).AddTicks(2894),
+                            Username = "cher"
                         });
                 });
 

@@ -18,6 +18,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Consider using AutoMapper for automatic conversion from DTO to Model and vice versa
 
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder
+            .WithOrigins("http://localhost:8081") // Add your client URL here
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
+});
+
 // JWT Authentication Setup
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -64,6 +75,9 @@ builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// Comment out when using the addition of custom middleware that automatically read JWT from cookies.
 builder.Services.AddSwaggerGen(options =>
 {
     var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -100,6 +114,20 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Apply CORS middleware
+app.UseCors("AllowSpecificOrigin");
+
+//// Custom middleware to read JWT token from cookies
+//app.Use(async (context, next) =>
+//{
+//    var token = context.Request.Cookies["token"];
+//    if (!string.IsNullOrEmpty(token))
+//    {
+//        context.Request.Headers.Append("Authorization", "Bearer " + token);
+//    }
+//    await next();
+//});
 
 app.UseAuthentication();
 app.UseAuthorization();
