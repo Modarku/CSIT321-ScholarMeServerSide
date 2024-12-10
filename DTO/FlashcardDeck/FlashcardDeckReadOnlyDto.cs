@@ -1,4 +1,6 @@
 ﻿using ScholarMeServer.DTO.Flashcard;
+using ScholarMeServer.DTO.UserAccount;
+using System.Text.Json.Serialization;
 
 namespace ScholarMeServer.DTO.FlashcardDeck
 {

@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ScholarMeServer.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class addmigrationinit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -105,26 +105,26 @@ namespace ScholarMeServer.Migrations
             migrationBuilder.InsertData(
                 table: "UserAccounts",
                 columns: new[] { "Id", "CreatedAt", "Email", "FirstName", "LastName", "Password", "PhoneNumber", "UpdatedAt", "Username" },
-                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "cher@gmail.com", "Teach", "Cher", "$2a$11$INSoIly/oqNSyygsDzjnNOHFdREmIkenNbtTLYnE7tMZ5K5orkKDy", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Cher" });
+                values: new object[] { 1, new DateTime(2024, 12, 10, 9, 48, 28, 984, DateTimeKind.Utc).AddTicks(2635), "cher@gmail.com", "Teach", "Cher", "$2a$11$gmNDL/jS7gca2lzEiL25j.HBKUjS.YT2XBRvhURmGxm8TDZyY.dCK", null, new DateTime(2024, 12, 10, 9, 48, 28, 984, DateTimeKind.Utc).AddTicks(2894), "cher" });
 
             migrationBuilder.InsertData(
                 table: "FlashcardDecks",
                 columns: new[] { "Id", "CreatedAt", "Description", "Title", "UpdatedAt", "UserAccountId" },
-                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This is the first flashcard set", "Flashcard Set 1", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 });
+                values: new object[] { 1, new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(636), "This is the first flashcard set", "Flashcard Set 1", new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(809), 1 });
 
             migrationBuilder.InsertData(
                 table: "Flashcards",
                 columns: new[] { "Id", "CreatedAt", "FlashcardDeckId", "Question", "UpdatedAt" },
-                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "What is the capital of France?", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+                values: new object[] { 1, new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(1925), 1, "What is the capital of France?", new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(2100) });
 
             migrationBuilder.InsertData(
                 table: "FlashcardChoices",
                 columns: new[] { "Id", "Choice", "CreatedAt", "FlashcardId", "IsAnswer", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, "Paris", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 2, "London", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 3, "Berlin", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { 1, "Paris", new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3110), 1, true, new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3244) },
+                    { 2, "London", new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3402), 1, false, new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3402) },
+                    { 3, "Berlin", new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3404), 1, false, new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3404) }
                 });
 
             migrationBuilder.CreateIndex(

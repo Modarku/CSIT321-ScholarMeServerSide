@@ -16,7 +16,7 @@ namespace ScholarMeServer.Services.UserAccountInfo
 
         public async Task<UserAccountReadOnlyDto> SignUpUser(UserAccountSignUpDto userAccountDto)
         {
-            var user = await _userAccountInfoRepository.GetUserByUsername(userAccountDto.Username);
+            var user = await _userAccountInfoRepository.GetUserByUsername(userAccountDto.Username.ToLower());
             if (user != null)
             {
                 // TODO:
@@ -25,8 +25,8 @@ namespace ScholarMeServer.Services.UserAccountInfo
 
             var account = new UserAccount
             {
-                Username = userAccountDto.Username,
-                Email = userAccountDto.Email,
+                Username = userAccountDto.Username.ToLower(),
+                Email = userAccountDto.Email.ToLower(),
                 Password = HashPassword(userAccountDto.Password),
                 FirstName = userAccountDto.FirstName,
                 LastName = userAccountDto.LastName,
@@ -52,7 +52,7 @@ namespace ScholarMeServer.Services.UserAccountInfo
 
         public async Task<UserAccountReadOnlyDto> SignInUser(UserAccountSignInDto userAccountDto)
         {
-            var user = await _userAccountInfoRepository.GetUserByUsername(userAccountDto.Username);
+            var user = await _userAccountInfoRepository.GetUserByUsername(userAccountDto.Username.ToLower());
 
             if (user == null)
             {

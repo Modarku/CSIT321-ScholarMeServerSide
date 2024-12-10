@@ -25,7 +25,9 @@ namespace ScholarMeServer.Controllers
         public async Task<IActionResult> SignUp([FromBody] UserAccountSignUpDto userAccountDto)
         {
             var user = await _userAccountInfoService.SignUpUser(userAccountDto);
-            return Ok(user);
+            var token = _jwt.GenerateJwtToken(user);
+
+            return Ok(new {user, token});
         }
 
         [HttpPost("signin")]

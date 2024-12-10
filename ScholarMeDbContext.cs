@@ -36,8 +36,8 @@ namespace RestTest
                     new UserAccount()
                     {
                         Id = 1,
-                        Username = "Cher",
-                        Email = "cher@gmail.com",
+                        Username = "Cher".ToLower(),
+                        Email = "Cher@gmail.com".ToLower(),
                         Password = HashPassword("hashme"),
                         FirstName = "Teach",
                         LastName = "Cher",
