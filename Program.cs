@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -12,13 +13,15 @@ using ScholarMeServer.Services.FlashcardDeckInfo;
 using ScholarMeServer.Services.FlashcardInfo;
 using ScholarMeServer.Services.UserAccountInfo;
 using ScholarMeServer.Utilities;
+using ScholarMeServer.Utilities.Filters;
+using ScholarMeServer.Utilities.Middlewares;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Consider using AutoMapper for automatic conversion from DTO to Model and vice versa
 
-// Configure CORS
+// Configure CORS - to allow requests from client
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
@@ -30,6 +33,7 @@ builder.Services.AddCors(options =>
 });
 
 // JWT Authentication Setup
+// https://medium.com/@solomongetachew112/jwt-authentication-in-net-8-a-complete-guide-for-secure-and-scalable-applications-6281e5e8667c
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -70,14 +74,23 @@ builder.Services.AddDbContext<ScholarMeDbContext>(
     ServiceLifetime.Scoped
 );
 
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<HttpResponseExceptionFilter>();
+});
 
-builder.Services.AddControllers();
+// Disable ModelState validation filter in order to be able to catch model validation exceptions in the controller
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Comment out when using the addition of custom middleware that automatically read JWT from cookies.
+// https://www.youtube.com/watch?v=w8I32UPEvj8&t=133s
 builder.Services.AddSwaggerGen(options =>
 {
     var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -111,6 +124,30 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    // https://learn.microsoft.com/en-us/aspnet/core/web-api/handle-errors?view=aspnetcore-6.0#use-exceptions-to-modify-the-response
+    // Handle Global Exception in the case it is not caught with Action Filters
+    app.UseExceptionHandler(builder =>
+    {
+        builder.Run(async context =>
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = 500;
+
+            var problemDetails = new ProblemDetails
+            {
+                Status = context.Response.StatusCode,
+                Title = "An unexpected error occurred!",
+                Detail = "Please contact support if the problem persists.",
+                Instance = context.Request.Path
+            };
+
+            await context.Response.WriteAsJsonAsync(problemDetails);
+        });
+    });
 }
 
 app.UseHttpsRedirection();
@@ -128,6 +165,9 @@ app.UseCors("AllowSpecificOrigin");
 //    }
 //    await next();
 //});
+
+// Custom middleware to handle unauthorized responses
+app.UseMiddleware<UnauthorizedMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();

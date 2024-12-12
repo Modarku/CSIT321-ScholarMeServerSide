@@ -1,6 +1,8 @@
 ﻿using RestTest.Models;
 using ScholarMeServer.DTO.UserAccount;
 using ScholarMeServer.Repository.UserAccountInfo;
+using ScholarMeServer.Utilities.Exceptions;
+using System.Net;
 
 
 namespace ScholarMeServer.Services.UserAccountInfo
@@ -19,8 +21,7 @@ namespace ScholarMeServer.Services.UserAccountInfo
             var user = await _userAccountInfoRepository.GetUserByUsername(userAccountDto.Username.ToLower());
             if (user != null)
             {
-                // TODO:
-                throw new NotImplementedException("Validation logic not yet implemented!");
+                throw new HttpResponseException((int)HttpStatusCode.Unauthorized, "User already exists");
             }
 
             var account = new UserAccount
@@ -56,14 +57,12 @@ namespace ScholarMeServer.Services.UserAccountInfo
 
             if (user == null)
             {
-                // TODO:
-                throw new NotImplementedException("User Not Found: Validation logic not yet implemented!");
+                throw new HttpResponseException((int)HttpStatusCode.Unauthorized, "User not found");
             }
 
             if (!Verify(userAccountDto.Password, user.Password))
             {
-                // TODO:
-                throw new NotImplementedException("Incorrect Password: Validation logic not yet implemented!");
+                throw new HttpResponseException((int)HttpStatusCode.Unauthorized, "Incorrect password");
             }
 
             return new UserAccountReadOnlyDto()
@@ -85,8 +84,7 @@ namespace ScholarMeServer.Services.UserAccountInfo
 
             if (user == null)
             {
-                // TODO:
-                throw new NotImplementedException("User Not Found: Validation logic not yet implemented!");
+                throw new HttpResponseException((int)HttpStatusCode.Unauthorized, "User not found");
             }
 
             if (userAccountDto.Email != null)
@@ -129,14 +127,12 @@ namespace ScholarMeServer.Services.UserAccountInfo
 
             if (user == null)
             {
-                // TODO:
-                throw new NotImplementedException("User Not Found: Validation logic not yet implemented!");
+                throw new HttpResponseException((int)HttpStatusCode.Unauthorized, "User not found");
             }
 
             if (!Verify(userAccountDto.OldPassword, user.Password))
             {
-                // TODO:
-                throw new NotImplementedException("Incorrect Password: Validation logic not yet implemented!");
+                throw new HttpResponseException((int)HttpStatusCode.Unauthorized, "Incorrect password");
             }
 
             user.Password = HashPassword(userAccountDto.NewPassword);
