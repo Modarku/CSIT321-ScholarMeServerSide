@@ -1,6 +1,8 @@
 ﻿using RestTest.Models;
 using ScholarMeServer.DTO.FlashcardChoice;
 using ScholarMeServer.Repository.FlashcardChoiceInfo;
+using ScholarMeServer.Utilities.Exceptions;
+using System.Net;
 
 namespace ScholarMeServer.Services.FlashcardChoiceInfo
 {
@@ -58,8 +60,7 @@ namespace ScholarMeServer.Services.FlashcardChoiceInfo
 
             if (flashcardChoice == null)
             {
-                // TODO:
-                throw new NotImplementedException("Flashcard Choice Not Found: Validation logic is not yet implemented!");
+                throw new HttpResponseException((int)HttpStatusCode.BadRequest, "Flashcard choice not found");
             }
 
             return new FlashcardChoiceReadOnlyDto()
@@ -79,7 +80,7 @@ namespace ScholarMeServer.Services.FlashcardChoiceInfo
 
             if (flashcardChoice == null)
             {
-                throw new NotImplementedException("Flashcard Choice Not Found: Validation logic is not yet implemented!");
+                throw new HttpResponseException((int)HttpStatusCode.BadRequest, "Flashcard choice not found");
             }
 
             if (flashcardChoiceDto.Choice != null)
@@ -110,7 +111,7 @@ namespace ScholarMeServer.Services.FlashcardChoiceInfo
 
             if (flashcardChoice == null)
             {
-                throw new NotImplementedException("Flashcard Choice Not Found: Validation logic is not yet implemented!");
+                throw new HttpResponseException((int)HttpStatusCode.BadRequest, "Flashcard choice not found");
             }
 
             await _flashcardChoiceRepository.DeleteFlashcardChoice(flashcardChoice);

@@ -1,6 +1,8 @@
 ﻿using RestTest.Models;
 using ScholarMeServer.DTO.FlashcardDeck;
 using ScholarMeServer.Repository.FlashcardDeckInfo;
+using ScholarMeServer.Utilities.Exceptions;
+using System.Net;
 
 namespace ScholarMeServer.Services.FlashcardDeckInfo
 {
@@ -58,8 +60,7 @@ namespace ScholarMeServer.Services.FlashcardDeckInfo
 
             if (flashcardDeck == null)
             {
-                // TODO:
-                throw new NotImplementedException("Flashcard Deck Not Found: Validation logic not yet implemented!");
+                throw new HttpResponseException((int)HttpStatusCode.BadRequest, "Flashcard deck not found");
             }
 
             return new FlashcardDeckReadOnlyDto()
@@ -79,8 +80,7 @@ namespace ScholarMeServer.Services.FlashcardDeckInfo
 
             if (flashcardDeck == null)
             {
-                // TODO:
-                throw new NotImplementedException("Flashcard FlashcardDeck Not Found: Validation logic not yet implemented!");
+                throw new HttpResponseException((int)HttpStatusCode.BadRequest, "Flashcard deck not found");
             }
 
             if (flashcardDeckDto.Title != null)
@@ -114,8 +114,7 @@ namespace ScholarMeServer.Services.FlashcardDeckInfo
 
             if (flashcardDeck == null) 
             {
-                // TODO:
-                throw new NotImplementedException("Flashcard Deck Not Found: Validation logic not yet implemented!");
+                throw new HttpResponseException((int)HttpStatusCode.BadRequest, "Flashcard deck not found");
             }
 
             await _flashcardDeckRepository.DeleteFlashcardDeck(flashcardDeck);

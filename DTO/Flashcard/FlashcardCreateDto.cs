@@ -6,9 +6,10 @@ namespace ScholarMeServer.DTO.Flashcard
     // Primarily for creating flashcards
     public class FlashcardCreateDto
     {
-        [Required]
-        [Range(1, int.MaxValue)]
-        public int FlashcardSetId { get; set; }
+        // Comment out since flashcardDeckId is already provided in the api url {flashcardDeckId}
+        //[Required]
+        //[Range(1, int.MaxValue)]
+        //public int FlashcardDeckId { get; set; }
 
         [Required]
         [MinLength(1)]

@@ -2,6 +2,8 @@
 using ScholarMeServer.DTO.Flashcard;
 using ScholarMeServer.DTO.FlashcardChoice;
 using ScholarMeServer.Repository.FlashcardInfo;
+using ScholarMeServer.Utilities.Exceptions;
+using System.Net;
 
 namespace ScholarMeServer.Services.FlashcardInfo
 {
@@ -54,8 +56,7 @@ namespace ScholarMeServer.Services.FlashcardInfo
 
             if (flashcard == null)
             {
-                // TODO:
-                throw new NotImplementedException("Flashcard Not Found: Validation logic not yet implemented!");
+                throw new HttpResponseException((int)HttpStatusCode.BadRequest, "Flashcard not found");
             }
 
             return new FlashcardReadOnlyDto
@@ -74,8 +75,7 @@ namespace ScholarMeServer.Services.FlashcardInfo
 
             if (flashcard == null)
             {
-                // TODO:
-                throw new NotImplementedException("Flashcard Not Found: Validation logic not yet implemented!");
+                throw new HttpResponseException((int)HttpStatusCode.BadRequest, "Flashcard not found");
             }
 
             if (flashcardDto.FlashcardSetId != null)
@@ -110,8 +110,7 @@ namespace ScholarMeServer.Services.FlashcardInfo
 
             if (flashcard == null)
             {
-                // TODO:
-                throw new NotImplementedException("Flashcard Not Found: Validation logic not yet implemented!");
+                throw new HttpResponseException((int)HttpStatusCode.BadRequest, "Flashcard not found");
             }
 
             await _flashcardRepository.DeleteFlashcard(flashcard);
