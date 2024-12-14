@@ -53,10 +53,10 @@ namespace ScholarMeServer.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(1925),
+                            CreatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(663),
                             FlashcardDeckId = 1,
                             Question = "What is the capital of France?",
-                            UpdatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(2100)
+                            UpdatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(822)
                         });
                 });
 
@@ -95,28 +95,28 @@ namespace ScholarMeServer.Migrations
                         {
                             Id = 1,
                             Choice = "Paris",
-                            CreatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3110),
+                            CreatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(1848),
                             FlashcardId = 1,
                             IsAnswer = true,
-                            UpdatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3244)
+                            UpdatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(1974)
                         },
                         new
                         {
                             Id = 2,
                             Choice = "London",
-                            CreatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3402),
+                            CreatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(2090),
                             FlashcardId = 1,
                             IsAnswer = false,
-                            UpdatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3402)
+                            UpdatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(2091)
                         },
                         new
                         {
                             Id = 3,
                             Choice = "Berlin",
-                            CreatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3404),
+                            CreatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(2092),
                             FlashcardId = 1,
                             IsAnswer = false,
-                            UpdatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(3404)
+                            UpdatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(2092)
                         });
                 });
 
@@ -155,10 +155,10 @@ namespace ScholarMeServer.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(636),
+                            CreatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 877, DateTimeKind.Utc).AddTicks(9651),
                             Description = "This is the first flashcard set",
                             Title = "Flashcard Set 1",
-                            UpdatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 985, DateTimeKind.Utc).AddTicks(809),
+                            UpdatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 877, DateTimeKind.Utc).AddTicks(9806),
                             UserAccountId = 1
                         });
                 });
@@ -208,14 +208,37 @@ namespace ScholarMeServer.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 984, DateTimeKind.Utc).AddTicks(2635),
+                            CreatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 877, DateTimeKind.Utc).AddTicks(2983),
                             Email = "cher@gmail.com",
                             FirstName = "Teach",
                             LastName = "Cher",
-                            Password = "$2a$11$gmNDL/jS7gca2lzEiL25j.HBKUjS.YT2XBRvhURmGxm8TDZyY.dCK",
-                            UpdatedAt = new DateTime(2024, 12, 10, 9, 48, 28, 984, DateTimeKind.Utc).AddTicks(2894),
+                            Password = "$2a$11$GEdE.kXSFvRDWyYEc8/EjOseQM9O5ftY9yvQNxZt.NtzDGr7dkjPO",
+                            UpdatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 877, DateTimeKind.Utc).AddTicks(3186),
                             Username = "cher"
                         });
+                });
+
+            modelBuilder.Entity("ScholarMeServer.Models.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("ExpiresOnUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("UserAccountId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserAccountId");
+
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("RestTest.Models.Flashcard", b =>
@@ -251,6 +274,17 @@ namespace ScholarMeServer.Migrations
                     b.Navigation("UserAccount");
                 });
 
+            modelBuilder.Entity("ScholarMeServer.Models.RefreshToken", b =>
+                {
+                    b.HasOne("RestTest.Models.UserAccount", "UserAccount")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserAccount");
+                });
+
             modelBuilder.Entity("RestTest.Models.Flashcard", b =>
                 {
                     b.Navigation("Choices");
@@ -264,6 +298,8 @@ namespace ScholarMeServer.Migrations
             modelBuilder.Entity("RestTest.Models.UserAccount", b =>
                 {
                     b.Navigation("FlashcardDecks");
+
+                    b.Navigation("RefreshTokens");
                 });
 #pragma warning restore 612, 618
         }

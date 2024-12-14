@@ -21,7 +21,7 @@ namespace ScholarMeServer.Controllers
         public async Task<IActionResult> CreateFlashcardChoice([FromRoute] int flashcardId, [FromBody] FlashcardChoiceCreateDto flashcardChoiceDto)
         {
             var createdFlashcardChoice = await _flashcardChoiceService.CreateFlashcardChoice(flashcardId, flashcardChoiceDto);
-            return CreatedAtRoute("GetFlashcardChoiceById", new { id = createdFlashcardChoice.Id }, createdFlashcardChoice);
+            return CreatedAtRoute("GetFlashcardChoiceById", new { flashcardChoiceId = createdFlashcardChoice.Id }, createdFlashcardChoice);
         }
 
         [HttpGet("cards/{flashcardId}/choices")]

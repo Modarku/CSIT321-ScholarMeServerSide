@@ -1,4 +1,5 @@
 ﻿using RestTest.Models;
+using ScholarMeServer.Models;
 
 namespace ScholarMeServer.Repository.UserAccountInfo
 {
@@ -11,5 +12,10 @@ namespace ScholarMeServer.Repository.UserAccountInfo
         public Task<UserAccount?> GetUserById(int userAccountId);
 
         public Task SaveUser(UserAccount userAccount);
+
+        public Task<RefreshToken?> GetRefreshToken(string token);
+
+        public Task SaveRefreshToken(RefreshToken refreshToken);
+
     }
 }

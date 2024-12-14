@@ -1,5 +1,8 @@
 ﻿using RestTest.Models;
+using ScholarMeServer.DTO;
+using ScholarMeServer.DTO.RefreshTokenRequest;
 using ScholarMeServer.DTO.UserAccount;
+using ScholarMeServer.Models;
 using ScholarMeServer.Repository.UserAccountInfo;
 using ScholarMeServer.Utilities.Exceptions;
 using System.Net;
@@ -138,6 +141,67 @@ namespace ScholarMeServer.Services.UserAccountInfo
             user.Password = HashPassword(userAccountDto.NewPassword);
 
             await _userAccountInfoRepository.SaveUser(user);
+        }
+
+        public async Task<UserAccountReadOnlyDto> GetUserById(int userId)
+        {
+            var user = await _userAccountInfoRepository.GetUserById(userId);
+
+            if (user == null)
+            {
+                throw new HttpResponseException((int)HttpStatusCode.Unauthorized, "User not found");
+            }
+
+            return new UserAccountReadOnlyDto()
+            {
+                Id = user.Id,
+                Username = user.Username,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                CreatedAt = user.CreatedAt,
+                UpdatedAt = user.UpdatedAt
+            };
+        }
+
+        public async Task<RefreshTokenReadOnly> CreateRefreshToken(int userId, string token, DateTime expires)
+        {
+            RefreshToken refreshToken = new RefreshToken
+            {
+                UserAccountId = userId,
+                Token = token,
+                ExpiresOnUtc = expires,
+            };
+
+            await _userAccountInfoRepository.SaveRefreshToken(refreshToken);
+
+            return new RefreshTokenReadOnly()
+            {
+                Id = refreshToken.Id,
+                UserAccountId = refreshToken.UserAccountId,
+                Token = refreshToken.Token,
+                ExpiresOnUtc = refreshToken.ExpiresOnUtc
+            };
+        }
+
+        public async Task UpdateRefreshToken(int userId, string oldToken, string newToken, DateTime expires)
+        {
+            RefreshToken? refreshToken = await _userAccountInfoRepository.GetRefreshToken(oldToken);
+
+            if (refreshToken == null)
+            {
+                throw new HttpResponseException((int)HttpStatusCode.Unauthorized, "Refresh token not found");
+            }
+
+            if (refreshToken.ExpiresOnUtc < DateTime.UtcNow)
+            {
+                throw new HttpResponseException((int)HttpStatusCode.Unauthorized, "The refresh token has expired");
+            }
+
+            refreshToken.Token = newToken;
+
+            await _userAccountInfoRepository.SaveRefreshToken(refreshToken);
         }
     }
 }

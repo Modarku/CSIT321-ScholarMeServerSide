@@ -8,7 +8,7 @@ using System.Linq;
 // Standardizing the response body for errors
 namespace ScholarMeServer.Utilities.Filters
 {
-    public class HttpResponseExceptionFilter : IActionFilter, IOrderedFilter
+    public class ModelValidatorFilter : IActionFilter, IOrderedFilter
     {
         // Set the order to int.MaxValue - 10 to run this filter after the built-in ModelStateInvalidFilter
         public int Order => int.MaxValue - 10;
@@ -45,24 +45,6 @@ namespace ScholarMeServer.Utilities.Filters
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            // If an HttpResponseException was thrown, return a ProblemDetails response otherwise propagate the exception to the global exception handler
-            if (context.Exception is HttpResponseException httpResponseException)
-            {
-                var problemDetails = new ProblemDetails
-                {
-                    Status = httpResponseException.StatusCode,
-                    Title = "An error occurred while processing your request.",
-                    Detail = httpResponseException.Value?.ToString(),
-                    Instance = context.HttpContext.Request.Path
-                };
-
-                context.Result = new ObjectResult(problemDetails)
-                {
-                    StatusCode = httpResponseException.StatusCode
-                };
-
-                context.ExceptionHandled = true;
-            }
         }
     }
 }

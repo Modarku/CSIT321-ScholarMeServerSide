@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ScholarMeServer.Models;
+using System.ComponentModel.DataAnnotations;
 
 // Model for individual user accounts
 namespace RestTest.Models
@@ -25,5 +26,7 @@ namespace RestTest.Models
 
         // Navigation Property
         public List<FlashcardDeck> FlashcardDecks { get; set; }
+
+        public List<RefreshToken> RefreshTokens { get; set; }
     }
 }
