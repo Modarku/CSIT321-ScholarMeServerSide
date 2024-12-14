@@ -122,6 +122,12 @@ builder.Services.AddSwaggerGen(options =>
 // Register the custom exception handler middleware
 builder.Services.AddTransient<ExceptionHandlerMiddleware>();
 
+// Configure Kestrel to use HTTP
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5000); // Listen on port 5000 for HTTP
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -131,7 +137,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// Temporarily comment out in development, not recommended for production (altho need to setup SSL)
+//app.UseHttpsRedirection();
 
 // Apply CORS middleware
 app.UseCors("AllowSpecificOrigin");
