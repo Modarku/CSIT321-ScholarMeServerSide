@@ -52,3 +52,12 @@ Route JSON Return are one dimensional meaning that the return object will be a s
 This is due to how the client side layout will be structured. The client side will be responsible for the nesting of objects.
 
 Consider replacing PK with UUID for security reasons.
+
+TODO: 
+*Profile Avatar
+
+User Roles: Creator, User
+Courses:
+Course Lessons:
+Flashcard Generator: (llama3 model)
+Content Generator: (Machine Learning Association)

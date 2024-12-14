@@ -23,7 +23,7 @@ namespace ScholarMeServer.Controllers
         {
             var userAccountId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var createdFlashcardDeck = await _flashcardDeckService.CreateFlashcardDeck(userAccountId, flashcardDeckDto);
-            return CreatedAtRoute("GetFlashcardDeckById", new { id = createdFlashcardDeck.Id }, createdFlashcardDeck);
+            return CreatedAtRoute("GetFlashcardDeckById", new { flashcardDeckId = createdFlashcardDeck.Id }, createdFlashcardDeck);
         }
 
         [HttpGet]

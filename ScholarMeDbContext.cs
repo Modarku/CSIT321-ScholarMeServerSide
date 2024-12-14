@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using RestTest.Models;
+using ScholarMeServer.Models;
 
 namespace RestTest
 {
@@ -17,6 +18,7 @@ namespace RestTest
         public DbSet<Flashcard> Flashcards { get; set; }
         public DbSet<FlashcardChoice> FlashcardChoices { get; set; }
         public DbSet<FlashcardDeck> FlashcardDecks { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         // Used to supressed when PendingModelChangesWarning is thrown although not recommended unless the schema and model are already in sync
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -30,8 +32,6 @@ namespace RestTest
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // TODO: Setup table columns such as adding default values because ORM does not support default values
-
             modelBuilder.Entity<UserAccount>().HasData(
                     new UserAccount()
                     {

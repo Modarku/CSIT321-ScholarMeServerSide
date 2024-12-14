@@ -12,7 +12,6 @@ using ScholarMeServer.Services.FlashcardChoiceInfo;
 using ScholarMeServer.Services.FlashcardDeckInfo;
 using ScholarMeServer.Services.FlashcardInfo;
 using ScholarMeServer.Services.UserAccountInfo;
-using ScholarMeServer.Utilities;
 using ScholarMeServer.Utilities.Filters;
 using ScholarMeServer.Utilities.Middlewares;
 using System.Text;
@@ -76,8 +75,11 @@ builder.Services.AddDbContext<ScholarMeDbContext>(
 
 builder.Services.AddControllers(options =>
 {
-    options.Filters.Add<HttpResponseExceptionFilter>();
+    options.Filters.Add<ModelValidatorFilter>();
 });
+
+
+builder.Services.AddControllers();
 
 // Disable ModelState validation filter in order to be able to catch model validation exceptions in the controller
 builder.Services.Configure<ApiBehaviorOptions>(options =>
@@ -117,6 +119,9 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// Register the custom exception handler middleware
+builder.Services.AddTransient<ExceptionHandlerMiddleware>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -124,30 +129,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseDeveloperExceptionPage();
-}
-else
-{
-    // https://learn.microsoft.com/en-us/aspnet/core/web-api/handle-errors?view=aspnetcore-6.0#use-exceptions-to-modify-the-response
-    // Handle Global Exception in the case it is not caught with Action Filters
-    app.UseExceptionHandler(builder =>
-    {
-        builder.Run(async context =>
-        {
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = 500;
-
-            var problemDetails = new ProblemDetails
-            {
-                Status = context.Response.StatusCode,
-                Title = "An unexpected error occurred!",
-                Detail = "Please contact support if the problem persists.",
-                Instance = context.Request.Path
-            };
-
-            await context.Response.WriteAsJsonAsync(problemDetails);
-        });
-    });
 }
 
 app.UseHttpsRedirection();
@@ -166,8 +147,9 @@ app.UseCors("AllowSpecificOrigin");
 //    await next();
 //});
 
-// Custom middleware to handle unauthorized responses
-app.UseMiddleware<UnauthorizedMiddleware>();
+// Use the custom exception handler middleware
+// Handle Global Exception in the case it is not caught with Action Filters
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
