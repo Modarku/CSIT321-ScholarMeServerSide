@@ -1,5 +1,6 @@
 ﻿using RestTest.Models;
 using ScholarMeServer.DTO;
+using ScholarMeServer.DTO.File;
 using ScholarMeServer.DTO.RefreshTokenRequest;
 using ScholarMeServer.DTO.UserAccount;
 using ScholarMeServer.Models;
@@ -49,6 +50,7 @@ namespace ScholarMeServer.Services.UserAccountInfo
                 FirstName = account.FirstName,
                 LastName = account.LastName,
                 PhoneNumber = account.PhoneNumber,
+                AvatarPath = null,
                 CreatedAt = account.CreatedAt,
                 UpdatedAt = account.UpdatedAt
             };
@@ -76,6 +78,7 @@ namespace ScholarMeServer.Services.UserAccountInfo
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
+                AvatarPath = user.AvatarPath,
                 CreatedAt = user.CreatedAt,
                 UpdatedAt = user.UpdatedAt
             };
@@ -106,6 +109,48 @@ namespace ScholarMeServer.Services.UserAccountInfo
             {
                 user.PhoneNumber = userAccountDto.PhoneNumber;
             }
+            if (userAccountDto.avatar != null)
+            {
+                List<string> validExtensions = new List<string>() { ".jpg", ".jpeg", ".png", "gif" };
+                IFormFile file = userAccountDto.avatar;
+
+                string extension = Path.GetExtension(file.FileName);
+
+                if (!validExtensions.Contains(extension))
+                {
+                    throw new HttpResponseException(400);
+                }
+
+                long size = file.Length;
+
+                if (size > 5 * 1024 * 1024)
+                {
+                    throw new HttpResponseException(400);
+                }
+
+                string dir = Path.Combine(Directory.GetCurrentDirectory());
+                string path = Path.Combine("Media", "Avatar");
+                string fileName = Guid.NewGuid().ToString() + extension;
+                string filePath = Path.Combine(path, fileName);
+
+                // Ensure the directory exists
+                Directory.CreateDirectory(Path.Combine(dir, path));
+
+                // Delete the old avatar if it exists
+                if (!string.IsNullOrEmpty(user.AvatarPath))
+                {
+                    string oldFilePath = Path.Combine(dir, user.AvatarPath);
+                    if (File.Exists(oldFilePath))
+                    {
+                        File.Delete(oldFilePath);
+                    }
+                }
+
+                using FileStream stream = new FileStream(Path.Combine(dir, filePath), FileMode.Create);
+                file.CopyTo(stream);
+
+                user.AvatarPath = filePath;
+            }
 
             user.UpdatedAt = DateTime.UtcNow;
 
@@ -119,6 +164,7 @@ namespace ScholarMeServer.Services.UserAccountInfo
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
+                AvatarPath = user.AvatarPath,
                 CreatedAt = user.CreatedAt,
                 UpdatedAt = user.UpdatedAt
             };
@@ -140,6 +186,8 @@ namespace ScholarMeServer.Services.UserAccountInfo
 
             user.Password = HashPassword(userAccountDto.NewPassword);
 
+            user.UpdatedAt = DateTime.UtcNow;
+
             await _userAccountInfoRepository.SaveUser(user);
         }
 
@@ -160,6 +208,7 @@ namespace ScholarMeServer.Services.UserAccountInfo
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
+                AvatarPath = user.AvatarPath,
                 CreatedAt = user.CreatedAt,
                 UpdatedAt = user.UpdatedAt
             };
@@ -209,6 +258,57 @@ namespace ScholarMeServer.Services.UserAccountInfo
                 UserAccountId = refreshToken.UserAccountId,
                 Token = refreshToken.Token,
                 ExpiresOnUtc = refreshToken.ExpiresOnUtc,
+            };
+        }
+
+        public async Task<ProfileAvatarReadOnlyDto> UpdateUserAvatar(Guid userAccountId, ProfileAvatarDto profileAvatarDto)
+        {
+            List<string> validExtensions = new List<string>() { ".jpg", ".jpeg", ".png", "gif" };
+            IFormFile file = profileAvatarDto.Avatar;
+
+            string extension = Path.GetExtension(file.FileName);
+
+            if (!validExtensions.Contains(extension))
+            {
+                throw new HttpResponseException(400);
+            }
+
+            long size = file.Length;
+
+            if (size > 5 * 1024 * 1024)
+            {
+                throw new HttpResponseException(400);
+            }
+
+            string dir = Path.Combine(Directory.GetCurrentDirectory());
+            string path = Path.Combine("Media", "Avatar");
+            string fileName = Guid.NewGuid().ToString() + extension;
+            string filePath = Path.Combine(path, fileName);
+
+            // Ensure the directory exists
+            Directory.CreateDirectory(Path.Combine(dir, path));
+
+            var user = await _userAccountInfoRepository.GetUserById(userAccountId);
+
+            // Delete the old avatar if it exists
+            if (!string.IsNullOrEmpty(user.AvatarPath))
+            {
+                string oldFilePath = Path.Combine(dir, user.AvatarPath);
+                if (File.Exists(oldFilePath))
+                {
+                    File.Delete(oldFilePath);
+                }
+            }
+
+            using FileStream stream = new FileStream(Path.Combine(dir, filePath), FileMode.Create);
+            file.CopyTo(stream);
+
+            user.AvatarPath = filePath;
+            await _userAccountInfoRepository.SaveUser(user);
+
+            return new ProfileAvatarReadOnlyDto()
+            {
+                FilePath = filePath
             };
         }
     }

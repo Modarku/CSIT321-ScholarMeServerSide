@@ -25,7 +25,8 @@ namespace ScholarMeServer.Migrations
                     LastName = table.Column<string>(type: "text", nullable: false),
                     PhoneNumber = table.Column<string>(type: "text", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    AvatarPath = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -119,27 +120,27 @@ namespace ScholarMeServer.Migrations
 
             migrationBuilder.InsertData(
                 table: "UserAccounts",
-                columns: new[] { "Id", "CreatedAt", "Email", "FirstName", "LastName", "Password", "PhoneNumber", "UpdatedAt", "Username" },
-                values: new object[] { new Guid("e0826199-bc30-4ea2-9adf-444cf6286f97"), new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(3160), "cher@gmail.com", "Teach", "Cher", "$2a$11$OmzB8G/qpldri5cvkdJENuWuDypksiE6ioAazfsQvg67wu5DQXRge", null, new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(3400), "cher" });
+                columns: new[] { "Id", "AvatarPath", "CreatedAt", "Email", "FirstName", "LastName", "Password", "PhoneNumber", "UpdatedAt", "Username" },
+                values: new object[] { new Guid("535f49f4-bd0f-4bf4-aa48-7fca28f329e9"), null, new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(1033), "cher@gmail.com", "Teach", "Cher", "$2a$11$4ea5m6VbQnQtlEP36QTh9etC2gcbBg.v9V4gPXOs/1H1j.rstd5Zu", null, new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(1177), "cher" });
 
             migrationBuilder.InsertData(
                 table: "FlashcardDecks",
                 columns: new[] { "Id", "CreatedAt", "Description", "Title", "UpdatedAt", "UserAccountId" },
-                values: new object[] { new Guid("cb0f4609-2e96-4fdc-b1a7-ddc53e5e55b3"), new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(4856), "This is the first flashcard set", "Flashcard Set 1", new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(5016), new Guid("e0826199-bc30-4ea2-9adf-444cf6286f97") });
+                values: new object[] { new Guid("aab90a73-75c1-4e61-b948-02d3397e21ee"), new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(1907), "This is the first flashcard set", "Flashcard Set 1", new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(1975), new Guid("535f49f4-bd0f-4bf4-aa48-7fca28f329e9") });
 
             migrationBuilder.InsertData(
                 table: "Flashcards",
                 columns: new[] { "Id", "CreatedAt", "FlashcardDeckId", "Question", "UpdatedAt" },
-                values: new object[] { new Guid("0d761a2b-40f5-4082-846d-44bc627a78db"), new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(5984), new Guid("cb0f4609-2e96-4fdc-b1a7-ddc53e5e55b3"), "What is the capital of France?", new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(6123) });
+                values: new object[] { new Guid("41e2e4af-abd9-4832-ae73-86798d0e534b"), new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(2410), new Guid("aab90a73-75c1-4e61-b948-02d3397e21ee"), "What is the capital of France?", new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(2473) });
 
             migrationBuilder.InsertData(
                 table: "FlashcardChoices",
                 columns: new[] { "Id", "Choice", "CreatedAt", "FlashcardId", "IsAnswer", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("48091b67-9810-41b3-81a8-53ffa4de6432"), "London", new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7410), new Guid("0d761a2b-40f5-4082-846d-44bc627a78db"), false, new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7411) },
-                    { new Guid("5c4cb636-f424-4194-93b9-69a25c530f38"), "Paris", new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7146), new Guid("0d761a2b-40f5-4082-846d-44bc627a78db"), true, new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7283) },
-                    { new Guid("81b6d369-4b3d-4403-a45b-0f21d7bf0702"), "Berlin", new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7413), new Guid("0d761a2b-40f5-4082-846d-44bc627a78db"), false, new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7413) }
+                    { new Guid("9649769f-9c9b-4175-b668-b2bc104a5b58"), "Berlin", new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(3062), new Guid("41e2e4af-abd9-4832-ae73-86798d0e534b"), false, new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(3062) },
+                    { new Guid("9b8839c3-58f1-4518-be94-4f923dc2f52c"), "London", new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(3060), new Guid("41e2e4af-abd9-4832-ae73-86798d0e534b"), false, new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(3060) },
+                    { new Guid("c2eee04b-f123-4809-915e-1db2032c20d9"), "Paris", new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(2934), new Guid("41e2e4af-abd9-4832-ae73-86798d0e534b"), true, new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(2997) }
                 });
 
             migrationBuilder.CreateIndex(
