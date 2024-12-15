@@ -49,7 +49,7 @@ namespace ScholarMeServer.Repository.UserAccountInfo
         public async Task SaveRefreshToken(RefreshToken refreshToken)
         {
             var existingToken = await _scholarmeDbContext.Set<RefreshToken>()
-                .SingleOrDefaultAsync(rt => rt.Token == refreshToken.Token);
+                .SingleOrDefaultAsync(rt => rt.Id == refreshToken.Id);
 
             if (existingToken == null)
             {

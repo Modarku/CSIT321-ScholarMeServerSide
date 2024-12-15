@@ -5,7 +5,7 @@ namespace ScholarMeServer.Repository.FlashcardInfo
     public interface IFlashcardRepository
     {
         public Task AddFlashcard(Flashcard flashcard);
-        public Task<List<Flashcard>> GetFlashcardsByDeckId(int flashcardDeckId);
+        public Task<List<Flashcard>> GetFlashcardsByDeckId(int flashcardDeckId, bool choices);
         public Task<Flashcard?> GetFlashcardById(int flashcardId);
         public Task DeleteFlashcard(Flashcard flashcard);
         public Task SaveFlashcard(Flashcard flashcard);

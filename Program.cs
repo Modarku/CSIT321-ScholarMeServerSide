@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -15,8 +16,39 @@ using ScholarMeServer.Services.UserAccountInfo;
 using ScholarMeServer.Utilities.Filters;
 using ScholarMeServer.Utilities.Middlewares;
 using System.Text;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// https://learn.microsoft.com/en-us/aspnet/core/performance/rate-limit?view=aspnetcore-9.0
+// https://blog.maartenballiauw.be/post/2022/09/26/aspnet-core-rate-limiting-middleware.html
+//builder.Services.AddRateLimiter(options =>
+//{
+//    options.OnRejected = async (context, token) =>
+//    {
+//        context.HttpContext.Response.StatusCode = 429;
+//        if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
+//        {
+//            await context.HttpContext.Response.WriteAsync(
+//                $"Too many requests. Please try again after {retryAfter.TotalMinutes} minute(s). ");
+//        }
+//        else
+//        {
+//            await context.HttpContext.Response.WriteAsync(
+//                "Too many requests. Please try again later. ");
+//        }
+//    };
+//    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+//        RateLimitPartition.GetFixedWindowLimiter(
+//            partitionKey: httpContext.User.Identity?.Name ?? httpContext.Request.Headers.Host.ToString(),
+//            factory: partition => new FixedWindowRateLimiterOptions
+//            {
+//                AutoReplenishment = true,
+//                PermitLimit = 10,
+//                QueueLimit = 0,
+//                Window = TimeSpan.FromMinutes(1)
+//            }));
+//});
 
 // Consider using AutoMapper for automatic conversion from DTO to Model and vice versa
 
@@ -29,6 +61,7 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials());
+            //.WithExposedHeaders("www-authenticate")); // Expose the www-authenticate header
 });
 
 // JWT Authentication Setup
@@ -45,7 +78,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+            ClockSkew = TimeSpan.Zero, // Set clock skew to zero to approximately jwt expiration
         };
     });
 
@@ -102,7 +136,7 @@ builder.Services.AddSwaggerGen(options =>
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
         Scheme = JwtBearerDefaults.AuthenticationScheme,
-        Description = "Enter your JWT Access Token",
+        Description = "Enter your JWT Access RefreshToken",
         Reference = new OpenApiReference
         {
             Id = JwtBearerDefaults.AuthenticationScheme,
@@ -129,6 +163,9 @@ builder.WebHost.ConfigureKestrel(options =>
 });
 
 var app = builder.Build();
+
+// Ensure the rate limiting middleware is added to the request pipeline
+//app.UseRateLimiter();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

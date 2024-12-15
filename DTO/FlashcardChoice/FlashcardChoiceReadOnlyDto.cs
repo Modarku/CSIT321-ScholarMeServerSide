@@ -1,10 +1,13 @@
-﻿namespace ScholarMeServer.DTO.FlashcardChoice
+﻿using System.Text.Json.Serialization;
+
+namespace ScholarMeServer.DTO.FlashcardChoice
 {
     public class FlashcardChoiceReadOnlyDto
     {
         public int Id { get; set; }
 
-        public int FlashcardId { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public int? FlashcardId { get; set; }
 
         public string Choice { get; set; }
 
