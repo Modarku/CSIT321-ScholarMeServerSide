@@ -4,11 +4,11 @@ namespace ScholarMeServer.Services.FlashcardDeckInfo
 {
     public interface IFlashcardDeckService
     {
-        public Task<FlashcardDeckReadOnlyDto> CreateFlashcardDeck(int userAccountId, FlashcardDeckCreateDto flashcardDeckDto);
-        public Task<List<FlashcardDeckReadOnlyDto>> GetFlashcardDecksByUserId(int userAccountId);
+        public Task<FlashcardDeckReadOnlyDto> CreateFlashcardDeck(Guid userAccountId, FlashcardDeckCreateDto flashcardDeckDto);
+        public Task<List<FlashcardDeckReadOnlyDto>> GetFlashcardDecksByUserId(Guid userAccountId);
 
-        public Task<FlashcardDeckReadOnlyDto> GetFlashcardDeckById(int flashcardDeckId);
-        public Task<FlashcardDeckReadOnlyDto> UpdateFlashcardDeck(int flashcardDeckId, FlashcardDeckUpdateDto flashcardDeckDto);
-        public Task DeleteFlashcardDeck(int flashcardDeckId);
+        public Task<FlashcardDeckReadOnlyDto> GetFlashcardDeckById(Guid flashcardDeckId);
+        public Task<FlashcardDeckReadOnlyDto> UpdateFlashcardDeck(Guid flashcardDeckId, FlashcardDeckUpdateDto flashcardDeckDto);
+        public Task DeleteFlashcardDeck(Guid flashcardDeckId);
     }
 }

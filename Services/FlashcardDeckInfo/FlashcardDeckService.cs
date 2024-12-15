@@ -15,7 +15,7 @@ namespace ScholarMeServer.Services.FlashcardDeckInfo
             _flashcardDeckRepository = flashcardDeckRepository;
         }
 
-        public async Task<FlashcardDeckReadOnlyDto> CreateFlashcardDeck(int userAccountId, FlashcardDeckCreateDto flashcardDeckDto)
+        public async Task<FlashcardDeckReadOnlyDto> CreateFlashcardDeck(Guid userAccountId, FlashcardDeckCreateDto flashcardDeckDto)
         {
             FlashcardDeck flashcardDeck = new FlashcardDeck()
             {
@@ -39,7 +39,7 @@ namespace ScholarMeServer.Services.FlashcardDeckInfo
             };
         } 
 
-        public async Task<List<FlashcardDeckReadOnlyDto>> GetFlashcardDecksByUserId(int userAccountId)
+        public async Task<List<FlashcardDeckReadOnlyDto>> GetFlashcardDecksByUserId(Guid userAccountId)
         {
             var flashcardDecks = await _flashcardDeckRepository.GetFlashcardDecksByUserId(userAccountId);
 
@@ -54,7 +54,7 @@ namespace ScholarMeServer.Services.FlashcardDeckInfo
             }).ToList();
         }
 
-        public async Task<FlashcardDeckReadOnlyDto> GetFlashcardDeckById(int flashcardDeckId)
+        public async Task<FlashcardDeckReadOnlyDto> GetFlashcardDeckById(Guid flashcardDeckId)
         {
             var flashcardDeck = await _flashcardDeckRepository.GetFlashcardDeckById(flashcardDeckId);
 
@@ -74,7 +74,7 @@ namespace ScholarMeServer.Services.FlashcardDeckInfo
             };
         }
 
-        public async Task<FlashcardDeckReadOnlyDto> UpdateFlashcardDeck(int flashcardDeckId, FlashcardDeckUpdateDto flashcardDeckDto)
+        public async Task<FlashcardDeckReadOnlyDto> UpdateFlashcardDeck(Guid flashcardDeckId, FlashcardDeckUpdateDto flashcardDeckDto)
         {
             var flashcardDeck = await _flashcardDeckRepository.GetFlashcardDeckById(flashcardDeckId);
 
@@ -108,7 +108,7 @@ namespace ScholarMeServer.Services.FlashcardDeckInfo
             };
         }
 
-        public async Task DeleteFlashcardDeck(int flashcardDeckId)
+        public async Task DeleteFlashcardDeck(Guid flashcardDeckId)
         {
             var flashcardDeck = await _flashcardDeckRepository.GetFlashcardDeckById(flashcardDeckId);
 

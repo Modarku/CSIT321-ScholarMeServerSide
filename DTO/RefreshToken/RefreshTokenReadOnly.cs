@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
 
-        public int UserAccountId { get; set; }
+        public Guid UserAccountId { get; set; }
 
         public string Token { get; set; }
 

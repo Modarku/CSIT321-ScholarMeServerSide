@@ -15,7 +15,7 @@ namespace ScholarMeServer.Services.FlashcardChoiceInfo
             _flashcardChoiceRepository = flashcardChoiceRepository;
         }
 
-        public async Task<FlashcardChoiceReadOnlyDto> CreateFlashcardChoice(int flashcardId, FlashcardChoiceCreateDto flashcardChoiceDto)
+        public async Task<FlashcardChoiceReadOnlyDto> CreateFlashcardChoice(Guid flashcardId, FlashcardChoiceCreateDto flashcardChoiceDto)
         {
             FlashcardChoice flashcardChoice = new FlashcardChoice()
             {
@@ -39,7 +39,7 @@ namespace ScholarMeServer.Services.FlashcardChoiceInfo
             };
         }
 
-        public async Task<List<FlashcardChoiceReadOnlyDto>> GetFlashcardChoicesByCardId(int flashcardId)
+        public async Task<List<FlashcardChoiceReadOnlyDto>> GetFlashcardChoicesByCardId(Guid flashcardId)
         {
             var flashcardChoices = await _flashcardChoiceRepository.GetFlashcardChoicesByCardId(flashcardId);
 
@@ -54,7 +54,7 @@ namespace ScholarMeServer.Services.FlashcardChoiceInfo
             }).ToList();
         }
 
-        public async Task<FlashcardChoiceReadOnlyDto> GetFlashcardChoiceById(int flashcardChoiceId)
+        public async Task<FlashcardChoiceReadOnlyDto> GetFlashcardChoiceById(Guid flashcardChoiceId)
         {
             var flashcardChoice = await _flashcardChoiceRepository.GetFlashcardChoiceById(flashcardChoiceId);
 
@@ -74,7 +74,7 @@ namespace ScholarMeServer.Services.FlashcardChoiceInfo
             };
         }
 
-        public async Task<FlashcardChoiceReadOnlyDto> UpdateFlashcardChoice(int flashcardChoiceId, FlashcardChoiceUpdateDto flashcardChoiceDto)
+        public async Task<FlashcardChoiceReadOnlyDto> UpdateFlashcardChoice(Guid flashcardChoiceId, FlashcardChoiceUpdateDto flashcardChoiceDto)
         {
             var flashcardChoice = await _flashcardChoiceRepository.GetFlashcardChoiceById(flashcardChoiceId);
 
@@ -105,7 +105,7 @@ namespace ScholarMeServer.Services.FlashcardChoiceInfo
                 UpdatedAt = flashcardChoice.UpdatedAt
             };
         }
-        public async Task DeleteFlashcardChoice(int flashcardChoiceId)
+        public async Task DeleteFlashcardChoice(Guid flashcardChoiceId)
         {
             var flashcardChoice = await _flashcardChoiceRepository.GetFlashcardChoiceById(flashcardChoiceId);
 

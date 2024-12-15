@@ -22,33 +22,33 @@ var builder = WebApplication.CreateBuilder(args);
 
 // https://learn.microsoft.com/en-us/aspnet/core/performance/rate-limit?view=aspnetcore-9.0
 // https://blog.maartenballiauw.be/post/2022/09/26/aspnet-core-rate-limiting-middleware.html
-//builder.Services.AddRateLimiter(options =>
-//{
-//    options.OnRejected = async (context, token) =>
-//    {
-//        context.HttpContext.Response.StatusCode = 429;
-//        if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
-//        {
-//            await context.HttpContext.Response.WriteAsync(
-//                $"Too many requests. Please try again after {retryAfter.TotalMinutes} minute(s). ");
-//        }
-//        else
-//        {
-//            await context.HttpContext.Response.WriteAsync(
-//                "Too many requests. Please try again later. ");
-//        }
-//    };
-//    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
-//        RateLimitPartition.GetFixedWindowLimiter(
-//            partitionKey: httpContext.User.Identity?.Name ?? httpContext.Request.Headers.Host.ToString(),
-//            factory: partition => new FixedWindowRateLimiterOptions
-//            {
-//                AutoReplenishment = true,
-//                PermitLimit = 10,
-//                QueueLimit = 0,
-//                Window = TimeSpan.FromMinutes(1)
-//            }));
-//});
+builder.Services.AddRateLimiter(options =>
+{
+    options.OnRejected = async (context, token) =>
+    {
+        context.HttpContext.Response.StatusCode = 429;
+        if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
+        {
+            await context.HttpContext.Response.WriteAsync(
+                $"Too many requests. Please try again after {retryAfter.TotalMinutes} minute(s). ");
+        }
+        else
+        {
+            await context.HttpContext.Response.WriteAsync(
+                "Too many requests. Please try again later. ");
+        }
+    };
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: httpContext.User.Identity?.Name ?? httpContext.Request.Headers.Host.ToString(),
+            factory: partition => new FixedWindowRateLimiterOptions
+            {
+                AutoReplenishment = true,
+                PermitLimit = 60, // 60 requests per minute
+                QueueLimit = 0,
+                Window = TimeSpan.FromMinutes(1)
+            }));
+});
 
 // Consider using AutoMapper for automatic conversion from DTO to Model and vice versa
 

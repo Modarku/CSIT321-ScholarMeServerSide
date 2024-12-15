@@ -7,9 +7,9 @@ namespace ScholarMeServer.Repository.FlashcardChoiceInfo
     {
         public Task AddFlashcardChoice(FlashcardChoice flashcardChoice);
 
-        public Task<List<FlashcardChoice>> GetFlashcardChoicesByCardId(int flashcardId);
+        public Task<List<FlashcardChoice>> GetFlashcardChoicesByCardId(Guid flashcardId);
 
-        public Task<FlashcardChoice?> GetFlashcardChoiceById(int flashcardChoiceId);
+        public Task<FlashcardChoice?> GetFlashcardChoiceById(Guid flashcardChoiceId);
 
         public Task SaveFlashcardChoice(FlashcardChoice flashcardChoice);
         public Task DeleteFlashcardChoice(FlashcardChoice flashcardChoiceId);

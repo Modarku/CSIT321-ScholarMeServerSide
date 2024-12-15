@@ -12,7 +12,7 @@ using RestTest;
 namespace ScholarMeServer.Migrations
 {
     [DbContext(typeof(ScholarMeDbContext))]
-    [Migration("20241214111036_init")]
+    [Migration("20241215023711_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -27,17 +27,15 @@ namespace ScholarMeServer.Migrations
 
             modelBuilder.Entity("RestTest.Models.Flashcard", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("FlashcardDeckId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("FlashcardDeckId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Question")
                         .IsRequired()
@@ -55,21 +53,19 @@ namespace ScholarMeServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CreatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(663),
-                            FlashcardDeckId = 1,
+                            Id = new Guid("0d761a2b-40f5-4082-846d-44bc627a78db"),
+                            CreatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(5984),
+                            FlashcardDeckId = new Guid("cb0f4609-2e96-4fdc-b1a7-ddc53e5e55b3"),
                             Question = "What is the capital of France?",
-                            UpdatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(822)
+                            UpdatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(6123)
                         });
                 });
 
             modelBuilder.Entity("RestTest.Models.FlashcardChoice", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Choice")
                         .IsRequired()
@@ -78,8 +74,8 @@ namespace ScholarMeServer.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("FlashcardId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("FlashcardId")
+                        .HasColumnType("uuid");
 
                     b.Property<bool>("IsAnswer")
                         .HasColumnType("boolean");
@@ -96,40 +92,38 @@ namespace ScholarMeServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = new Guid("5c4cb636-f424-4194-93b9-69a25c530f38"),
                             Choice = "Paris",
-                            CreatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(1848),
-                            FlashcardId = 1,
+                            CreatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7146),
+                            FlashcardId = new Guid("0d761a2b-40f5-4082-846d-44bc627a78db"),
                             IsAnswer = true,
-                            UpdatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(1974)
+                            UpdatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7283)
                         },
                         new
                         {
-                            Id = 2,
+                            Id = new Guid("48091b67-9810-41b3-81a8-53ffa4de6432"),
                             Choice = "London",
-                            CreatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(2090),
-                            FlashcardId = 1,
+                            CreatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7410),
+                            FlashcardId = new Guid("0d761a2b-40f5-4082-846d-44bc627a78db"),
                             IsAnswer = false,
-                            UpdatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(2091)
+                            UpdatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7411)
                         },
                         new
                         {
-                            Id = 3,
+                            Id = new Guid("81b6d369-4b3d-4403-a45b-0f21d7bf0702"),
                             Choice = "Berlin",
-                            CreatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(2092),
-                            FlashcardId = 1,
+                            CreatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7413),
+                            FlashcardId = new Guid("0d761a2b-40f5-4082-846d-44bc627a78db"),
                             IsAnswer = false,
-                            UpdatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(2092)
+                            UpdatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7413)
                         });
                 });
 
             modelBuilder.Entity("RestTest.Models.FlashcardDeck", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -145,8 +139,8 @@ namespace ScholarMeServer.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("UserAccountId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserAccountId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -157,22 +151,20 @@ namespace ScholarMeServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CreatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 877, DateTimeKind.Utc).AddTicks(9651),
+                            Id = new Guid("cb0f4609-2e96-4fdc-b1a7-ddc53e5e55b3"),
+                            CreatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(4856),
                             Description = "This is the first flashcard set",
                             Title = "Flashcard Set 1",
-                            UpdatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 877, DateTimeKind.Utc).AddTicks(9806),
-                            UserAccountId = 1
+                            UpdatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(5016),
+                            UserAccountId = new Guid("e0826199-bc30-4ea2-9adf-444cf6286f97")
                         });
                 });
 
             modelBuilder.Entity("RestTest.Models.UserAccount", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -210,13 +202,13 @@ namespace ScholarMeServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CreatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 877, DateTimeKind.Utc).AddTicks(2983),
+                            Id = new Guid("e0826199-bc30-4ea2-9adf-444cf6286f97"),
+                            CreatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(3160),
                             Email = "cher@gmail.com",
                             FirstName = "Teach",
                             LastName = "Cher",
-                            Password = "$2a$11$GEdE.kXSFvRDWyYEc8/EjOseQM9O5ftY9yvQNxZt.NtzDGr7dkjPO",
-                            UpdatedAt = new DateTime(2024, 12, 14, 11, 10, 35, 877, DateTimeKind.Utc).AddTicks(3186),
+                            Password = "$2a$11$OmzB8G/qpldri5cvkdJENuWuDypksiE6ioAazfsQvg67wu5DQXRge",
+                            UpdatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(3400),
                             Username = "cher"
                         });
                 });
@@ -230,12 +222,12 @@ namespace ScholarMeServer.Migrations
                     b.Property<DateTime>("ExpiresOnUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("RefreshToken")
+                    b.Property<string>("Token")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("UserAccountId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserAccountId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 

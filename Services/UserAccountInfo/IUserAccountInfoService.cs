@@ -9,10 +9,10 @@ namespace ScholarMeServer.Services.UserAccountInfo
     {
         public Task<UserAccountReadOnlyDto> SignUpUser(UserAccountSignUpDto userAccountDto);
         public Task<UserAccountReadOnlyDto> SignInUser(UserAccountSignInDto userAccountDto);
-        public Task<UserAccountReadOnlyDto> UpdateUserAccount(int userAccountId, UserAccountUpdateDto userAccountDto);
-        public Task UpdateUserPassword(int userAccountId, UserAccountChangePasswordDto userAccountDto);
-        public Task<UserAccountReadOnlyDto> GetUserById(int userId);
-        public Task<RefreshTokenReadOnly> CreateRefreshToken(int userId, string token, DateTime expires);
+        public Task<UserAccountReadOnlyDto> UpdateUserAccount(Guid userAccountId, UserAccountUpdateDto userAccountDto);
+        public Task UpdateUserPassword(Guid userAccountId, UserAccountChangePasswordDto userAccountDto);
+        public Task<UserAccountReadOnlyDto> GetUserById(Guid userId);
+        public Task<RefreshTokenReadOnly> CreateRefreshToken(Guid userId, string token, DateTime expires);
         public Task<RefreshTokenReadOnly> UpdateRefreshToken(string oldToken, string newToken, DateTime expires);
     }
 }

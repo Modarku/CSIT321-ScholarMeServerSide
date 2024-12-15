@@ -32,72 +32,74 @@ namespace RestTest
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserAccount>().HasData(
-                    new UserAccount()
-                    {
-                        Id = 1,
-                        Username = "Cher".ToLower(),
-                        Email = "Cher@gmail.com".ToLower(),
-                        Password = HashPassword("hashme"),
-                        FirstName = "Teach",
-                        LastName = "Cher",
-                        CreatedAt = DateTime.UtcNow,
-                        UpdatedAt = DateTime.UtcNow,
-                    }
-                );
 
-            modelBuilder.Entity<FlashcardDeck>().HasData(
-                    new FlashcardDeck()
-                    {
-                        Id = 1,
-                        UserAccountId = 1,
-                        Title = "Flashcard Set 1",
-                        Description = "This is the first flashcard set",
-                        CreatedAt = DateTime.UtcNow,
-                        UpdatedAt = DateTime.UtcNow,
-                    }
-                );
+            UserAccount user1 = new UserAccount()
+            {
+                Id = Guid.NewGuid(),
+                Username = "Cher".ToLower(),
+                Email = "Cher@gmail.com".ToLower(),
+                Password = HashPassword("hashme"),
+                FirstName = "Teach",
+                LastName = "Cher",
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+            };
 
-            modelBuilder.Entity<Flashcard>().HasData(
-                    new Flashcard()
-                    {
-                        Id = 1,
-                        FlashcardDeckId = 1,
-                        Question = "What is the capital of France?",
-                        CreatedAt = DateTime.UtcNow,
-                        UpdatedAt = DateTime.UtcNow,
-                    }
-                );
+            FlashcardDeck deck1 = new FlashcardDeck()
+            {
+                Id = Guid.NewGuid(),
+                UserAccountId = user1.Id,
+                Title = "Flashcard Set 1",
+                Description = "This is the first flashcard set",
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+            };
 
-            modelBuilder.Entity<FlashcardChoice>().HasData(
-                    new FlashcardChoice()
-                    {
-                        Id = 1,
-                        FlashcardId = 1,
-                        Choice = "Paris",
-                        IsAnswer = true,
-                        CreatedAt = DateTime.UtcNow,
-                        UpdatedAt = DateTime.UtcNow,
-                    },
-                    new FlashcardChoice()
-                    {
-                        Id = 2,
-                        FlashcardId = 1,
-                        Choice = "London",
-                        IsAnswer = false,
-                        CreatedAt = DateTime.UtcNow,
-                        UpdatedAt = DateTime.UtcNow,
-                    },
-                    new FlashcardChoice()
-                    {
-                        Id = 3,
-                        FlashcardId = 1,
-                        Choice = "Berlin",
-                        IsAnswer = false,
-                        CreatedAt = DateTime.UtcNow,
-                        UpdatedAt = DateTime.UtcNow,
-                    }
-                );
+            Flashcard card1 = new Flashcard()
+            {
+                Id = Guid.NewGuid(),
+                FlashcardDeckId = deck1.Id,
+                Question = "What is the capital of France?",
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+            };
+
+            FlashcardChoice card1Choice1 = new FlashcardChoice()
+            {
+                Id = Guid.NewGuid(),
+                FlashcardId = card1.Id,
+                Choice = "Paris",
+                IsAnswer = true,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+            };
+            FlashcardChoice card1Choice2 = new FlashcardChoice()
+            {
+                Id = Guid.NewGuid(),
+                FlashcardId = card1.Id,
+                Choice = "London",
+                IsAnswer = false,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+            };
+            FlashcardChoice card1Choice3 = new FlashcardChoice()
+            {
+                Id = Guid.NewGuid(),
+                FlashcardId = card1.Id,
+                Choice = "Berlin",
+                IsAnswer = false,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+            };
+
+
+            modelBuilder.Entity<UserAccount>().HasData(user1);
+
+            modelBuilder.Entity<FlashcardDeck>().HasData(deck1);
+
+            modelBuilder.Entity<Flashcard>().HasData(card1);
+
+            modelBuilder.Entity<FlashcardChoice>().HasData(card1Choice1, card1Choice2, card1Choice3);
         }
     }
 }

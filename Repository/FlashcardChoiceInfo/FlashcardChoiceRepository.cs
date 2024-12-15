@@ -14,13 +14,13 @@ namespace ScholarMeServer.Repository.FlashcardChoiceInfo
             await _scholarmeDbContext.SaveChangesAsync();
         }
 
-        public async Task<List<FlashcardChoice>> GetFlashcardChoicesByCardId(int flashcardId)
+        public async Task<List<FlashcardChoice>> GetFlashcardChoicesByCardId(Guid flashcardId)
         {
             var flashcardChoices = await _scholarmeDbContext.Set<FlashcardChoice>().Where(fc => fc.FlashcardId == flashcardId).ToListAsync();
             return flashcardChoices;
         }
 
-        public async Task<FlashcardChoice?> GetFlashcardChoiceById(int flashcardChoiceId)
+        public async Task<FlashcardChoice?> GetFlashcardChoiceById(Guid flashcardChoiceId)
         {
             var flashcard = await _scholarmeDbContext.Set<FlashcardChoice>().FindAsync(flashcardChoiceId);
             return flashcard;
