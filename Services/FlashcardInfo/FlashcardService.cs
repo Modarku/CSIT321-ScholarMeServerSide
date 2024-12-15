@@ -59,9 +59,9 @@ namespace ScholarMeServer.Services.FlashcardInfo
             }).ToList();
         }
 
-        public async Task<FlashcardReadOnlyDto> GetFlashcardById(Guid flashcardId)
+        public async Task<FlashcardReadOnlyDto> GetFlashcardById(Guid flashcardId, bool includeChoices)
         {
-            var flashcard = await _flashcardRepository.GetFlashcardById(flashcardId);
+            var flashcard = await _flashcardRepository.GetFlashcardById(flashcardId, includeChoices);
 
             if (flashcard == null)
             {
