@@ -81,7 +81,7 @@ namespace ScholarMeServer.Services.UserAccountInfo
             };
         }
 
-        public async Task<UserAccountReadOnlyDto> UpdateUserAccount(int userAccountId, UserAccountUpdateDto userAccountDto)
+        public async Task<UserAccountReadOnlyDto> UpdateUserAccount(Guid userAccountId, UserAccountUpdateDto userAccountDto)
         {
             var user = await _userAccountInfoRepository.GetUserById(userAccountId);
 
@@ -124,7 +124,7 @@ namespace ScholarMeServer.Services.UserAccountInfo
             };
         }
 
-        public async Task UpdateUserPassword(int userAccountId, UserAccountChangePasswordDto userAccountDto)
+        public async Task UpdateUserPassword(Guid userAccountId, UserAccountChangePasswordDto userAccountDto)
         {
             var user = await _userAccountInfoRepository.GetUserById(userAccountId);
 
@@ -143,7 +143,7 @@ namespace ScholarMeServer.Services.UserAccountInfo
             await _userAccountInfoRepository.SaveUser(user);
         }
 
-        public async Task<UserAccountReadOnlyDto> GetUserById(int userId)
+        public async Task<UserAccountReadOnlyDto> GetUserById(Guid userId)
         {
             var user = await _userAccountInfoRepository.GetUserById(userId);
 
@@ -165,7 +165,7 @@ namespace ScholarMeServer.Services.UserAccountInfo
             };
         }
 
-        public async Task<RefreshTokenReadOnly> CreateRefreshToken(int userId, string token, DateTime expires)
+        public async Task<RefreshTokenReadOnly> CreateRefreshToken(Guid userId, string token, DateTime expires)
         {
             RefreshToken refreshToken = new RefreshToken
             {

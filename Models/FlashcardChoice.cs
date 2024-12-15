@@ -6,10 +6,10 @@ namespace RestTest.Models
 {
     public class FlashcardChoice
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         // Many-to-One relationship with Flashcard
-        public int FlashcardId { get; set; }
+        public Guid FlashcardId { get; set; }
 
         public string Choice { get; set; }
 

@@ -18,35 +18,35 @@ namespace ScholarMeServer.Controllers
         }
 
         [HttpPost("cards/{flashcardId}/choices")]
-        public async Task<IActionResult> CreateFlashcardChoice([FromRoute] int flashcardId, [FromBody] FlashcardChoiceCreateDto flashcardChoiceDto)
+        public async Task<IActionResult> CreateFlashcardChoice([FromRoute] Guid flashcardId, [FromBody] FlashcardChoiceCreateDto flashcardChoiceDto)
         {
             var createdFlashcardChoice = await _flashcardChoiceService.CreateFlashcardChoice(flashcardId, flashcardChoiceDto);
             return CreatedAtRoute("GetFlashcardChoiceById", new { flashcardChoiceId = createdFlashcardChoice.Id }, createdFlashcardChoice);
         }
 
         [HttpGet("cards/{flashcardId}/choices")]
-        public async Task<IActionResult> GetFlashcardChoicesByCardId([FromRoute] int flashcardId)
+        public async Task<IActionResult> GetFlashcardChoicesByCardId([FromRoute] Guid flashcardId)
         {
             var flashcardChoices = await _flashcardChoiceService.GetFlashcardChoicesByCardId(flashcardId);
             return Ok(flashcardChoices);
         }
 
-        [HttpGet("choices/{flashcardChoiceId:int}", Name = "GetFlashcardChoiceById")]
-        public async Task<IActionResult> GetFlashcardChoiceById([FromRoute] int flashcardChoiceId)
+        [HttpGet("choices/{flashcardChoiceId:Guid}", Name = "GetFlashcardChoiceById")]
+        public async Task<IActionResult> GetFlashcardChoiceById([FromRoute] Guid flashcardChoiceId)
         {
             var flashcardChoice = await _flashcardChoiceService.GetFlashcardChoiceById(flashcardChoiceId);
             return Ok(flashcardChoice);
         }
 
-        [HttpPut("choices/{flashcardChoiceId:int}")]
-        public async Task<IActionResult> UpdateFlashcardChoice([FromRoute] int flashcardChoiceId, [FromBody] FlashcardChoiceUpdateDto flashcardChoiceDto)
+        [HttpPut("choices/{flashcardChoiceId:Guid}")]
+        public async Task<IActionResult> UpdateFlashcardChoice([FromRoute] Guid flashcardChoiceId, [FromBody] FlashcardChoiceUpdateDto flashcardChoiceDto)
         {
             var updatedFlashcardChoice = await _flashcardChoiceService.UpdateFlashcardChoice(flashcardChoiceId, flashcardChoiceDto);
             return Ok(updatedFlashcardChoice);
         }
 
-        [HttpDelete("choices/{flashcardChoiceId:int}")]
-        public async Task<IActionResult> DeleteFlashcardChoice([FromRoute] int flashcardChoiceId)
+        [HttpDelete("choices/{flashcardChoiceId:Guid}")]
+        public async Task<IActionResult> DeleteFlashcardChoice([FromRoute] Guid flashcardChoiceId)
         {
             await _flashcardChoiceService.DeleteFlashcardChoice(flashcardChoiceId);
             return NoContent();

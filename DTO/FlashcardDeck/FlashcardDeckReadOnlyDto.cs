@@ -7,9 +7,9 @@ namespace ScholarMeServer.DTO.FlashcardDeck
     // Primarily for displaying flashcard sets
     public class FlashcardDeckReadOnlyDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
-        public int UserAccountId { get; set; }
+        public Guid UserAccountId { get; set; }
 
         public string Title { get; set; }
 

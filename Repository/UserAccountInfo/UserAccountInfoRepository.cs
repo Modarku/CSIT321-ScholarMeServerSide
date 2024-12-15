@@ -22,7 +22,7 @@ namespace ScholarMeServer.Repository.UserAccountInfo
             return await _scholarmeDbContext.Set<UserAccount>().SingleOrDefaultAsync(u => u.Username == username);
         }
 
-        public async Task<UserAccount?> GetUserById(int userAccountId)
+        public async Task<UserAccount?> GetUserById(Guid userAccountId)
         {
             return await _scholarmeDbContext.Set<UserAccount>().FindAsync(userAccountId);
         }

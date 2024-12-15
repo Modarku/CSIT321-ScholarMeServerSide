@@ -16,7 +16,7 @@ namespace ScholarMeServer.Services.FlashcardInfo
             _flashcardRepository = flashcardRepository;
         }
 
-        public async Task<FlashcardReadOnlyDto> CreateFlashcard(int flashcardDeckId, FlashcardCreateDto flashcardDto)
+        public async Task<FlashcardReadOnlyDto> CreateFlashcard(Guid flashcardDeckId, FlashcardCreateDto flashcardDto)
         {
             Flashcard flashcard = new Flashcard
             {
@@ -36,7 +36,7 @@ namespace ScholarMeServer.Services.FlashcardInfo
             };
         }
 
-        public async Task<List<FlashcardReadOnlyDto>> GetFlashcardsByDeckId(int flashcardDeckId, bool choices)
+        public async Task<List<FlashcardReadOnlyDto>> GetFlashcardsByDeckId(Guid flashcardDeckId, bool choices)
         {
             var flashcards = await _flashcardRepository.GetFlashcardsByDeckId(flashcardDeckId, choices);
 
@@ -59,7 +59,7 @@ namespace ScholarMeServer.Services.FlashcardInfo
             }).ToList();
         }
 
-        public async Task<FlashcardReadOnlyDto> GetFlashcardById(int flashcardId)
+        public async Task<FlashcardReadOnlyDto> GetFlashcardById(Guid flashcardId)
         {
             var flashcard = await _flashcardRepository.GetFlashcardById(flashcardId);
 
@@ -78,7 +78,7 @@ namespace ScholarMeServer.Services.FlashcardInfo
             };
         }
 
-        public async Task<FlashcardReadOnlyDto> UpdateFlashcard(int flashcardId, FlashcardUpdateDto flashcardDto)
+        public async Task<FlashcardReadOnlyDto> UpdateFlashcard(Guid flashcardId, FlashcardUpdateDto flashcardDto)
         {
             var flashcard = await _flashcardRepository.GetFlashcardById(flashcardId);
 
@@ -89,12 +89,12 @@ namespace ScholarMeServer.Services.FlashcardInfo
 
             if (flashcardDto.FlashcardSetId != null)
             {
-                if (!await _flashcardRepository.FlashcardDeckExists((int)flashcardDto.FlashcardSetId))
+                if (!await _flashcardRepository.FlashcardDeckExists((Guid)flashcardDto.FlashcardSetId))
                 {
                     // TODO:
                     throw new NotImplementedException("Flashcard FlashcardDeck Not Found: Validation logic not yet implemented!");
                 }
-                flashcard.FlashcardDeckId = (int)flashcardDto.FlashcardSetId;
+                flashcard.FlashcardDeckId = (Guid)flashcardDto.FlashcardSetId;
             }
 
             if (flashcardDto.Question != null)
@@ -113,7 +113,7 @@ namespace ScholarMeServer.Services.FlashcardInfo
             };
         }
 
-        public async Task DeleteFlashcard(int flashcardId)
+        public async Task DeleteFlashcard(Guid flashcardId)
         {
             var flashcard = await _flashcardRepository.GetFlashcardById(flashcardId);
 

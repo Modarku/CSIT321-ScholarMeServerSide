@@ -4,10 +4,10 @@ namespace ScholarMeServer.DTO.FlashcardChoice
 {
     public class FlashcardChoiceReadOnlyDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public int? FlashcardId { get; set; }
+        public Guid? FlashcardId { get; set; }
 
         public string Choice { get; set; }
 

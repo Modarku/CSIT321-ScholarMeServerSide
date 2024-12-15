@@ -55,7 +55,7 @@ namespace ScholarMeServer.Controllers
         [Authorize]
         public async Task<IActionResult> UpdateUserAccount([FromBody] UserAccountUpdateDto userAccountDto)
         {
-            var userAccountId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var userAccountId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var user = await _userAccountInfoService.UpdateUserAccount(userAccountId, userAccountDto);
             return Ok(user);
         }
@@ -64,7 +64,7 @@ namespace ScholarMeServer.Controllers
         [Authorize]
         public async Task<IActionResult> UpdateUserPassword([FromBody] UserAccountChangePasswordDto userAccountDto)
         {
-            var userAccountId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var userAccountId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             await _userAccountInfoService.UpdateUserPassword(userAccountId, userAccountDto);
             return NoContent();
         }

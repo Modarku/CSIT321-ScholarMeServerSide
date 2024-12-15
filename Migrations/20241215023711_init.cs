@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -18,8 +17,7 @@ namespace ScholarMeServer.Migrations
                 name: "UserAccounts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Username = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
@@ -38,9 +36,8 @@ namespace ScholarMeServer.Migrations
                 name: "FlashcardDecks",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserAccountId = table.Column<int>(type: "integer", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserAccountId = table.Column<Guid>(type: "uuid", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -62,7 +59,7 @@ namespace ScholarMeServer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserAccountId = table.Column<int>(type: "integer", nullable: false),
+                    UserAccountId = table.Column<Guid>(type: "uuid", nullable: false),
                     Token = table.Column<string>(type: "text", nullable: false),
                     ExpiresOnUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -81,9 +78,8 @@ namespace ScholarMeServer.Migrations
                 name: "Flashcards",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FlashcardDeckId = table.Column<int>(type: "integer", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    FlashcardDeckId = table.Column<Guid>(type: "uuid", nullable: false),
                     Question = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -103,9 +99,8 @@ namespace ScholarMeServer.Migrations
                 name: "FlashcardChoices",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FlashcardId = table.Column<int>(type: "integer", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    FlashcardId = table.Column<Guid>(type: "uuid", nullable: false),
                     Choice = table.Column<string>(type: "text", nullable: false),
                     IsAnswer = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -125,26 +120,26 @@ namespace ScholarMeServer.Migrations
             migrationBuilder.InsertData(
                 table: "UserAccounts",
                 columns: new[] { "Id", "CreatedAt", "Email", "FirstName", "LastName", "Password", "PhoneNumber", "UpdatedAt", "Username" },
-                values: new object[] { 1, new DateTime(2024, 12, 14, 11, 10, 35, 877, DateTimeKind.Utc).AddTicks(2983), "cher@gmail.com", "Teach", "Cher", "$2a$11$GEdE.kXSFvRDWyYEc8/EjOseQM9O5ftY9yvQNxZt.NtzDGr7dkjPO", null, new DateTime(2024, 12, 14, 11, 10, 35, 877, DateTimeKind.Utc).AddTicks(3186), "cher" });
+                values: new object[] { new Guid("e0826199-bc30-4ea2-9adf-444cf6286f97"), new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(3160), "cher@gmail.com", "Teach", "Cher", "$2a$11$OmzB8G/qpldri5cvkdJENuWuDypksiE6ioAazfsQvg67wu5DQXRge", null, new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(3400), "cher" });
 
             migrationBuilder.InsertData(
                 table: "FlashcardDecks",
                 columns: new[] { "Id", "CreatedAt", "Description", "Title", "UpdatedAt", "UserAccountId" },
-                values: new object[] { 1, new DateTime(2024, 12, 14, 11, 10, 35, 877, DateTimeKind.Utc).AddTicks(9651), "This is the first flashcard set", "Flashcard Set 1", new DateTime(2024, 12, 14, 11, 10, 35, 877, DateTimeKind.Utc).AddTicks(9806), 1 });
+                values: new object[] { new Guid("cb0f4609-2e96-4fdc-b1a7-ddc53e5e55b3"), new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(4856), "This is the first flashcard set", "Flashcard Set 1", new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(5016), new Guid("e0826199-bc30-4ea2-9adf-444cf6286f97") });
 
             migrationBuilder.InsertData(
                 table: "Flashcards",
                 columns: new[] { "Id", "CreatedAt", "FlashcardDeckId", "Question", "UpdatedAt" },
-                values: new object[] { 1, new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(663), 1, "What is the capital of France?", new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(822) });
+                values: new object[] { new Guid("0d761a2b-40f5-4082-846d-44bc627a78db"), new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(5984), new Guid("cb0f4609-2e96-4fdc-b1a7-ddc53e5e55b3"), "What is the capital of France?", new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(6123) });
 
             migrationBuilder.InsertData(
                 table: "FlashcardChoices",
                 columns: new[] { "Id", "Choice", "CreatedAt", "FlashcardId", "IsAnswer", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, "Paris", new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(1848), 1, true, new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(1974) },
-                    { 2, "London", new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(2090), 1, false, new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(2091) },
-                    { 3, "Berlin", new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(2092), 1, false, new DateTime(2024, 12, 14, 11, 10, 35, 878, DateTimeKind.Utc).AddTicks(2092) }
+                    { new Guid("48091b67-9810-41b3-81a8-53ffa4de6432"), "London", new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7410), new Guid("0d761a2b-40f5-4082-846d-44bc627a78db"), false, new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7411) },
+                    { new Guid("5c4cb636-f424-4194-93b9-69a25c530f38"), "Paris", new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7146), new Guid("0d761a2b-40f5-4082-846d-44bc627a78db"), true, new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7283) },
+                    { new Guid("81b6d369-4b3d-4403-a45b-0f21d7bf0702"), "Berlin", new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7413), new Guid("0d761a2b-40f5-4082-846d-44bc627a78db"), false, new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7413) }
                 });
 
             migrationBuilder.CreateIndex(
