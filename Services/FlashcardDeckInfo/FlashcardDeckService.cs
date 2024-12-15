@@ -1,4 +1,6 @@
 ﻿using RestTest.Models;
+using ScholarMeServer.DTO.Flashcard;
+using ScholarMeServer.DTO.FlashcardChoice;
 using ScholarMeServer.DTO.FlashcardDeck;
 using ScholarMeServer.Repository.FlashcardDeckInfo;
 using ScholarMeServer.Utilities.Exceptions;
@@ -54,9 +56,9 @@ namespace ScholarMeServer.Services.FlashcardDeckInfo
             }).ToList();
         }
 
-        public async Task<FlashcardDeckReadOnlyDto> GetFlashcardDeckById(Guid flashcardDeckId)
+        public async Task<FlashcardDeckReadOnlyDto> GetFlashcardDeckById(Guid flashcardDeckId, bool includeFlashcards)
         {
-            var flashcardDeck = await _flashcardDeckRepository.GetFlashcardDeckById(flashcardDeckId);
+            var flashcardDeck = await _flashcardDeckRepository.GetFlashcardDeckById(flashcardDeckId, includeFlashcards);
 
             if (flashcardDeck == null)
             {
@@ -71,6 +73,15 @@ namespace ScholarMeServer.Services.FlashcardDeckInfo
                 Description = flashcardDeck.Description,
                 CreatedAt = flashcardDeck.CreatedAt,
                 UpdatedAt = flashcardDeck.UpdatedAt,
+                Flashcards = includeFlashcards ? flashcardDeck.Flashcards.Select(c => new FlashcardReadOnlyDto
+                {
+                    Id = c.Id,
+                    FlashcardSetId = null,
+                    Question = c.Question,
+                    CreatedAt = c.CreatedAt,
+                    UpdatedAt = c.UpdatedAt,
+                    Choices = null,
+                }).ToList() : null
             };
         }
 

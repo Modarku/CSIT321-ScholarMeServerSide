@@ -14,11 +14,11 @@ namespace ScholarMeServer.Repository.FlashcardInfo
             await _scholarmeDbContext.SaveChangesAsync();
         }
 
-        public async Task<List<Flashcard>> GetFlashcardsByDeckId(Guid flashcardDeckId, bool choices)
+        public async Task<List<Flashcard>> GetFlashcardsByDeckId(Guid flashcardDeckId, bool includeChoices)
         {
             IQueryable<Flashcard> query = _scholarmeDbContext.Set<Flashcard>().Where(f => f.FlashcardDeckId == flashcardDeckId);
 
-            if (choices)
+            if (includeChoices)
             {
                 query = query.Include(f => f.Choices);
             }

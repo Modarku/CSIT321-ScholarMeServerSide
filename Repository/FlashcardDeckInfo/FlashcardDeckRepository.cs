@@ -20,9 +20,16 @@ namespace ScholarMeServer.Repository.FlashcardDeckInfo
             return flashcardDecks;
         }
 
-        public async Task<FlashcardDeck?> GetFlashcardDeckById(Guid flashcardDeckId)
+        public async Task<FlashcardDeck?> GetFlashcardDeckById(Guid flashcardDeckId, bool includeFlashcards = true)
         {
-            var flashcardDeck = await _scholarmeDbContext.Set<FlashcardDeck>().FindAsync(flashcardDeckId);
+            IQueryable<FlashcardDeck> query = _scholarmeDbContext.Set<FlashcardDeck>();
+
+            if (includeFlashcards)
+            {
+                query = query.Include(deck => deck.Flashcards);
+            }
+
+            var flashcardDeck = await query.FirstOrDefaultAsync(deck => deck.Id == flashcardDeckId);
             return flashcardDeck;
         }
 

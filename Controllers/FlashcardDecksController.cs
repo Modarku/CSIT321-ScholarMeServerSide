@@ -35,9 +35,9 @@ namespace ScholarMeServer.Controllers
         }
 
         [HttpGet("{flashcardDeckId:Guid}", Name = "GetFlashcardDeckById")]
-        public async Task<IActionResult> GetFlashcardDeckById([FromRoute] Guid flashcardDeckId)
+        public async Task<IActionResult> GetFlashcardDeckById([FromRoute] Guid flashcardDeckId, [FromQuery] bool includeFlashcards = false)
         {
-            var flashcardDeck = await _flashcardDeckService.GetFlashcardDeckById(flashcardDeckId);
+            var flashcardDeck = await _flashcardDeckService.GetFlashcardDeckById(flashcardDeckId, includeFlashcards);
             return Ok(flashcardDeck);
         }
 
