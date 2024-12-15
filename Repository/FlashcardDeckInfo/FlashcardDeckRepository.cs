@@ -20,7 +20,7 @@ namespace ScholarMeServer.Repository.FlashcardDeckInfo
             return flashcardDecks;
         }
 
-        public async Task<FlashcardDeck?> GetFlashcardDeckById(Guid flashcardDeckId, bool includeFlashcards = true)
+        public async Task<FlashcardDeck?> GetFlashcardDeckById(Guid flashcardDeckId, bool includeFlashcards = false)
         {
             IQueryable<FlashcardDeck> query = _scholarmeDbContext.Set<FlashcardDeck>();
 

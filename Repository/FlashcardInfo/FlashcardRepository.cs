@@ -8,13 +8,13 @@ namespace ScholarMeServer.Repository.FlashcardInfo
     {
         public FlashcardRepository(ScholarMeDbContext scholarmeDbContext) : base(scholarmeDbContext) { }
 
-        public async Task AddFlashcard( Flashcard flashcard)
+        public async Task AddFlashcard(Flashcard flashcard)
         {
             _scholarmeDbContext.Set<Flashcard>().Add(flashcard);
             await _scholarmeDbContext.SaveChangesAsync();
         }
 
-        public async Task<List<Flashcard>> GetFlashcardsByDeckId(Guid flashcardDeckId, bool includeChoices)
+        public async Task<List<Flashcard>> GetFlashcardsByDeckId(Guid flashcardDeckId, bool includeChoices = false)
         {
             IQueryable<Flashcard> query = _scholarmeDbContext.Set<Flashcard>().Where(f => f.FlashcardDeckId == flashcardDeckId);
 
@@ -27,9 +27,16 @@ namespace ScholarMeServer.Repository.FlashcardInfo
             return flashcards;
         }
 
-        public async Task<Flashcard?> GetFlashcardById(Guid flashcardId)
+        public async Task<Flashcard?> GetFlashcardById(Guid flashcardId, bool includeChoices = false)
         {
-            var flashcard = await _scholarmeDbContext.Set<Flashcard>().FindAsync(flashcardId);
+            IQueryable<Flashcard> query = _scholarmeDbContext.Set<Flashcard>().Where(f => f.Id == flashcardId);
+
+            if (includeChoices)
+            {
+                query = query.Include(f => f.Choices);
+            }
+
+            var flashcard = await query.FirstOrDefaultAsync();
             return flashcard;
         }
 

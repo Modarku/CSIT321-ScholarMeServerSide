@@ -23,6 +23,7 @@ namespace RestTest.Models
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
+        public string? AvatarPath { get; set; }
 
         // Navigation Property
         public List<FlashcardDeck> FlashcardDecks { get; set; }
