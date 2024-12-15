@@ -8,7 +8,8 @@ namespace ScholarMeServer.DTO.Flashcard
     {
         public Guid Id { get; set; }
 
-        public Guid FlashcardSetId { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public Guid? FlashcardSetId { get; set; }
 
         public string Question { get; set; }
 
