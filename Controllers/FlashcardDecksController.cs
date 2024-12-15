@@ -34,6 +34,7 @@ namespace ScholarMeServer.Controllers
             return Ok(flashcardDecks);
         }
 
+        [AllowAnonymous]
         [HttpGet("{flashcardDeckId:Guid}", Name = "GetFlashcardDeckById")]
         public async Task<IActionResult> GetFlashcardDeckById([FromRoute] Guid flashcardDeckId, [FromQuery] bool includeFlashcards = false)
         {
@@ -53,6 +54,15 @@ namespace ScholarMeServer.Controllers
         {
             await _flashcardDeckService.DeleteFlashcardDeck(flashcardDeckId);
             return NoContent();
+        }
+
+        // New method to get all flashcard decks without authorization
+        [AllowAnonymous]
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllFlashcardDecks([FromQuery] bool includeFlashcards)
+        {
+            var flashcardDecks = await _flashcardDeckService.GetAllFlashcardDecks(includeFlashcards);
+            return Ok(flashcardDecks);
         }
     }
 }
