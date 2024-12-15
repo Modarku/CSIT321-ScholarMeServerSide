@@ -123,7 +123,10 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "File Upload API", Version = "v1" });
+});
 
 // Comment out when using the addition of custom middleware that automatically read JWT from cookies.
 // https://www.youtube.com/watch?v=w8I32UPEvj8&t=133s

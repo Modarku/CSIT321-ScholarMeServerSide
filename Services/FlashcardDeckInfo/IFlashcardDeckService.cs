@@ -10,5 +10,6 @@ namespace ScholarMeServer.Services.FlashcardDeckInfo
         public Task<FlashcardDeckReadOnlyDto> GetFlashcardDeckById(Guid flashcardDeckId, bool includeFlashcards);
         public Task<FlashcardDeckReadOnlyDto> UpdateFlashcardDeck(Guid flashcardDeckId, FlashcardDeckUpdateDto flashcardDeckDto);
         public Task DeleteFlashcardDeck(Guid flashcardDeckId);
+        public Task<List<FlashcardDeckReadOnlyDto>> GetAllFlashcardDecks(bool includeFlashcards);
     }
 }

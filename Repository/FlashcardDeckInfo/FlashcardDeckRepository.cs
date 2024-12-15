@@ -44,5 +44,17 @@ namespace ScholarMeServer.Repository.FlashcardDeckInfo
             _scholarmeDbContext.Set<FlashcardDeck>().Remove(flashcardDeck);
             await _scholarmeDbContext.SaveChangesAsync();
         }
+
+        public async Task<List<FlashcardDeck>> GetAllFlashcardDecks(bool includeFlashcards = false)
+        {
+            IQueryable<FlashcardDeck> query = _scholarmeDbContext.Set<FlashcardDeck>();
+
+            if (includeFlashcards)
+            {
+                query = query.Include(deck => deck.Flashcards);
+            }
+
+            return await query.ToListAsync();
+        }
     }
 }

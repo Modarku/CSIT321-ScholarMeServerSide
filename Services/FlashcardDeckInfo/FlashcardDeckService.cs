@@ -130,5 +130,29 @@ namespace ScholarMeServer.Services.FlashcardDeckInfo
 
             await _flashcardDeckRepository.DeleteFlashcardDeck(flashcardDeck);
         }
+
+        public async Task<List<FlashcardDeckReadOnlyDto>> GetAllFlashcardDecks(bool includeFlashcards)
+        {
+            var flashcardDecks = await _flashcardDeckRepository.GetAllFlashcardDecks(includeFlashcards);
+
+            return flashcardDecks.Select(d => new FlashcardDeckReadOnlyDto()
+            {
+                Id = d.Id,
+                UserAccountId = d.UserAccountId,
+                Title = d.Title,
+                Description = d.Description,
+                CreatedAt = d.CreatedAt,
+                UpdatedAt = d.UpdatedAt,
+                Flashcards = includeFlashcards ? d.Flashcards.Select(c => new FlashcardReadOnlyDto
+                {
+                    Id = c.Id,
+                    FlashcardSetId = null,
+                    Question = c.Question,
+                    CreatedAt = c.CreatedAt,
+                    UpdatedAt = c.UpdatedAt,
+                    Choices = null,
+                }).ToList() : null
+            }).ToList();
+        }
     }
 }

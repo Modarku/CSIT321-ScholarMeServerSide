@@ -81,4 +81,8 @@
 	    <Using Include="BCrypt.Net.BCrypt" Static="True" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Media\" />
+    </ItemGroup>
+
 </Project>
