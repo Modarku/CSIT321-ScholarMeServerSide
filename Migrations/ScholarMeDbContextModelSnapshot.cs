@@ -50,11 +50,11 @@ namespace ScholarMeServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0d761a2b-40f5-4082-846d-44bc627a78db"),
-                            CreatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(5984),
-                            FlashcardDeckId = new Guid("cb0f4609-2e96-4fdc-b1a7-ddc53e5e55b3"),
+                            Id = new Guid("41e2e4af-abd9-4832-ae73-86798d0e534b"),
+                            CreatedAt = new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(2410),
+                            FlashcardDeckId = new Guid("aab90a73-75c1-4e61-b948-02d3397e21ee"),
                             Question = "What is the capital of France?",
-                            UpdatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(6123)
+                            UpdatedAt = new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(2473)
                         });
                 });
 
@@ -89,30 +89,30 @@ namespace ScholarMeServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5c4cb636-f424-4194-93b9-69a25c530f38"),
+                            Id = new Guid("c2eee04b-f123-4809-915e-1db2032c20d9"),
                             Choice = "Paris",
-                            CreatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7146),
-                            FlashcardId = new Guid("0d761a2b-40f5-4082-846d-44bc627a78db"),
+                            CreatedAt = new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(2934),
+                            FlashcardId = new Guid("41e2e4af-abd9-4832-ae73-86798d0e534b"),
                             IsAnswer = true,
-                            UpdatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7283)
+                            UpdatedAt = new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(2997)
                         },
                         new
                         {
-                            Id = new Guid("48091b67-9810-41b3-81a8-53ffa4de6432"),
+                            Id = new Guid("9b8839c3-58f1-4518-be94-4f923dc2f52c"),
                             Choice = "London",
-                            CreatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7410),
-                            FlashcardId = new Guid("0d761a2b-40f5-4082-846d-44bc627a78db"),
+                            CreatedAt = new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(3060),
+                            FlashcardId = new Guid("41e2e4af-abd9-4832-ae73-86798d0e534b"),
                             IsAnswer = false,
-                            UpdatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7411)
+                            UpdatedAt = new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(3060)
                         },
                         new
                         {
-                            Id = new Guid("81b6d369-4b3d-4403-a45b-0f21d7bf0702"),
+                            Id = new Guid("9649769f-9c9b-4175-b668-b2bc104a5b58"),
                             Choice = "Berlin",
-                            CreatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7413),
-                            FlashcardId = new Guid("0d761a2b-40f5-4082-846d-44bc627a78db"),
+                            CreatedAt = new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(3062),
+                            FlashcardId = new Guid("41e2e4af-abd9-4832-ae73-86798d0e534b"),
                             IsAnswer = false,
-                            UpdatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(7413)
+                            UpdatedAt = new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(3062)
                         });
                 });
 
@@ -148,12 +148,12 @@ namespace ScholarMeServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("cb0f4609-2e96-4fdc-b1a7-ddc53e5e55b3"),
-                            CreatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(4856),
+                            Id = new Guid("aab90a73-75c1-4e61-b948-02d3397e21ee"),
+                            CreatedAt = new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(1907),
                             Description = "This is the first flashcard set",
                             Title = "Flashcard Set 1",
-                            UpdatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(5016),
-                            UserAccountId = new Guid("e0826199-bc30-4ea2-9adf-444cf6286f97")
+                            UpdatedAt = new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(1975),
+                            UserAccountId = new Guid("535f49f4-bd0f-4bf4-aa48-7fca28f329e9")
                         });
                 });
 
@@ -162,6 +162,9 @@ namespace ScholarMeServer.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("AvatarPath")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -199,13 +202,13 @@ namespace ScholarMeServer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e0826199-bc30-4ea2-9adf-444cf6286f97"),
-                            CreatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(3160),
+                            Id = new Guid("535f49f4-bd0f-4bf4-aa48-7fca28f329e9"),
+                            CreatedAt = new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(1033),
                             Email = "cher@gmail.com",
                             FirstName = "Teach",
                             LastName = "Cher",
-                            Password = "$2a$11$OmzB8G/qpldri5cvkdJENuWuDypksiE6ioAazfsQvg67wu5DQXRge",
-                            UpdatedAt = new DateTime(2024, 12, 15, 2, 37, 11, 26, DateTimeKind.Utc).AddTicks(3400),
+                            Password = "$2a$11$4ea5m6VbQnQtlEP36QTh9etC2gcbBg.v9V4gPXOs/1H1j.rstd5Zu",
+                            UpdatedAt = new DateTime(2024, 12, 15, 11, 18, 1, 772, DateTimeKind.Utc).AddTicks(1177),
                             Username = "cher"
                         });
                 });

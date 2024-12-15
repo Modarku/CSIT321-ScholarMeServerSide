@@ -16,6 +16,5 @@ namespace ScholarMeServer.Repository.UserAccountInfo
         public Task<RefreshToken?> GetRefreshToken(string token);
 
         public Task SaveRefreshToken(RefreshToken refreshToken);
-
     }
 }

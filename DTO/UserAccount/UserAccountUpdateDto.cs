@@ -19,5 +19,7 @@ namespace ScholarMeServer.DTO.UserAccount
         // TODO: Philippines phone number validation specific
         [Phone]
         public string? PhoneNumber { get; set; }
+
+        public IFormFile? avatar { get; set; }
     }
 }

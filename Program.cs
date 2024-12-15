@@ -177,6 +177,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles(); // Enable serving static files
+// Serve files from the "Media" folder
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Media")),
+    RequestPath = "/Media"
+});
+
 // Temporarily comment out in development, not recommended for production (altho need to setup SSL)
 //app.UseHttpsRedirection();
 
