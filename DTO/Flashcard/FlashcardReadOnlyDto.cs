@@ -1,4 +1,5 @@
 ﻿using ScholarMeServer.DTO.FlashcardChoice;
+using System.Text.Json.Serialization;
 
 namespace ScholarMeServer.DTO.Flashcard
 {
@@ -14,5 +15,8 @@ namespace ScholarMeServer.DTO.Flashcard
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public List<FlashcardChoiceReadOnlyDto>? Choices { get; set; }
     }
 }

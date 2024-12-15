@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using ScholarMeServer.DTO;
+using ScholarMeServer.DTO.RefreshToken;
 using ScholarMeServer.DTO.UserAccount;
 using ScholarMeServer.Services.UserAccountInfo;
 using ScholarMeServer.Utilities;
@@ -70,16 +71,19 @@ namespace ScholarMeServer.Controllers
 
         [HttpPost("refresh-token")]
         [AllowAnonymous]
-        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenCreateDto refreshTokenDto)
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequestDto refreshTokenRequest)
         {
-            var userAccountId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-            var user = await _userAccountInfoService.GetUserById(userAccountId);
-            
-            var accessToken = _jwt.GenerateJwtToken(user);
+            // Validate the refresh token
             var refreshToken = _jwt.GenerateRefreshToken();
+            var refreshTokenDto = await _userAccountInfoService.UpdateRefreshToken(refreshTokenRequest.RefreshToken, refreshToken, DateTime.UtcNow.AddDays(30));
 
-            await _userAccountInfoService.UpdateRefreshToken(userAccountId, refreshTokenDto.Token, refreshToken, DateTime.UtcNow.AddDays(30));
+            // Get the user associated with the refresh token
+            var user = await _userAccountInfoService.GetUserById(refreshTokenDto.UserAccountId);
 
+            // Generate a new access token
+            var accessToken = _jwt.GenerateJwtToken(user);
+
+            // Return the new tokens to the client
             return Ok(new { user, accessToken, refreshToken });
         }
     }

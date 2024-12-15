@@ -13,6 +13,6 @@ namespace ScholarMeServer.Services.UserAccountInfo
         public Task UpdateUserPassword(int userAccountId, UserAccountChangePasswordDto userAccountDto);
         public Task<UserAccountReadOnlyDto> GetUserById(int userId);
         public Task<RefreshTokenReadOnly> CreateRefreshToken(int userId, string token, DateTime expires);
-        public Task UpdateRefreshToken(int userId, string oldToken, string newToken, DateTime expires);
+        public Task<RefreshTokenReadOnly> UpdateRefreshToken(string oldToken, string newToken, DateTime expires);
     }
 }

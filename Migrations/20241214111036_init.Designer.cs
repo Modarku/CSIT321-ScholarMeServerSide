@@ -230,7 +230,7 @@ namespace ScholarMeServer.Migrations
                     b.Property<DateTime>("ExpiresOnUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Token")
+                    b.Property<string>("RefreshToken")
                         .IsRequired()
                         .HasColumnType("text");
 

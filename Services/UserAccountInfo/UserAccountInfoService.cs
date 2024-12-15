@@ -185,23 +185,31 @@ namespace ScholarMeServer.Services.UserAccountInfo
             };
         }
 
-        public async Task UpdateRefreshToken(int userId, string oldToken, string newToken, DateTime expires)
+        public async Task<RefreshTokenReadOnly> UpdateRefreshToken(string oldToken, string newToken, DateTime expires)
         {
             RefreshToken? refreshToken = await _userAccountInfoRepository.GetRefreshToken(oldToken);
 
             if (refreshToken == null)
             {
-                throw new HttpResponseException((int)HttpStatusCode.Unauthorized, "Refresh token not found");
+                throw new HttpResponseException((int)HttpStatusCode.Unauthorized, "INVALID_REFRESH_TOKEN");
             }
 
             if (refreshToken.ExpiresOnUtc < DateTime.UtcNow)
             {
-                throw new HttpResponseException((int)HttpStatusCode.Unauthorized, "The refresh token has expired");
+                throw new HttpResponseException((int)HttpStatusCode.Unauthorized, "REFRESH_TOKEN_EXPIRED");
             }
 
             refreshToken.Token = newToken;
 
             await _userAccountInfoRepository.SaveRefreshToken(refreshToken);
+
+            return new RefreshTokenReadOnly()
+            {
+                Id = refreshToken.Id,
+                UserAccountId = refreshToken.UserAccountId,
+                Token = refreshToken.Token,
+                ExpiresOnUtc = refreshToken.ExpiresOnUtc,
+            };
         }
     }
 }

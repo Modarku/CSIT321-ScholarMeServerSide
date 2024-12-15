@@ -50,6 +50,16 @@ namespace ScholarMeServer.Utilities.Middlewares
                 Instance = context.Request.Path
             };
 
+            // Check for the WWW-Authenticate header to determine if the token is invalid
+            if (context.Response.Headers.ContainsKey("WWW-Authenticate"))
+            {
+                var wwwAuthenticateHeader = context.Response.Headers["WWW-Authenticate"].ToString();
+                if (wwwAuthenticateHeader.Contains("invalid_token"))
+                {
+                    problemDetails.Detail = "INVALID_ACCESS_TOKEN";
+                }
+            }
+
             return context.Response.WriteAsJsonAsync(problemDetails);
         }
 

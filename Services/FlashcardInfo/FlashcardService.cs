@@ -36,9 +36,9 @@ namespace ScholarMeServer.Services.FlashcardInfo
             };
         }
 
-        public async Task<List<FlashcardReadOnlyDto>> GetFlashcardsByDeckId(int flashcardDeckId)
+        public async Task<List<FlashcardReadOnlyDto>> GetFlashcardsByDeckId(int flashcardDeckId, bool choices)
         {
-            var flashcards = await _flashcardRepository.GetFlashcardsByDeckId(flashcardDeckId);
+            var flashcards = await _flashcardRepository.GetFlashcardsByDeckId(flashcardDeckId, choices);
 
             return flashcards.Select(f => new FlashcardReadOnlyDto
             {
@@ -47,6 +47,15 @@ namespace ScholarMeServer.Services.FlashcardInfo
                 Question = f.Question,
                 CreatedAt = f.CreatedAt,
                 UpdatedAt = f.UpdatedAt,
+                Choices = choices ? f.Choices.Select(c => new FlashcardChoiceReadOnlyDto
+                {
+                    Id = c.Id,
+                    FlashcardId = null,
+                    Choice = c.Choice,
+                    IsAnswer = c.IsAnswer,
+                    CreatedAt = c.CreatedAt,
+                    UpdatedAt = c.UpdatedAt,
+                }).ToList() : null
             }).ToList();
         }
 
