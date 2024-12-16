@@ -1,5 +1,6 @@
 ﻿using RestTest.Models;
 using ScholarMeServer.DTO;
+using ScholarMeServer.DTO.File;
 using ScholarMeServer.DTO.RefreshTokenRequest;
 using ScholarMeServer.DTO.UserAccount;
 
@@ -14,6 +15,6 @@ namespace ScholarMeServer.Services.UserAccountInfo
         public Task<UserAccountReadOnlyDto> GetUserById(Guid userId);
         public Task<RefreshTokenReadOnly> CreateRefreshToken(Guid userId, string token, DateTime expires);
         public Task<RefreshTokenReadOnly> UpdateRefreshToken(string oldToken, string newToken, DateTime expires);
-        public Task UpdateUserAvatar(Guid userId, string avatarUrl);
+        public Task UpdateUserAvatar(Guid userId, ProfileAvatarDto profileAvatarDto);
     }
 }

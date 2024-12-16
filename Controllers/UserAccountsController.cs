@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using ScholarMeServer.DTO;
+using ScholarMeServer.DTO.File;
 using ScholarMeServer.DTO.RefreshToken;
 using ScholarMeServer.DTO.UserAccount;
 using ScholarMeServer.Services.UserAccountInfo;
@@ -56,7 +57,7 @@ namespace ScholarMeServer.Controllers
 
         [HttpPut("edit-profile")]
         [Authorize]
-        public async Task<IActionResult> UpdateUserAccount([FromBody] UserAccountUpdateDto userAccountDto)
+        public async Task<IActionResult> UpdateUserAccount([FromForm] UserAccountUpdateDto userAccountDto)
         {
             var userAccountId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var user = await _userAccountInfoService.UpdateUserAccount(userAccountId, userAccountDto);
@@ -88,6 +89,16 @@ namespace ScholarMeServer.Controllers
 
             // Return the new tokens to the client
             return Ok(new { user, accessToken, refreshToken });
+        }
+
+        [HttpPost("update-avatar")]
+        [Authorize]
+        public async Task<IActionResult> UpdateAvatar(ProfileAvatarDto profileAvatarDto)
+        {
+            var userAccountId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            ProfileAvatarReadOnlyDto filePath = await _userAccountInfoService.UpdateUserAvatar(userAccountId, profileAvatarDto);
+
+            return Ok(filePath);
         }
     }
 }
