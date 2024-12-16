@@ -149,7 +149,7 @@ namespace ScholarMeServer.Services.UserAccountInfo
                 using FileStream stream = new FileStream(Path.Combine(dir, filePath), FileMode.Create);
                 file.CopyTo(stream);
 
-                user.AvatarPath = filePath;
+                user.AvatarPath = filePath.Replace("\\", "/");
             }
 
             user.UpdatedAt = DateTime.UtcNow;

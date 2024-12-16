@@ -17,11 +17,14 @@ namespace ScholarMeServer.Controllers
     {
         private readonly IUserAccountInfoService _userAccountInfoService;
         private readonly JwtService _jwt;
+        private readonly ILogger<UserAccountsController> _logger;
+        private readonly string _fileUploadPath = Path.Combine("wwwroot", "media", "avatars");
 
-        public UserAccountsController(IUserAccountInfoService userAccountInfoService, JwtService jwt)
+        public UserAccountsController(IUserAccountInfoService userAccountInfoService, JwtService jwt, ILogger<UserAccountsController> logger)
         {
             _userAccountInfoService = userAccountInfoService;
             _jwt = jwt;
+            _logger = logger;
         }
 
         [HttpPost("signup")]

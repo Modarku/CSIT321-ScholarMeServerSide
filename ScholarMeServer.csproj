@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\OldController\**" />
+    <Compile Remove="Media\Avatars\**" />
     <Compile Remove="Repository\FlashcardSetInfo\**" />
     <Compile Remove="Repository\IRepository\**" />
     <Compile Remove="Repository\OldFlashcardInfo\**" />
@@ -15,6 +16,7 @@
     <Compile Remove="Services\IServices\**" />
     <Compile Remove="Services\OldFlashcardInfo\**" />
     <Content Remove="Controllers\OldController\**" />
+    <Content Remove="Media\Avatars\**" />
     <Content Remove="Repository\FlashcardSetInfo\**" />
     <Content Remove="Repository\IRepository\**" />
     <Content Remove="Repository\OldFlashcardInfo\**" />
@@ -22,6 +24,7 @@
     <Content Remove="Services\IServices\**" />
     <Content Remove="Services\OldFlashcardInfo\**" />
     <EmbeddedResource Remove="Controllers\OldController\**" />
+    <EmbeddedResource Remove="Media\Avatars\**" />
     <EmbeddedResource Remove="Repository\FlashcardSetInfo\**" />
     <EmbeddedResource Remove="Repository\IRepository\**" />
     <EmbeddedResource Remove="Repository\OldFlashcardInfo\**" />
@@ -29,6 +32,7 @@
     <EmbeddedResource Remove="Services\IServices\**" />
     <EmbeddedResource Remove="Services\OldFlashcardInfo\**" />
     <None Remove="Controllers\OldController\**" />
+    <None Remove="Media\Avatars\**" />
     <None Remove="Repository\FlashcardSetInfo\**" />
     <None Remove="Repository\IRepository\**" />
     <None Remove="Repository\OldFlashcardInfo\**" />
@@ -82,7 +86,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Media\Avatars\" />
+      <Folder Include="Media\" />
     </ItemGroup>
 
 </Project>
