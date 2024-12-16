@@ -211,5 +211,17 @@ namespace ScholarMeServer.Services.UserAccountInfo
                 ExpiresOnUtc = refreshToken.ExpiresOnUtc,
             };
         }
+
+        public async Task UpdateUserAvatar(Guid userAccountId, string avatarUrl)
+        {
+            var user = await _userAccountInfoRepository.GetUserById(userAccountId);
+            if (user == null)
+            {
+                throw new HttpResponseException((int)HttpStatusCode.BadRequest, "User not found");
+            }
+
+            user.AvatarPath = avatarUrl;
+            await _userAccountInfoRepository.SaveUser(user);
+        }
     }
 }

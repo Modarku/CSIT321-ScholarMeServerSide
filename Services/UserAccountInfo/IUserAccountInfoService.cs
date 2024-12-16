@@ -14,5 +14,6 @@ namespace ScholarMeServer.Services.UserAccountInfo
         public Task<UserAccountReadOnlyDto> GetUserById(Guid userId);
         public Task<RefreshTokenReadOnly> CreateRefreshToken(Guid userId, string token, DateTime expires);
         public Task<RefreshTokenReadOnly> UpdateRefreshToken(string oldToken, string newToken, DateTime expires);
+        public Task UpdateUserAvatar(Guid userId, string avatarUrl);
     }
 }
